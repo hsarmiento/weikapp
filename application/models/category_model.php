@@ -9,12 +9,11 @@ class Category_model extends CI_Model {
     }
 
 
-    public function get_categories($limit, $offset)
-    {
+    public function get_all_categories(){
         $this->db->select('*')
         ->from('categories')
-        ->limit($limit,$offset);
-        return $this->db->get()->result_array();       
+        ->order_by('name asc');
+        return $this->db->get()->result_array();
     }
 
 }

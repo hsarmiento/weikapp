@@ -1,18 +1,18 @@
 <?php
 	$count = count($aData);
-	// echo $count;
-	// print_r($aData);	
 ?>
 
 
 <style>
-p{margin: 10px;
-	padding: 5px;}
-#finalResult{
-	list-style-type: none;
-	margin: 10px;
-	padding: 5px;
-	width:300px;
+
+
+
+.header{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: green solid 1px;
+	margin-bottom: 50px;
 }
 
 .container{
@@ -49,17 +49,28 @@ p{margin: 10px;
 
 </style>
 
+<div class="header">
+	<h2>Categorias</h2>
+	<?php
+		foreach ($aCategories as $value) { ?>
+			<p><a href="<?php echo base_url();?>promos/index/<?=$value['name']?>"><?=ucfirst($value['name'])?></a></p>
+		<?php } ?>
+</div>
+
 <h1>HOME PROMOS</h1>
 
-
 <div class="container" id="container-promos">
-		<?php foreach ($aData as $value) { ?>
-				<div class="promo">
-					<?=$value['title']?>
-					<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
-				</div>
-		<?php } ?>
-		
+		<?php if($count == 0){ ?>
+			<h3>No existen promociones para esta categoría</h3>
+		<?php } else{
+				foreach ($aData as $value) { ?>
+					<div class="promo">
+						<?=$value['title']?>
+						<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
+					</div>
+			<?php } 
+
+		} ?>	
 </div>
 
 
@@ -76,7 +87,7 @@ p{margin: 10px;
 	    	
 	    	$.ajax({
 				type: "post",
-				url: "<?php echo base_url();?>promos/ajax_load/"+offset.toString(),
+				url: "<?php echo base_url();?>promos/ajax_load/"+offset.toString()+"/<?=$category?>",
 				cache: false,				
 				data:'',
 				success: function(response){	
@@ -91,7 +102,7 @@ p{margin: 10px;
 							    offset = offset + 1;
 						});	
 						
-						console.log(items);
+						// console.log(items);
 						// if(offset%2==0){
 						// 	color = 'green';
 						// }else{

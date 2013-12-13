@@ -9,15 +9,17 @@ class Promos extends CI_Controller
         $this->load->model('promo_model');
 	}
 
-	public function index(){
-		$aData = $this->promo_model->get_promos(9,0);
-		// $aData = array($aData);
-		$this->layout->view('index', compact("aData"));
+	public function index($category){
+
+		$this->load->model('category_model');
+		$aData = $this->promo_model->get_promos(9,0, $category);
+		$aCategories = $this->category_model->get_all_categories();
+		$this->layout->view('index', compact("aData","category","aCategories"));
 	}
 
-	public function ajax_load($offset){
+	public function ajax_load($offset,$category){
 		$this->layout->setLayout('ajax_layout');
-		$aData = $this->promo_model->get_promos(3,$offset);
+		$aData = $this->promo_model->get_promos(3,$offset, $category);
 		echo json_encode(array($aData));
 		// $this->layout->view('ajax_load',compact("aData"));
 	}
