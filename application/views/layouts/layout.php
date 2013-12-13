@@ -11,6 +11,8 @@
 	    
 		<meta name="description" content="<?php echo $this->layout->getDescripcion(); ?>">
 		<meta name="keywords" content="<?php echo $this->layout->getKeywords(); ?>" />
+	    <script type="text/javascript" src="<?php echo base_url()?>public/js/jquery-1.10.2.js"></script>
+	    <script type="text/javascript" src="<?php echo base_url()?>public/js/json2.js"></script>
 
 
 	    <!--*************auxiliares*****************-->
