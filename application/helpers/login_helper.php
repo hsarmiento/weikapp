@@ -16,11 +16,14 @@ if (!function_exists('is_logged'))
 
 if (!function_exists('logged_or_redirect'))
 {
-	function logged_or_redirect($sUrl)
+	function logged_or_redirect($sUrlTo,$sUrlFrom)
 	{		
        	if(is_logged() === FALSE)
-		{			
-			redirect(base_url().$sUrl);
+		{
+			$CI =& get_instance();
+			$CI->session->set_flashdata('urlFrom', $sUrlFrom);
+			error_log($CI->session->flashdata('urlFrom'));
+			redirect(base_url().$sUrlTo);
 			return FALSE;
 		}
 		return TRUE;

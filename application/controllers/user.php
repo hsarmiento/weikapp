@@ -53,7 +53,8 @@ class User extends CI_Controller
 		        $aData['user'] = $this->User_model->get_user_name($iUserId);		        
 		        $this->session->set_userdata(array('fbuid' => $iUserId,'logged_in' => TRUE));
 				
-		        redirect(base_url().'user/restringida');
+				// error_log($this->session->flashdata('urlFrom'));
+		        redirect(base_url().$this->session->flashdata('urlFrom'));
             }
             catch (FacebookApiException $e)
             {
@@ -62,14 +63,15 @@ class User extends CI_Controller
 		}
 		else
 		{
+			$this->session->keep_flashdata('urlFrom');
 			$aData['login_url'] = $this->facebook->getLoginUrl(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));
-			$this->layout->view('login',$aData);
+			$this->layout->view('login',$aData);			
 		}		
 	}
 
 	public function restringida()
 	{
-		logged_or_redirect('user/login');
+		logged_or_redirect('user/login', 'user/restringida');
 		$this->layout->view('restringida');
 	}
 }
