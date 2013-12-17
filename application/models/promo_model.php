@@ -15,4 +15,13 @@ class Promo_model extends CI_Model {
         return $query->result_array();     
     }
 
+    public function get_info_promo($promo_id)
+    {
+    	$this->db->select('*')
+    	->from('promos')
+    	->where('id', $promo_id);
+    	$aResult = $this->db->get()->row_array();
+        return $aResult;
+    }
+
 }

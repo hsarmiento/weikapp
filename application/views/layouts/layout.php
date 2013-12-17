@@ -13,8 +13,7 @@
 		<meta name="keywords" content="<?php echo $this->layout->getKeywords(); ?>" />
 	    <script type="text/javascript" src="<?php echo base_url()?>public/js/jquery-1.10.2.js"></script>
 	    <script type="text/javascript" src="<?php echo base_url()?>public/js/json2.js"></script>
-
-
+		<script type="text/javascript" src="<?php echo base_url()?>public/js/jquery-ui-1.10.3.custom.js"></script>
 	    <!--*************auxiliares*****************-->
 
 		<?php echo $this->layout->css; ?>
