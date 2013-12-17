@@ -42,10 +42,10 @@
 	margin-right: 20px;
 	margin-top: 45px;
 	border: 1px solid red;
-	/*float:left;*/
 	display: inline-block;
-	/*display: inline;*/
+	cursor: pointer;
 }
+
 
 </style>
 
@@ -79,6 +79,16 @@
 
 
 <script>
+
+    $(".promo").hover(function() {
+        $(this).animate({
+            opacity: 0.5
+        });
+    }, function() {
+        $(this).stop(true, true).animate({
+            opacity: 1
+        });
+    });
 
 	$(function() {
 	    $( "#dialog" ).dialog({
@@ -137,6 +147,15 @@
 					alert('Error while request..');
 				}
 			 });
+	    	$(".promo").hover(function() {
+		        $(this).animate({
+		            opacity: 0.5
+		        });
+		    }, function() {
+		        $(this).stop(true, true).animate({
+		            opacity: 1
+		        });
+		    });
 	    }
 	});
 </script>
