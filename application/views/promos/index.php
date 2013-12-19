@@ -110,7 +110,7 @@
 	function open_promo(id,title){
 		$("#dialog").dialog("option","title", title);
 		$("#dialog").dialog("open");
-		$("#dialog").load("<?php echo base_url();?>promos/ajax_load_dialog_promo/"+id);	
+		$("#dialog").empty().load("<?php echo base_url();?>promos/ajax_load_dialog_promo/"+id);	
 	}
 
 	var offset = <?=$count?>;

@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Promos extends CI_Controller
 {
@@ -10,7 +10,6 @@ class Promos extends CI_Controller
 	}
 
 	public function index($category){
-
 		$isLogged = is_logged();
 		$this->load->model('category_model');
 		$aData = $this->promo_model->get_promos(9,0, $category);
