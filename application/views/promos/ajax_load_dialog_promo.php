@@ -1,3 +1,8 @@
+<?php 
+	$timestamp = strtotime($aPromo['end_datetime']);
+	$end_date = getdate($timestamp);
+?>
+
 <div class="dialog-promo" id="dialog-promo">
 
 	<?php
@@ -15,13 +20,23 @@
 			<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
 		<?php } ?>
 	</br>
-	<div onclick="participate()" style="cursor: pointer; color:blue">Participar</div>
+	<a onclick="participate()" href="#">Participar</a>
 
+	<div id="countdown"></div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript">	
 	function participate()
 	{
 		$("#dialog-promo").empty().load("<?php echo base_url();?>competitor/participate/");
 	}
+
+	$("#countdown").countdown({ 
+		layout:'<b>{d<}{dn} {dl} {d>}'+'{hn} {hl}, {mn} {ml}, {sn} {sl}</b>',
+		labels: ['Años', 'Meses', 'Semanas', 'Dias', 'Horas', 'Minutos', 'Segundos'],
+    	until: new Date(<?=$end_date['year']?>, <?=$end_date['mon']?>-1, <?=$end_date['mday']?>, <?=$end_date['hours']?>,<?=$end_date['minutes']?>,<?=$end_date['seconds']?>)
+	});
 </script>
+
+
+
