@@ -32,6 +32,7 @@ class User extends CI_Controller
 
 	public function login()
 	{
+		$this->layout->setTitle('Login');
 		$iUserId = $this->facebook->getUser();
 		$aData['fb_profile'] = null;
 		$aData['login_url'] = null;
@@ -73,6 +74,11 @@ class User extends CI_Controller
 	{
 		logged_or_redirect('user/login', 'user/restringida');
 		$this->layout->view('restringida');
+	}
+
+	public function participate()
+	{
+
 	}
 }
 

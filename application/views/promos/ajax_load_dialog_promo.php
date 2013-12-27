@@ -1,9 +1,9 @@
 <div class="dialog-promo" id="dialog-promo">
 
 	<?php
-		// echo '<pre>';
-		// print_r($aPromo);
-		// echo '</pre>';
+		echo '<pre>';
+		print_r($aPromo);
+		echo '</pre>';
 	?>
 	<p>Nombre promo:<?=$aPromo['title']?></p>
 	<p>Descripcion: <?=$aPromo['description']?></p>
@@ -15,13 +15,13 @@
 			<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
 		<?php } ?>
 	</br>
-	<div onclick="participate()" style="cursor: pointer;">Participar</div>
+	<div onclick="participate()" style="cursor: pointer; color:blue">Participar</div>
 
 </div>
 
 <script type="text/javascript">
 	function participate()
 	{
-		$("#dialog-promo").empty().load("<?php echo base_url();?>user/restringida/");
+		$("#dialog-promo").empty().load("<?php echo base_url();?>competitor/participate/");
 	}
 </script>
