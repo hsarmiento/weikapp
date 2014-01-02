@@ -23,6 +23,7 @@
 	<a onclick="participate()" href="#">Participar</a>
 
 	<div id="countdown"></div>
+	<p>Participantes: <?=$aPromo['count_competitors']?></p>
 </div>
 
 <script type="text/javascript">	

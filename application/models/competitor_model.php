@@ -29,4 +29,12 @@ class Competitor_model extends CI_Model
     {
 
     }
+
+    public function count_promo_competitors($promo_id)
+    {
+        $this->db->select('*')
+        ->from('competitors')
+        ->where('promo_id',$promo_id);
+        return $this->db->count_all_results();
+    }
 }

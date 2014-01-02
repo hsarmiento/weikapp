@@ -22,13 +22,14 @@ class Promos extends CI_Controller
 		$this->layout->setLayout('ajax_layout');
 		$aData = $this->promo_model->get_promos(3,$offset, $category);
 		echo json_encode(array($aData));
-		// $this->layout->view('ajax_load',compact("aData"));
 	}
 
-	public function ajax_load_dialog_promo($promo_id){		
+	public function ajax_load_dialog_promo($promo_id){	
+		$this->load->model('competitor_model');			
 		$this->layout->setLayout('ajax_layout');
 		$aPromo = $this->promo_model->get_info_promo($promo_id);
 		$aPromo['is_logged'] = is_logged();
+		$aPromo['count_competitors'] = $this->competitor_model->count_promo_competitors($promo_id);
 		$this->layout->view('ajax_load_dialog_promo', compact('aPromo'));
 	}
 }
