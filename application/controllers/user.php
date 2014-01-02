@@ -52,7 +52,7 @@ class User extends CI_Controller
 		        	$this->User_model->save();
 		        }
 		        $aData['user'] = $this->User_model->get_user_name($iUserId);		        
-		        $this->session->set_userdata(array('fbuid' => $iUserId,'logged_in' => TRUE));
+		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE));
 				
 				// error_log($this->session->flashdata('urlFrom'));
 		        redirect(base_url().$this->session->flashdata('urlFrom'));

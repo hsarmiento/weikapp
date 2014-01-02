@@ -80,11 +80,11 @@ class User_model extends CI_Model
 
     public function get_userid_by_fbuid($iFbuid)
     {
-        $this->db-->select('id')
+        $this->db->select('id')
         ->from('users')
         ->where('fb_uid',$iFbuid);
         $aQuery = $this->db->get()->row_array();
-        return $aQuery;
+        return $aQuery['id'];
     }
     
 }
