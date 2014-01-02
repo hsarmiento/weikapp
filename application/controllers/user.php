@@ -76,9 +76,5 @@ class User extends CI_Controller
 		$this->layout->view('restringida');
 	}
 
-	public function participate()
-	{
-
-	}
 }
 
