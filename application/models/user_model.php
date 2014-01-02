@@ -69,13 +69,22 @@ class User_model extends CI_Model
 		}
     }
 
-    public function get_user_name($iUserId)
+    public function get_user_name($iFbuid)
     {
         $this->db->select('*')
         ->from('users')
-        ->where('fb_uid', $iUserId);
+        ->where('fb_uid', $iFbuid);
         $aQuery = $this->db->get()->row_array();
         return $aQuery['names'];
+    }
+
+    public function get_userid_by_fbuid($iFbuid)
+    {
+        $this->db-->select('id')
+        ->from('users')
+        ->where('fb_uid',$iFbuid);
+        $aQuery = $this->db->get()->row_array();
+        return $aQuery;
     }
     
 }

@@ -1,4 +1,4 @@
- # Customized error messages.
+# Customized error messages.
 ErrorDocument 404 /index.php
 
 # Set the default handler.
