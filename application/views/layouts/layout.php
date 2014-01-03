@@ -29,6 +29,7 @@
 	</head>
 
 	<body>
+		<header> <?php echo $this->session->userdata('uid'); ?> </header>
 
 		<?php echo $content_for_layout; ?>
 

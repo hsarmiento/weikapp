@@ -11,9 +11,9 @@ class Competitor extends CI_Controller
 
 	public function participate($iPromoId)
 	{
-		logged_or_redirect('user/login', 'competitor/participate');
+		logged_or_redirect('user/login', 'competitor/participate/'.$iPromoId);
 		
-		if ($this->competitor_model->is_competitor($this->session->userdata('uid'),$iPromoId) === false)
+		if ($this->competitor_model->is_competitor($this->session->userdata('uid'),$iPromoId) === false && isset($iPromoId) === true)
 		{
 			$this->competitor_model->initialize($this->session->userdata('uid'),$iPromoId);
 			$this->competitor_model->save();

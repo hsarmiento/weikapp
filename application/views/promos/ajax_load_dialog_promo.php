@@ -6,9 +6,9 @@
 <div class="dialog-promo" id="dialog-promo">
 
 	<?php
-		echo '<pre>';
-		print_r($aPromo);
-		echo '</pre>';
+		// echo '<pre>';
+		// print_r($aPromo);
+		// echo '</pre>';
 	?>
 	<p>Nombre promo:<?=$aPromo['title']?></p>
 	<p>Descripcion: <?=$aPromo['description']?></p>
@@ -20,7 +20,16 @@
 			<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
 		<?php } ?>
 	</br>
-	<a onclick="participate()" href="#">Participar</a>
+	<?php 
+		if ($aPromo['joined'] === false)
+		{?>
+			<a onclick="participate()" href="#">Participar</a>
+		<?php }
+		else
+		{?>
+			<p>Ya estas particando campeón</p>
+		<?php }
+	?>
 
 	<div id="countdown"></div>
 	<p>Participantes: <?=$aPromo['count_competitors']?></p>

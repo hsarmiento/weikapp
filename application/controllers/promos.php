@@ -7,6 +7,7 @@ class Promos extends CI_Controller
 		parent::__construct();
         $this->layout->setLayout('layout');
         $this->load->model('promo_model');
+        $this->load->model('competitor_model');
 	}
 
 	public function index($category){
@@ -28,7 +29,14 @@ class Promos extends CI_Controller
 		$this->load->model('competitor_model');			
 		$this->layout->setLayout('ajax_layout');
 		$aPromo = $this->promo_model->get_info_promo($promo_id);
-		$aPromo['is_logged'] = is_logged();
+		if(is_logged() === true)
+		{
+			$aPromo['joined'] = $this->competitor_model->is_competitor($this->session->userdata('uid'),$promo_id);
+		}
+		else
+		{
+			$aPromo['joined'] = false;
+		}
 		$aPromo['count_competitors'] = $this->competitor_model->count_promo_competitors($promo_id);
 		$this->layout->view('ajax_load_dialog_promo', compact('aPromo'));
 	}
