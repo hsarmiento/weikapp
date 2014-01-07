@@ -34,13 +34,14 @@ class Promos extends CI_Controller
 		$this->layout->setLayout('ajax_layout');
 		$aPromo = $this->promo_model->get_info_promo($promo_id);
 		if(is_logged() === true)
-		{
+		{			
 			$aPromo['joined'] = $this->competitor_model->is_competitor($this->session->userdata('uid'),$promo_id);
 		}
 		else
 		{
 			$aPromo['joined'] = false;
 		}
+		$aPromo['is_logged'] = is_logged();
 		$aPromo['count_competitors'] = $this->competitor_model->count_promo_competitors($promo_id);
 		$this->layout->view('ajax_load_dialog_promo', compact('aPromo', 'category'));
 	}
