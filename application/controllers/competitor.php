@@ -9,9 +9,9 @@ class Competitor extends CI_Controller
         $this->load->model('competitor_model');
 	}
 
-	public function participate($iPromoId)
+	public function participate($iPromoId, $sCategory)
 	{
-		logged_or_redirect('user/login', 'competitor/participate/'.$iPromoId);
+		logged_or_redirect('user/login', 'competitor/participate/'.$iPromoId."/".$sCategory);
 		
 		if ($this->competitor_model->is_competitor($this->session->userdata('uid'),$iPromoId) === false && isset($iPromoId) === true)
 		{
@@ -19,6 +19,6 @@ class Competitor extends CI_Controller
 			$this->competitor_model->save();
 		}
 
-		redirect(base_url().'promos/ajax_load_dialog_promo/'.$iPromoId);
+		redirect(base_url().'promos/index/'.$sCategory.'/'.$iPromoId);
 	}
 }

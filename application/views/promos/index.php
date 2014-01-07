@@ -1,5 +1,8 @@
 <?php
 	$count = count($aData);
+	if(count($aPromo) == 0){
+		$aPromo = null;
+	}
 ?>
 
 
@@ -108,20 +111,24 @@
 	    });
     }
 
-	$(function() {
-	    settings_dialog();
-	});
  
 	function open_promo(id,title)
 	{
 		settings_dialog();
 		$("#dialog").dialog("option","title", title);
 		$("#dialog").dialog("open");
-		$("#dialog").empty().load("<?php echo base_url();?>promos/ajax_load_dialog_promo/"+id);	
+		$("#dialog").empty().load("<?php echo base_url();?>promos/ajax_load_dialog_promo/<?=$category?>/"+id);	
 	}
 
 	var offset = <?=$count?>;
 	$(document).ready(function () {
+		settings_dialog();
+		if("<?=$aPromo['id']?>"){
+			open_promo("<?=$aPromo['id']?>","<?=$aPromo['title']?>")
+		}
+		
+		
+		
 	    $(window).scroll(function () {        	
 	        if ($(window).scrollTop() == ( $(document).height() - $(window).height())) {
 	            loadData();

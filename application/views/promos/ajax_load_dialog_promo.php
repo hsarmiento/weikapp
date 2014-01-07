@@ -23,7 +23,7 @@
 	<?php 
 		if ($aPromo['joined'] === false)
 		{?>
-			<a onclick="participate()" href="#">Participar</a>
+			<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
 		<?php }
 		else
 		{?>
@@ -39,7 +39,7 @@
 	
 	function participate()
 	{
-		$("#dialog-promo").empty().load("<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>");
+		$("#dialog-promo").empty().load("<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>");
 	}
 
 	$("#countdown").countdown({ 
