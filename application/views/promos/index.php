@@ -68,7 +68,7 @@
 			<h3>No existen promociones para esta categoría</h3>
 		<?php }else{
 				foreach ($aData as $value) { ?>
-					<div class="promo" onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>')">
+					<div class="promo" onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>'); return false;">
 						<?=$value['title']?>
 						<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
 					</div>
@@ -90,8 +90,9 @@
         });
     });
 
-	$(function() {
-	    $( "#dialog" ).dialog({
+    function settings_dialog()
+    {
+    	$( "#dialog" ).dialog({
 	      modal:true,
 	      autoOpen: false,
 	      show: {
@@ -105,9 +106,15 @@
 	      minWidth:($( window ).width())*0.9,
 	      minHeight: ($( window ).height())*0.9
 	    });
+    }
+
+	$(function() {
+	    settings_dialog();
 	});
  
-	function open_promo(id,title){
+	function open_promo(id,title)
+	{
+		settings_dialog();
 		$("#dialog").dialog("option","title", title);
 		$("#dialog").dialog("open");
 		$("#dialog").empty().load("<?php echo base_url();?>promos/ajax_load_dialog_promo/"+id);	
