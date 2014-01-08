@@ -1,0 +1,93 @@
+
+
+html, body {
+	height: 100%;
+}
+
+h1{
+	text-align: center;
+}
+
+
+/* INICIO INDEX PRINCIPAL */
+
+.option_entry{
+	/*margin-left: 10%;
+	margin-right: 10%;*/
+	margin: 100px 30% 0 30%;
+	border: solid 1px blue;
+	width: 40%;
+
+}
+.male_option{
+	margin-left: 30%;
+	display: inline-block;
+	width: 20%;
+}
+.femme_option{
+	margin-left: 50px;
+	display: inline-block;
+	width: 20%;
+}
+
+/* FIN INDEX PRINCIPAL */
+
+
+
+/* INICIO INDEX PROMOS */
+
+.header{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: green solid 1px;
+	margin-bottom: 50px;
+}
+
+.container{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: blue 1px solid;
+	height: auto;
+	padding-bottom: 45px;
+	/*padding-left: 100px;*/
+}
+
+.box-promos{
+	width: 80%;
+	height: auto;
+	margin-right: 10%;
+	margin-left: 10%;
+	margin-top: 20px;
+	border: green 1px solid;
+	margin-bottom: 20px;
+}
+
+.promo{
+	width: 350px;
+	height: 250px;
+	margin-left: 100px;
+	margin-right: 20px;
+	margin-top: 45px;
+	border: 1px solid red;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.promo:hover{
+	opacity: 0.5;
+	transition: visibility 0s 4s, opacity 0.05s linear;
+}
+
+/* FIN INDEX PROMOS */
+
+
+
+footer{
+    width: 80%;
+    bottom: 0;
+    border: solid grey 2px;
+    margin-right: 10%;
+	margin-left: 10%;
+}
