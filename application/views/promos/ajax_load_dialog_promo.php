@@ -21,7 +21,9 @@
 		<?php } ?>
 	</br>
 	<?php 
-		if ($aPromo['joined'] === false)
+		if ($aPromo['is_logged'] === true)
+		{
+			if ($aPromo['joined'] === false)
 		{?>
 			<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
 		<?php }
@@ -29,7 +31,12 @@
 		{?>
 			<p>Ya estas particando campeón</p>
 		<?php }
-	?>
+
+		}
+		else
+		{ ?>
+			<a onclick="participate();" href="#">Participar</a>
+		<?php } ?>
 
 	<div id="countdown"></div>
 	<p>Participantes: <?=$aPromo['count_competitors']?></p>
