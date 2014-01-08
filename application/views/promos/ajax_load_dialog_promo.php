@@ -36,7 +36,6 @@
 </div>
 
 <script type="text/javascript">	
-	
 	function participate()
 	{
 		$("#dialog-promo").empty().load("<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>");

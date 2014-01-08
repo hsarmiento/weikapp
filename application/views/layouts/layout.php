@@ -14,8 +14,8 @@
 	    <script type="text/javascript" src="<?php echo base_url()?>public/js/jquery-1.10.2.js"></script>
 	    <script type="text/javascript" src="<?php echo base_url()?>public/js/json2.js"></script>
 		<script type="text/javascript" src="<?php echo base_url()?>public/js/jquery-ui-1.10.3.custom.js"></script>
-	    		<script type="text/javascript" src="<?php echo base_url()?>public/js/jquery.countdown.js"></script>
-
+	    <script type="text/javascript" src="<?php echo base_url()?>public/js/jquery.countdown.js"></script>
+	    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>public/css/style.css">
 	    <!--*************auxiliares*****************-->
 
 		<?php echo $this->layout->css; ?>
@@ -32,6 +32,8 @@
 		<header> <?php echo $this->session->userdata('uid'); ?> </header>
 
 		<?php echo $content_for_layout; ?>
-
+		<footer>
+			Footer
+		</footer>
 	</body>
 </html>

@@ -5,53 +5,6 @@
 	}
 ?>
 
-
-<style>
-
-
-
-.header{
-	width: 80%;
-	margin-left: 10%;
-	margin-right: 10%;
-	border: green solid 1px;
-	margin-bottom: 50px;
-}
-
-.container{
-	width: 80%;
-	margin-left: 10%;
-	margin-right: 10%;
-	border: blue 1px solid;
-	height: auto;
-	padding-bottom: 45px;
-	/*padding-left: 100px;*/
-}
-
-.box-promos{
-	width: 80%;
-	height: auto;
-	margin-right: 10%;
-	margin-left: 10%;
-	margin-top: 20px;
-	border: green 1px solid;
-	margin-bottom: 20px;
-}
-
-.promo{
-	width: 350px;
-	height: 250px;
-	margin-left: 100px;
-	margin-right: 20px;
-	margin-top: 45px;
-	border: 1px solid red;
-	display: inline-block;
-	cursor: pointer;
-}
-
-
-</style>
-
 <div class="header">
 	<h2>Categorias</h2>
 	<?php
@@ -83,16 +36,6 @@
 
 <script>
 
-    $(".promo").hover(function() {
-        $(this).animate({
-            opacity: 0.5
-        });
-    }, function() {
-        $(this).stop(true, true).animate({
-            opacity: 1
-        });
-    });
-
     function settings_dialog()
     {
     	$( "#dialog" ).dialog({
@@ -106,12 +49,16 @@
 	        effect: "explode",
 	        duration: 300
 	      },
+	      open: function(){
+		        jQuery('.ui-widget-overlay').bind('click',function(){
+		            jQuery('#dialog').dialog('close');
+		        })
+    	  },
 	      minWidth:($( window ).width())*0.9,
 	      minHeight: ($( window ).height())*0.9
 	    });
     }
 
- 
 	function open_promo(id,title)
 	{
 		settings_dialog();
@@ -126,8 +73,6 @@
 		if("<?=$aPromo['id']?>"){
 			open_promo("<?=$aPromo['id']?>","<?=$aPromo['title']?>")
 		}
-		
-		
 		
 	    $(window).scroll(function () {        	
 	        if ($(window).scrollTop() == ( $(document).height() - $(window).height())) {
@@ -161,15 +106,6 @@
 					alert('Error while request..');
 				}
 			 });
-	    	$(".promo").hover(function() {
-		        $(this).animate({
-		            opacity: 0.5
-		        });
-		    }, function() {
-		        $(this).stop(true, true).animate({
-		            opacity: 1
-		        });
-		    });
 	    }
 	});
 </script>
