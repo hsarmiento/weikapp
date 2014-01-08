@@ -9,6 +9,17 @@ h1{
 }
 
 
+footer{
+    width: 80%;
+    bottom: 0;
+    border: solid grey 2px;
+    margin-right: 10%;
+	margin-left: 10%;
+	text-align: center;
+	margin-top: 1%;
+}
+
+
 /* INICIO INDEX PRINCIPAL */
 
 .option_entry{
@@ -84,10 +95,3 @@ h1{
 
 
 
-footer{
-    width: 80%;
-    bottom: 0;
-    border: solid grey 2px;
-    margin-right: 10%;
-	margin-left: 10%;
-}
