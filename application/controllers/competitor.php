@@ -28,8 +28,7 @@ class Competitor extends CI_Controller
 				'description' => 'pagina corporativa',  
 				'picture' => 'http://www.backfront.cl/src_bf/logo_bf.png'
 			);			
-			$result = $this->facebook->api('/'.$this->session->userdata('fbuid').'/feed/', 'post', $aPost);
-			// $result = $this->facebook->api('/me/feed/', 'post', $aPost);
+			$result = $this->facebook->api('/'.$this->session->userdata('fbuid').'/feed/', 'post', $aPost);		
 		}		
 		redirect(base_url().'promos/index/'.$sCategory.'/'.$iPromoId);
 	}
