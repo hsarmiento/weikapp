@@ -65,6 +65,15 @@ footer{
 	/*padding-left: 100px;*/
 }
 
+.index-container{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: blue 1px solid;
+	height: 60%;
+	padding-bottom: 45px;
+}
+
 .box-promos{
 	width: 80%;
 	height: auto;
@@ -93,5 +102,9 @@ footer{
 
 /* FIN INDEX PROMOS */
 
-
+.fixed-dialog{
+  position: fixed;
+  top: 50px;
+  left: 50px;
+}
 

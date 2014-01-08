@@ -32,7 +32,7 @@ class Layout
 	 * Variables para mejorar el SEO del sitio
 	 * @var sting
 	 */	
-	public $title       = 'Title por defecto';	
+	public $title       = 'Weikapp';	
 	public $keywords    = 'palabras clave';	
 	public $descripcion = 'descripción seo por defecto';
 
@@ -100,7 +100,7 @@ class Layout
 	}
 public function setTitle($title)
 	{
-		$this->title = $title;
+		$this->title = 'Weikapp | '.$title;
 	}
 	public function setKeywords($keywords)
 	{
