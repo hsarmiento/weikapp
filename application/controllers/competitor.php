@@ -13,14 +13,12 @@ class Competitor extends CI_Controller
 
 	public function participate($iPromoId, $sCategory)
 	{
-		logged_or_redirect('user/login', 'competitor/participate/'.$iPromoId."/".$sCategory);
-		
+		logged_or_redirect('user/login', 'competitor/participate/'.$iPromoId."/".$sCategory);		
 		if ($this->competitor_model->is_competitor($this->session->userdata('uid'),$iPromoId) === false && isset($iPromoId) === true)
-		{
+		{			
 			// guarda en la bd
 			$this->competitor_model->initialize($this->session->userdata('uid'),$iPromoId);
-			$this->competitor_model->save();
-
+			$this->competitor_model->save();			
 			// comparte en facebook
 			$aPost = array(
 				'message' => 'Estoy participando por maracas', 
@@ -29,10 +27,9 @@ class Competitor extends CI_Controller
 				'link' => 'http://www.backfront.cl',
 				'description' => 'pagina corporativa',  
 				'picture' => 'http://www.backfront.cl/src_bf/logo_bf.png'
-			);
-			$result = $this->facebook->api('/me/feed/', 'post', $aPost);
-		}
-
+			);			
+			$result = $this->facebook->api('/'.$this->session->userdata('fbuid').'/feed/', 'post', $aPost);		
+		}		
 		redirect(base_url().'promos/index/'.$sCategory.'/'.$iPromoId);
 	}
 }
