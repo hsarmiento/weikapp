@@ -73,7 +73,7 @@
 				foreach ($aData as $value) { ?>
 					<div class="promo" onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>'); return false;">
 						<?=$value['title']?>
-						<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
+						<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225" alt="foto_promo">
 					</div>
 			<?php } 
 

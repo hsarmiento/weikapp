@@ -24,14 +24,13 @@
 		if ($aPromo['is_logged'] === true)
 		{
 			if ($aPromo['joined'] === false)
-		{?>
-			<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
-		<?php }
-		else
-		{?>
-			<p>Ya estas particando campeón</p>
-		<?php }
-
+			{?>
+				<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
+			<?php }
+			else
+			{?>
+				<p>Ya estas particando campeón</p>
+			<?php }
 		}
 		else
 		{ ?>
