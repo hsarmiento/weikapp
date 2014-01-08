@@ -21,8 +21,8 @@ class Competitor extends CI_Controller
 			$this->competitor_model->save();			
 			// comparte en facebook
 			$aPost = array(
-				'message' => 'Estoy participando por maracas', 
-				'name' => 'bf facebook app',
+				'message' => 'Estoy participando en un concurso nítido', 
+				'name' => 'weikapp facebook app',
 				'caption' => 'caption loco po ahi puee se',
 				'link' => 'http://www.backfront.cl',
 				'description' => 'pagina corporativa',  

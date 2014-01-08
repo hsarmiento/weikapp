@@ -7,7 +7,7 @@ if($fb_profile != null)
 }
 else
 {
-	echo '<h1>Logeate ctm</h1>';
+	echo '<h1>Logeate po hijo</h1>';
 	echo '<a href="'.$login_url.'">Login with facebook</a>';
 }
 ?>
