@@ -33,7 +33,7 @@
 
 		<?php echo $content_for_layout; ?>
 		<footer>
-			Footer
+			<a href="<?=base_url()?>companies">Soy empresa</a>
 		</footer>
 	</body>
 </html>
