@@ -17,19 +17,6 @@ class User extends CI_Controller
 		$this->layout->view('index');
 	}
 
-	public function logout()
-	{
-		// Destroy CodeIgniter Session 
-		$this->session->sess_destroy();
-
-		// Destroy Facebook Session using Facebook function
-		$this->facebook->destroySession();
-
-		// Maybe even destroy all native sessions as overkill
-		session_destroy();
-		redirect(base_url().'user/index');
-	}
-
 	public function login()
 	{
 		$this->layout->setTitle('Login');
@@ -52,8 +39,9 @@ class User extends CI_Controller
 		        	$this->User_model->save();
 		        }
 		        $aData['user'] = $this->User_model->get_user_name($iUserId);		        
-		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE));								
-		        error_log(base_url().$this->session->flashdata('urlFrom'));
+		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE));		        
+		        
+		        
 		        redirect(base_url().$this->session->flashdata('urlFrom'));
             }
             catch (FacebookApiException $e)
@@ -69,10 +57,17 @@ class User extends CI_Controller
 		}		
 	}
 
-	public function restringida()
+	public function logout()
 	{
-		logged_or_redirect('user/login', 'user/restringida');
-		$this->layout->view('restringida');
+		// Destroy CodeIgniter Session 
+		$this->session->sess_destroy();
+
+		// Destroy Facebook Session using Facebook function
+		$this->facebook->destroySession();
+
+		// Maybe even destroy all native sessions as overkill
+		session_destroy();
+		redirect(base_url().'user/index');
 	}
 
 }
