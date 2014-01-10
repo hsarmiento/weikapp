@@ -69,7 +69,7 @@ class User_model extends CI_Model
 		}
     }
 
-    public function get_user_name($iFbuid)
+    public function get_uname_by_fbuid($iFbuid)
     {
         $this->db->select('*')
         ->from('users')
