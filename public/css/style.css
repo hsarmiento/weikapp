@@ -46,14 +46,36 @@ footer{
 
 
 /* INICIO INDEX PROMOS */
-
-.header{
+header{
 	width: 80%;
 	margin-left: 10%;
 	margin-right: 10%;
 	border: green solid 1px;
 	margin-bottom: 50px;
+	height: 9%;
 }
+
+.home-logo{
+	width: 10%;
+	border: solid 1px brown;
+	height: 100%;
+	display: inline-block;
+}
+
+.categories{
+	width: 35%;
+	border: solid 1px brown;
+	display: inline-block;
+	margin-left: 20%;
+}
+
+.profile-container{
+	width: 10%;
+	border: solid 1px brown;
+	display: inline-block;
+	float:right;
+}
+
 
 .container{
 	width: 80%;

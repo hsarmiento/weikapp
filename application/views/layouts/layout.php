@@ -23,13 +23,29 @@
 		<?php echo $this->layout->js; ?>
 
 		<!--**********fin auxiliares*****************-->		
-
-    	 
-
 	</head>
 
 	<body>
-		<header> <?php echo $this->session->userdata('uid'); ?> </header>
+		<header> 
+			<div class="home-logo">
+				<a href="<?=base_url()?>">WEIKAPP</a>
+			</div>
+			<div class="categories">
+				ACA ESTARA EL DIV DE CATEGORIAS
+			</div>
+			<?php
+				if($this->session->userdata('uname') !== false){ ?>
+					<div class="profile-container">
+						<a href="<?=base_url()?>user/profile">
+							<img src="http://graph.facebook.com/<?=$this->session->userdata('fbuid')?>/picture">
+							<?=$this->session->userdata('uname')?>
+						</a>
+						<a href="<?=base_url()?>user/logout">
+							salir
+						</a>
+					</div>
+				<?php } ?>
+		</header>
 
 		<?php echo $content_for_layout; ?>
 		<footer>

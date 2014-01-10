@@ -17,19 +17,6 @@ class User extends CI_Controller
 		$this->layout->view('index');
 	}
 
-	public function logout()
-	{
-		// Destroy CodeIgniter Session 
-		$this->session->sess_destroy();
-
-		// Destroy Facebook Session using Facebook function
-		$this->facebook->destroySession();
-
-		// Maybe even destroy all native sessions as overkill
-		session_destroy();
-		redirect(base_url().'user/index');
-	}
-
 	public function login()
 	{
 		$this->layout->setTitle('Login');
@@ -51,8 +38,8 @@ class User extends CI_Controller
 		        	$this->User_model->initialize($iUserId,$aUserInfo[0]['first_name'],$aUserInfo[0]['last_name'],$aUserInfo[0]['email']);
 		        	$this->User_model->save();
 		        }
-		        $aData['user'] = $this->User_model->get_user_name($iUserId);		        
-		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE));								
+		        $aData['user'] = $this->User_model->get_uname_by_fbuid($iUserId);		        
+		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE, 'uname' =>$this->User_model->get_uname_by_fbuid($iUserId)));								
 		        error_log(base_url().$this->session->flashdata('urlFrom'));
 		        redirect(base_url().$this->session->flashdata('urlFrom'));
             }
@@ -65,14 +52,31 @@ class User extends CI_Controller
 		{
 			$this->session->keep_flashdata('urlFrom');
 			$aData['login_url'] = $this->facebook->getLoginUrl(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));
+			$this->layout->setLayout('ajax_layout');
 			$this->layout->view('login',$aData);			
 		}		
 	}
 
-	public function restringida()
+	public function logout()
 	{
-		logged_or_redirect('user/login', 'user/restringida');
-		$this->layout->view('restringida');
+		// Destroy CodeIgniter Session 
+		$this->session->sess_destroy();
+
+		// Destroy Facebook Session using Facebook function
+		$this->facebook->destroySession();
+
+		// Maybe even destroy all native sessions as overkill
+		session_destroy();
+		redirect(base_url().'user/index');
+	}
+
+	public function profile()
+	{
+		logged_or_redirect('user/login', 'user/profile');
+
+		$iUid = $this->session->userdata('uid');
+		$sUname = $this->session->userdata('uname');
+		$this->layout->view('profile', compact('iUid', 'sUname'));
 	}
 
 }
