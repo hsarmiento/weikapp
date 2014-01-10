@@ -73,10 +73,11 @@ class User extends CI_Controller
 	public function profile()
 	{
 		logged_or_redirect('user/login', 'user/profile');
-
+		$this->load->model('competitor_model');
 		$iUid = $this->session->userdata('uid');
 		$sUname = $this->session->userdata('uname');
-		$this->layout->view('profile', compact('iUid', 'sUname'));
+		$aUserPromosCompetitor = $this->competitor_model->user_promos_competitor($iUid);
+		$this->layout->view('profile', compact('iUid', 'sUname', 'aUserPromosCompetitor'));
 	}
 
 }
