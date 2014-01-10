@@ -15,8 +15,7 @@
 
 <h1>HOME PROMOS</h1>
 
-<div id="dialog" title="Basic dialog">
-  <p>This is an animated dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+<div id="dialog">
 </div>
  
 <div class="container" id="container-promos">
@@ -41,6 +40,7 @@
     	$( "#dialog" ).dialog({
 	      modal:true,
 	      autoOpen: false,
+	      sticky: true,
 	      show: {
 	        effect: "blind",
 	        duration: 300
@@ -49,13 +49,19 @@
 	        effect: "explode",
 	        duration: 300
 	      },
+	      dialogClass: 'fixed-dialog',
+			beforeClose: function() {
+				$('body').css('overflow','auto'); 
+			},
 	      open: function(){
+	      		$('body').css('overflow','hidden');
 		        jQuery('.ui-widget-overlay').bind('click',function(){
 		            jQuery('#dialog').dialog('close');
-		        })
+		        });
     	  },
 	      minWidth:($( window ).width())*0.9,
-	      minHeight: ($( window ).height())*0.9
+	      minHeight: ($( window ).height())*0.9,
+	      maxHeight: ($( window ).height())*0.95
 	    });
     }
 
@@ -76,7 +82,10 @@
 		
 	    $(window).scroll(function () {        	
 	        if ($(window).scrollTop() == ( $(document).height() - $(window).height())) {
-	            loadData();
+	            if(!$("#dialog").dialog("isOpen")){
+	            	loadData();
+	            }
+	            
 	        }
 	 	});
 
