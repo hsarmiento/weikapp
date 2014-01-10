@@ -7,8 +7,7 @@ class User extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('User_model');
-		$this->load->config('facebook_config');
-		$this->load->library('Facebook', array('appId' => $this->config->item('appId'), 'secret' => $this->config->item('appSecret')));
+		$this->load->library('Facebook_utils');
         $this->layout->setLayout('layout');
 	}
 
@@ -20,8 +19,7 @@ class User extends CI_Controller
 	public function login()
 	{
 		$this->layout->setTitle('Login');
-		$iUserId = $this->facebook->getUser();
-		$aData['fb_profile'] = null;
+		$iUserId = $this->facebook_utils->get_user_fbuid();		
 		$aData['login_url'] = null;
 		$aData['logout_url'] = null;
 		$aData['user'] = null;
@@ -30,8 +28,7 @@ class User extends CI_Controller
 		{
 			try
 			{
-                $aData['logout_url'] = $this->facebook->getLogoutUrl(array( 'next' => base_url().'user/logout' ));
-                $aData['fb_profile'] = $this->facebook->api('/me');
+				$aData['logout_url'] = $this->facebook_utils->get_logout_url(array( 'next' => base_url().'user/logout' ));
                 if ($this->User_model->exist_fbuid($iUserId) === FALSE)
 		        {
 		        	$aUserInfo = $this->User_model->get_user_fb_data($iUserId);
@@ -39,9 +36,7 @@ class User extends CI_Controller
 		        	$this->User_model->save();
 		        }
 		        $aData['user'] = $this->User_model->get_user_name($iUserId);		        
-		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE));		        
-		        
-		        
+		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE));
 		        redirect(base_url().$this->session->flashdata('urlFrom'));
             }
             catch (FacebookApiException $e)
@@ -52,7 +47,7 @@ class User extends CI_Controller
 		else
 		{
 			$this->session->keep_flashdata('urlFrom');
-			$aData['login_url'] = $this->facebook->getLoginUrl(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));
+			$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));
 			$this->layout->view('login',$aData);			
 		}		
 	}
@@ -63,11 +58,11 @@ class User extends CI_Controller
 		$this->session->sess_destroy();
 
 		// Destroy Facebook Session using Facebook function
-		$this->facebook->destroySession();
+		$this->facebook_utils->session_destroy();
 
 		// Maybe even destroy all native sessions as overkill
 		session_destroy();
-		redirect(base_url().'user/index');
+		redirect(base_url());
 	}
 
 }

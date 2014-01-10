@@ -1,6 +1,6 @@
 <?php
 
-if($fb_profile != null)
+if($user != null)
 {
 	echo '<h1>Bienvenido '.$user.'</h1>';
 	echo '<a href="'.$logout_url.'">Logout</a>';
