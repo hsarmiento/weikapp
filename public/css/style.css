@@ -149,5 +149,11 @@ header{
 	margin-top: 1%;
 }
 
+.see_more{
+	cursor: pointer;
+	color:blue;
+    text-decoration:underline;
+}
+
 /* FIN USER PROFILE */
 

@@ -74,6 +74,8 @@ class User extends CI_Controller
 		$iUid = $this->session->userdata('uid');
 		$sUname = $this->session->userdata('uname');
 		$aUserPromosCompetitor = $this->competitor_model->user_promos_competitor($iUid);
+		$this->layout->css(array(base_url().'public/css/jquery-ui-1.10.3.custom.css'));
+		$this->layout->setTitle('Promociones');
 		$this->layout->view('profile', compact('iUid', 'sUname', 'aUserPromosCompetitor'));
 	}
 
