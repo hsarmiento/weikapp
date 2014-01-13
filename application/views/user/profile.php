@@ -22,7 +22,11 @@
 				foreach ($aUserPromosCompetitor as $user_promo) {
 					if($user_promo['promo_end_datetime'] < $date)
 					{ ?>
-						<li><?=$user_promo['promo_title']?>&nbsp <span class="see_more" onclick="open_promo(<?=$user_promo['promo_id']?>, '<?=$user_promo['promo_title']?>'); return false;">ver promo</span></li>
+						<li><?=$user_promo['promo_title']?>&nbsp 
+						<?php if(isset($user_promo['winner_id'])){ ?>
+							GANADOR		
+						<?php } ?>
+							<span class="see_more" onclick="open_promo(<?=$user_promo['promo_id']?>, '<?=$user_promo['promo_title']?>'); return false;">ver promo</span></li>
 					<?php }				
 				 } ?>	
 		</ul>
