@@ -131,6 +131,9 @@ header{
 	width: 40%;
 	border: solid 1px orange;
 	display: inline-block;
+	vertical-align: top;
+	margin-left: 5%;
+	margin-top: 1%;
 }
 
 .promo-participate li{
@@ -141,6 +144,9 @@ header{
 	width: 40%;
 	border: solid 1px orange;
 	display: inline-block;
+	vertical-align: top;
+	margin-left: 5%;
+	margin-top: 1%;
 }
 
 /* FIN USER PROFILE */
