@@ -44,6 +44,10 @@
 							salir
 						</a>
 					</div>
+				<?php } else{ ?>
+					<div class="profile-container">
+						<a href="<?=base_url()?>user/login">Login</a>
+					</div>
 				<?php } ?>
 		</header>
 

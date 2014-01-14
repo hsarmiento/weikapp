@@ -10,15 +10,22 @@ class Promos extends CI_Controller
         $this->load->model('competitor_model');
 	}
 
-	public function index($category, $promo_id = null){
+	public function index($category = 'favorites', $promo_id = null){
 		$isLogged = is_logged();
 		$this->load->model('category_model');
-		$aData = $this->promo_model->get_promos(9,0, $category);
+		// $this->load->model('user_preference_model');
+		if($category === 'favorites' && $isLogged === true){
+			$aData = $this->promo_model->get_favorite_promos(9,0,1);
+		}elseif($category !== 'favorites'){
+			$aData = $this->promo_model->get_promos(9,0, $category);
+		}
+		
 		$aCategories = $this->category_model->get_all_categories();
 		$aPromo = NULL;
 		if(isset($promo_id)){
 			$aPromo = $this->promo_model->get_info_promo($promo_id);
 		}
+
 		$this->layout->css(array(base_url().'public/css/jquery-ui-1.10.3.custom.css'));
 		$this->layout->setTitle('Promociones');
 		$this->layout->view('index', compact("aData","category","aCategories", "isLogged", "aPromo"));
@@ -26,7 +33,13 @@ class Promos extends CI_Controller
 
 	public function ajax_load_scrolling($offset,$category){
 		$this->layout->setLayout('ajax_layout');
-		$aData = $this->promo_model->get_promos(3,$offset, $category);
+		$isLogged = is_logged();
+		if($category === 'favorites' && $isLogged === true){
+			$aData = $this->promo_model->get_favorite_promos(3,$offset,1);
+		}elseif($category !== 'favorites'){
+			$aData = $this->promo_model->get_promos(3,$offset, $category);
+		}
+
 		echo json_encode(array($aData));
 	}
 

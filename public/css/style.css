@@ -124,9 +124,36 @@ header{
 
 /* FIN INDEX PROMOS */
 
-.fixed-dialog{
-  position: fixed;
-  top: 50px;
-  left: 50px;
+
+/* INICIO USER PROFILE */
+
+.promo-participate{
+	width: 40%;
+	border: solid 1px orange;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 5%;
+	margin-top: 1%;
 }
+
+.promo-participate li{
+	margin-right: 4%;
+}
+
+.promo-expired{
+	width: 40%;
+	border: solid 1px orange;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 5%;
+	margin-top: 1%;
+}
+
+.see_more{
+	cursor: pointer;
+	color:blue;
+    text-decoration:underline;
+}
+
+/* FIN USER PROFILE */
 

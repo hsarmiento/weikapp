@@ -23,7 +23,7 @@ class User extends CI_Controller
 		$aData['login_url'] = null;
 		$aData['logout_url'] = null;
 		$aData['user'] = null;
-
+		$urlFrom = null;
 		if ($iUserId)
 		{
 			try
@@ -52,8 +52,14 @@ class User extends CI_Controller
 		        	}
 		        }		        
 		        $aData['user'] = $this->User_model->get_uname_by_fbuid($iUserId);		        
-		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE, 'uname' =>$this->User_model->get_uname_by_fbuid($iUserId)));		        
-		        redirect(base_url().$this->session->flashdata('urlFrom'));
+		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE, 'uname' =>$this->User_model->get_uname_by_fbuid($iUserId)));								
+		        $urlFrom = $this->session->flashdata('urlFrom');
+		        if(empty($urlFrom)){
+		        	redirect(base_url().'promos/index');
+		        }
+	        	error_log(base_url().$this->session->flashdata('urlFrom'));
+	        	redirect(base_url().$this->session->flashdata('urlFrom'));
+		        
             }
             catch (FacebookApiException $e)
             {
@@ -85,10 +91,13 @@ class User extends CI_Controller
 	public function profile()
 	{
 		logged_or_redirect('user/login', 'user/profile');
-
+		$this->load->model('competitor_model');
 		$iUid = $this->session->userdata('uid');
 		$sUname = $this->session->userdata('uname');
-		$this->layout->view('profile', compact('iUid', 'sUname'));
+		$aUserPromosCompetitor = $this->competitor_model->user_promos_competitor($iUid);
+		$this->layout->css(array(base_url().'public/css/jquery-ui-1.10.3.custom.css'));
+		$this->layout->setTitle('Promociones');
+		$this->layout->view('profile', compact('iUid', 'sUname', 'aUserPromosCompetitor'));
 	}
 
 }
