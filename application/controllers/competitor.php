@@ -23,7 +23,7 @@ class Competitor extends CI_Controller
 			{
 				// comparte en facebook
 				// $aPost = array(
-				// 	'message' => 'Estoy participando en un concurso nítido', 
+				// 	'message' => 'Estoy fronteando', 
 				// 	'name' => 'weikapp facebook app',
 				// 	'caption' => 'caption loco po ahi puee se',
 				// 	'link' => 'http://www.backfront.cl',
@@ -34,7 +34,7 @@ class Competitor extends CI_Controller
 			}		
 			else
 			{
-				echo 'dame permiso po pajaron';
+				echo 'DááMè PèrMííízó Pó PááJááróN máZnáátèdííghó óèzíí';
 			}				
 		}		
 		// redirect(base_url().'promos/index/'.$sCategory.'/'.$iPromoId);

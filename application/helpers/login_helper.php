@@ -22,7 +22,6 @@ if (!function_exists('logged_or_redirect'))
 		{
 			$CI =& get_instance();
 			$CI->session->set_flashdata('urlFrom', $sUrlFrom);
-			error_log($CI->session->flashdata('urlFrom'));
 			redirect(base_url().$sUrlTo);
 			return FALSE;
 		}
