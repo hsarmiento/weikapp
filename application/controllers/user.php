@@ -23,7 +23,7 @@ class User extends CI_Controller
 		$aData['login_url'] = null;
 		$aData['logout_url'] = null;
 		$aData['user'] = null;
-
+		$urlFrom = null;
 		if ($iUserId)
 		{
 			try
@@ -37,8 +37,13 @@ class User extends CI_Controller
 		        }
 		        $aData['user'] = $this->User_model->get_uname_by_fbuid($iUserId);		        
 		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE, 'uname' =>$this->User_model->get_uname_by_fbuid($iUserId)));								
-		        error_log(base_url().$this->session->flashdata('urlFrom'));
-		        redirect(base_url().$this->session->flashdata('urlFrom'));
+		        $urlFrom = $this->session->flashdata('urlFrom');
+		        if(empty($urlFrom)){
+		        	redirect(base_url().'promos/index');
+		        }
+	        	error_log(base_url().$this->session->flashdata('urlFrom'));
+	        	redirect(base_url().$this->session->flashdata('urlFrom'));
+		        
             }
             catch (FacebookApiException $e)
             {
