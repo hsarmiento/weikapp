@@ -84,5 +84,36 @@ class User extends CI_Controller
 		$this->layout->view('profile', compact('iUid', 'sUname', 'aUserPromosCompetitor'));
 	}
 
+	public function edit()
+	{
+		logged_or_redirect('user/login', 'user/edit');
+		$this->load->model('user_preference_model');
+		$this->load->model('category_model');
+		$iUid = $this->session->userdata('uid');
+		$aUserPref = $this->user_preference_model->get_user_preferences(1);
+		$aCategories = $this->category_model->get_all_categories();
+		$aCategoriesPref = array();
+		foreach ($aCategories as &$category) {
+			$category['exist'] = 0;
+			foreach ($aUserPref as $user_pref) {
+				if($user_pref['category_id'] == $category['id']){
+					$category['exist'] = 1;
+					$flag = 1;
+				}
+			}
+		}
+		$this->layout->setTitle('Editar');
+		$this->layout->view('edit',compact('aCategories','iUid'));
+	}
+
+	public function update()
+	{
+		if(isset($_POST) && $_POST['update_user'] === 'Guardar'){
+			$this->load->model('user_preference_model');
+			if($this->user_preference_model->delete_all_user_preferences($this->input->post('user_id')) === true){
+			}
+		}
+	}
+
 }
 

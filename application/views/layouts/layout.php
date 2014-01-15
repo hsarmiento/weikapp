@@ -40,6 +40,9 @@
 							<img src="http://graph.facebook.com/<?=$this->session->userdata('fbuid')?>/picture">
 							<?=$this->session->userdata('uname')?>
 						</a>
+						<a href="<?=base_url()?>user/edit">
+							editar
+						</a>
 						<a href="<?=base_url()?>user/logout">
 							salir
 						</a>
