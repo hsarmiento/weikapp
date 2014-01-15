@@ -34,7 +34,23 @@ class User extends CI_Controller
 		        	$aUserInfo = $this->User_model->get_user_fb_data($iUserId);
 		        	$this->User_model->initialize($iUserId,$aUserInfo[0]['first_name'],$aUserInfo[0]['last_name'],$aUserInfo[0]['email']);
 		        	$this->User_model->save();
-		        }
+		        	if ($this->facebook_utils->allowed_publish_actions($iUserId) === true)
+		        	{
+		        		$aPost = array(
+							'message' => 'He comenzado a utilizar weikapp',
+							'name' => 'weikapp facebook app',
+							'caption' => 'caption loco po ahi puee se',
+							'link' => 'http://www.backfront.cl',
+							'description' => 'pagina corporativa',
+							'picture' => 'http://www.backfront.cl/src_bf/logo_bf.png'
+						);
+						try{
+							$post_id = $this->facebook_utils->post_on_user_wall('me', $aPost);
+                   		}catch(Exception $e){
+                      		error_log($e->getMessage());
+                  		}
+		        	}
+		        }		        
 		        $aData['user'] = $this->User_model->get_uname_by_fbuid($iUserId);		        
 		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE, 'uname' =>$this->User_model->get_uname_by_fbuid($iUserId)));								
 		        $urlFrom = $this->session->flashdata('urlFrom');

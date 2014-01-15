@@ -48,6 +48,6 @@ class Facebook_utils
 
 	public function post_on_user_wall($iFbuid, $aPost)
 	{
-		$this->CI->facebook->api('/'.$iFbuid.'/feed/', 'post', $aPost);
+		return $this->CI->facebook->api('/'.$iFbuid.'/feed/', 'POST', $aPost);
 	}
 }
