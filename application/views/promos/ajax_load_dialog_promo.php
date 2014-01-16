@@ -4,12 +4,10 @@
 ?>
 
 <div class="dialog-promo" id="dialog-promo">
-
-	<?php
-		// echo '<pre>';
-		// print_r($aPromo);
-		// echo '</pre>';
-	?>
+	<?php if (isset($sPublishAction) && $sPublishAction == 'permissions_denied')
+	{ ?>
+		<p style="color:#ff0000;border-style:solid;border-color:#00ff00;border-width:10px;">Para poder participar debe dar permisos de publicacion para postear en facebook automaticamente <a href="<?php echo $sLoginUrl; ?>">Dar permisos</a></p>
+	<?php } ?>
 	<p>Nombre promo:<?=$aPromo['title']?></p>
 	<p>Descripcion: <?=$aPromo['description']?></p>
 	<p>Terminos y condiciones: <?=$aPromo['terms']?></p>

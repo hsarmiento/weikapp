@@ -46,6 +46,19 @@ class Facebook_utils
 		return false;
 	}
 
+	public function allowed_anything($iFbuid)
+	{
+		$aPermissions = $this->get_permissions($iFbuid);
+		if (count($aPermissions['data']) == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
 	public function post_on_user_wall($iFbuid, $aPost)
 	{
 		return $this->CI->facebook->api('/'.$iFbuid.'/feed/', 'POST', $aPost);
