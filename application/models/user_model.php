@@ -86,5 +86,33 @@ class User_model extends CI_Model
         $aQuery = $this->db->get()->row_array();
         return $aQuery['id'];
     }
+
+    public function get_user_data_by_id($iUserid)
+    {
+        $this->db->select('names,last_name,email')
+        ->from('users')
+        ->where('id',$iUserid);
+        $aRow = $this->db->get()->row_array();
+        return $aRow;
+    }
+
+    public function update_user_data($iUserid)
+    {
+        $data = array(
+                'names' => $this->names,
+                'last_name' => $this->last_name,
+                'email' => $this->email
+            );
+        $this->db->where('id', $iUserid);
+        $this->db->update('users',$data);
+        if($this->db->affected_rows() == '1')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     
 }

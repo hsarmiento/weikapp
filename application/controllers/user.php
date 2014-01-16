@@ -117,8 +117,10 @@ class User extends CI_Controller
 	{
 		logged_or_redirect('user/login', 'user/edit');
 		$this->load->model('user_preference_model');
+		$this->load->model('user_model');
 		$this->load->model('category_model');
 		$iUid = $this->session->userdata('uid');
+		$aUserData = $this->user_model->get_user_data_by_id($iUid);
 		$aUserPref = $this->user_preference_model->get_user_preferences($iUid);
 		$aCategories = $this->category_model->get_all_categories();
 		foreach ($aCategories as &$category) {
@@ -131,15 +133,18 @@ class User extends CI_Controller
 			}
 		}
 		$this->layout->setTitle('Editar');
-		$this->layout->view('edit',compact('aCategories','iUid', 'sSuccess'));
+		$this->layout->view('edit',compact('aCategories','iUid', 'sSuccess','aUserData'));
 	}
 
 	public function update()
 	{
-		$iLenInputUpdate = count($this->input->post()) -2;
+		$iLenInputUpdate = count($this->input->post()) - 2;
 		$iLenUpdateDB = 0;
 		if(count($this->input->post()) > 0 && $this->input->post('update_user') === 'Guardar'){
 			$this->load->model('user_preference_model');
+			$this->load->model('user_model');
+			$this->user_model->initialize(null,$this->input->post('names'),$this->input->post('last_name'),$this->input->post('email'));
+			$this->user_model->update_user_data($this->input->post('user_id'));
 			if($this->user_preference_model->delete_all_user_preferences($this->input->post('user_id')) === true){
 				foreach ($this->input->post() as $key => $value) {
 					if($key !== 'user_id' && $key !== 'update_user'){
