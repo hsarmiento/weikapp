@@ -46,7 +46,9 @@ class User extends CI_Controller
 						);
 						try{
 							$post_id = $this->facebook_utils->post_on_user_wall('me', $aPost);
-                   		}catch(Exception $e){
+                   		}
+                   		catch(Exception $e)
+                   		{
                       		error_log($e->getMessage());
                   		}
 		        	}
@@ -57,9 +59,7 @@ class User extends CI_Controller
 		        if(empty($urlFrom)){
 		        	redirect(base_url().'promos/index');
 		        }
-	        	error_log(base_url().$this->session->flashdata('urlFrom'));
 	        	redirect(base_url().$this->session->flashdata('urlFrom'));
-		        
             }
             catch (FacebookApiException $e)
             {
@@ -68,10 +68,23 @@ class User extends CI_Controller
 		}
 		else
 		{
-			$this->session->keep_flashdata('urlFrom');
-			$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));
-			$this->layout->setLayout('ajax_layout');
-			$this->layout->view('login',$aData);
+			$this->session->keep_flashdata('urlFrom');		
+			if (isset($_GET['error']) && isset($_GET['error_code']) && isset($_GET['error_reason']))
+			{
+				if ($_GET['error_code'] == 200 && $_GET['error_reason'] == 'user_denied')
+				{
+					// echo $this->session->flashdata('urlFrom').'<br>';
+					$aUrl = explode('/', $this->session->flashdata('urlFrom'));
+					// echo base_url();
+					redirect(base_url().'promos/index/'.$aUrl[3].'/'.$aUrl[2]);
+				}				
+			}
+			else
+			{
+				$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));
+				$this->layout->setLayout('ajax_layout');
+				$this->layout->view('login',$aData);
+			}
 		}		
 	}
 

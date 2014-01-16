@@ -10,7 +10,7 @@ class Promos extends CI_Controller
         $this->load->model('competitor_model');
 	}
 
-	public function index($category = 'favorites', $promo_id = null){
+	public function index($category = 'favorites', $promo_id = null, $sPublishAction = null){
 		$isLogged = is_logged();
 		$this->load->model('category_model');
 		// $this->load->model('user_preference_model');
@@ -28,7 +28,7 @@ class Promos extends CI_Controller
 
 		$this->layout->css(array(base_url().'public/css/jquery-ui-1.10.3.custom.css'));
 		$this->layout->setTitle('Promociones');
-		$this->layout->view('index', compact("aData","category","aCategories", "isLogged", "aPromo"));
+		$this->layout->view('index', compact("aData","category","aCategories", "isLogged", "aPromo", "sPublishAction"));
 	}
 
 	public function ajax_load_scrolling($offset,$category){
@@ -43,8 +43,9 @@ class Promos extends CI_Controller
 		echo json_encode(array($aData));
 	}
 
-	public function ajax_load_dialog_promo($category, $promo_id){	
-		$this->load->model('competitor_model');			
+	public function ajax_load_dialog_promo($category, $promo_id, $sPublishAction = null){	
+		$this->load->model('competitor_model');
+		$this->load->library('Facebook_utils');		
 		$this->layout->setLayout('ajax_layout');
 		$aPromo = $this->promo_model->get_info_promo($promo_id);
 		if(is_logged() === true)
@@ -57,6 +58,7 @@ class Promos extends CI_Controller
 		}
 		$aPromo['is_logged'] = is_logged();
 		$aPromo['count_competitors'] = $this->competitor_model->count_promo_competitors($promo_id);
-		$this->layout->view('ajax_load_dialog_promo', compact('aPromo', 'category'));
+		$sLoginUrl = $this->facebook_utils->get_login_url(array('scope' => 'publish_actions','redirect_uri' => base_url().'competitor/participate/'.$promo_id."/".$category));
+		$this->layout->view('ajax_load_dialog_promo', compact('aPromo', 'category', 'sPublishAction', 'sLoginUrl'));
 	}
 }

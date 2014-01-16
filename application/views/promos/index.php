@@ -23,7 +23,7 @@
 			<h3>No existen promociones para esta categoría</h3>
 		<?php }else{
 				foreach ($aData as $value) { ?>
-					<div class="promo" onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>'); return false;">
+					<div class="promo" onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
 						<?=$value['title']?>
 						<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225" alt="foto_promo">
 					</div>
@@ -65,19 +65,19 @@
 	    });
     }
 
-	function open_promo(id,title)
+	function open_promo(id,title,publish_actions)
 	{
 		settings_dialog();
 		$("#dialog").dialog("option","title", title);
 		$("#dialog").dialog("open");
-		$("#dialog").empty().load("<?php echo base_url();?>promos/ajax_load_dialog_promo/<?=$category?>/"+id);	
+		$("#dialog").empty().load("<?php echo base_url();?>promos/ajax_load_dialog_promo/<?=$category?>/"+id+'/'+publish_actions);	
 	}
 
 	var offset = <?=$count?>;
 	$(document).ready(function () {
 		settings_dialog();
 		if("<?=$aPromo['id']?>"){
-			open_promo("<?=$aPromo['id']?>","<?=$aPromo['title']?>")
+			open_promo("<?=$aPromo['id']?>","<?=$aPromo['title']?>","<?=$sPublishAction;?>");
 		}
 		
 	    $(window).scroll(function () {        	
