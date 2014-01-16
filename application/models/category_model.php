@@ -15,5 +15,4 @@ class Category_model extends CI_Model {
         ->order_by('name asc');
         return $this->db->get()->result_array();
     }
-
 }

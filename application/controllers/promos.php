@@ -15,7 +15,7 @@ class Promos extends CI_Controller
 		$this->load->model('category_model');
 		// $this->load->model('user_preference_model');
 		if($category === 'favorites' && $isLogged === true){
-			$aData = $this->promo_model->get_favorite_promos(9,0,1);
+			$aData = $this->promo_model->get_favorite_promos(9,0,$this->session->userdata('uid'));
 		}elseif($category !== 'favorites'){
 			$aData = $this->promo_model->get_promos(9,0, $category);
 		}
@@ -35,7 +35,7 @@ class Promos extends CI_Controller
 		$this->layout->setLayout('ajax_layout');
 		$isLogged = is_logged();
 		if($category === 'favorites' && $isLogged === true){
-			$aData = $this->promo_model->get_favorite_promos(3,$offset,1);
+			$aData = $this->promo_model->get_favorite_promos(3,$offset,$this->session->userdata('uid'));
 		}elseif($category !== 'favorites'){
 			$aData = $this->promo_model->get_promos(3,$offset, $category);
 		}

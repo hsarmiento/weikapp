@@ -2,10 +2,18 @@
 
 class User_preference_model extends CI_Model
 {
+    private $user_id;
+    private $category_id;
 
 	public function __construct()
     {
         parent::__construct();
+    }
+
+    public function initialize($iUserId, $iCategoryId)
+    {
+        $this->user_id = $iUserId;
+        $this->category_id = $iCategoryId;
     }
 
     public function get_user_preferences($iUserId)
@@ -22,5 +30,19 @@ class User_preference_model extends CI_Model
     {
     	$result = $this->db->delete('user_preferences',array('user_id' => $iUserId));
     	return $result;
+    }
+
+    public function save()
+    {
+        $aData = array('user_id' => $this->user_id, 'category_id' => $this->category_id);
+        $this->db->insert('user_preferences',$aData);
+        if($this->db->affected_rows() == '1')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -100,15 +100,14 @@ class User extends CI_Controller
 		$this->layout->view('profile', compact('iUid', 'sUname', 'aUserPromosCompetitor'));
 	}
 
-	public function edit()
+	public function edit($sSuccess = null)
 	{
 		logged_or_redirect('user/login', 'user/edit');
 		$this->load->model('user_preference_model');
 		$this->load->model('category_model');
 		$iUid = $this->session->userdata('uid');
-		$aUserPref = $this->user_preference_model->get_user_preferences(1);
+		$aUserPref = $this->user_preference_model->get_user_preferences($iUid);
 		$aCategories = $this->category_model->get_all_categories();
-		$aCategoriesPref = array();
 		foreach ($aCategories as &$category) {
 			$category['exist'] = 0;
 			foreach ($aUserPref as $user_pref) {
@@ -119,15 +118,27 @@ class User extends CI_Controller
 			}
 		}
 		$this->layout->setTitle('Editar');
-		$this->layout->view('edit',compact('aCategories','iUid'));
+		$this->layout->view('edit',compact('aCategories','iUid', 'sSuccess'));
 	}
 
 	public function update()
 	{
-		if(isset($_POST) && $_POST['update_user'] === 'Guardar'){
+		$iLenInputUpdate = count($this->input->post()) -2;
+		$iLenUpdateDB = 0;
+		if(count($this->input->post()) > 0 && $this->input->post('update_user') === 'Guardar'){
 			$this->load->model('user_preference_model');
 			if($this->user_preference_model->delete_all_user_preferences($this->input->post('user_id')) === true){
+				foreach ($this->input->post() as $key => $value) {
+					if($key !== 'user_id' && $key !== 'update_user'){
+						$this->user_preference_model->initialize($this->input->post('user_id'),$value);
+						$this->user_preference_model->save();
+						$iLenUpdateDB = $iLenUpdateDB +1;
+					}
+				}
 			}
+		}
+		if($iLenUpdateDB == $iLenInputUpdate){
+			redirect(base_url().'user/edit/success');
 		}
 	}
 

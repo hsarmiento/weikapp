@@ -1,9 +1,13 @@
 <h1>Editar usuario</h1>
+<?php
+	if(isset($sSuccess)){ ?>
+		<div class="success">Actualizado</div>
+	<?php } ?>
 <div class="container">
  <?php
  	echo form_open('user/update');
 	 	foreach ($aCategories as $category) {
-	 		$aOptions = array('name' => $category['name'], 'id' => $category['name'], 'value' =>'checked');
+	 		$aOptions = array('name' => $category['name'], 'id' => $category['name'], 'value' =>$category['id']);
 			if($category['exist'] === 1){
 	 			$aOptions['checked'] = 'TRUE';
 	 		}

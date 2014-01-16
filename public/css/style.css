@@ -20,6 +20,17 @@ footer{
 }
 
 
+.success{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin: 0 10% 0.5% 10%;
+	border: green 1px solid;
+	height: 5%;
+	text-align: center;
+	/*padding-left: 100px;*/
+}
+
 /* INICIO INDEX PRINCIPAL */
 
 .option_entry{
