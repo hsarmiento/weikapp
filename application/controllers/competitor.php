@@ -13,6 +13,7 @@ class Competitor extends CI_Controller
 	public function participate($iPromoId, $sCategory)
 	{
 		logged_or_redirect('user/login', 'competitor/participate/'.$iPromoId."/".$sCategory);
+		$this->load->model('promo_model');
 		if ($this->facebook_utils->allowed_anything($this->session->userdata('fbuid')) === false)
 		{
 			redirect(base_url().'user/logout');
@@ -25,13 +26,15 @@ class Competitor extends CI_Controller
 				$this->competitor_model->initialize($this->session->userdata('uid'),$iPromoId);
 				$this->competitor_model->save();
 
+				$aPromo = $this->promo_model->get_info_promo($iPromoId);
+
 				// comparte en facebook
 				$aPost = array(
-					'message' => 'Estoy fronteando', 
-					'name' => 'weikapp facebook app',
-					'caption' => 'caption loco po ahi puee se',
+					'message' => 'Weikapp!!! ya estoy participando por ...', 
+					'name' => $aPromo['title'],
+					'caption' => 'weikapp.cl',
 					'link' => 'http://www.backfront.cl',
-					'description' => 'pagina corporativa',
+					'description' => '¡No te quedes fuera! '.$aPromo['description'],
 					'picture' => 'http://www.backfront.cl/src_bf/logo_bf.png'
 				);
 				try{
