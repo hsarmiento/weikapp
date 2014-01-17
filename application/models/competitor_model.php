@@ -61,4 +61,14 @@ class Competitor_model extends CI_Model
         $query = $this->db->query("SELECT t1.created_at as participate_created_at, t2.id as promo_id, t2.title as promo_title, t2.end_datetime as promo_end_datetime, t3.id as winner_id from competitors as t1 join promos as t2 on t1.promo_id = t2.id left join winners as t3 on t1.id = t3.competitor_id where t1.user_id = $iUserId order by t1.created_at desc;");
         return $query->result_array();
     }
+
+    public function promo_users_competitor($iPromoId)
+    {
+        #get users promos that participate
+        $this->db->select('*')
+        ->from('competitors')
+        ->where('promo_id', $iPromoId);
+        return $this->db->get()->result_array();
+    }
+
 }
