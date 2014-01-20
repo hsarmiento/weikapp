@@ -16,7 +16,7 @@ class Winners extends CI_Controller
 		$this->load->model('competitor_model');
 		$aEndedPromos = $this->promo_model->get_id_ended_promos();
 		foreach ($aEndedPromos as $ended_promos) {
-			$aPromoCompetitors = $this->competitor_model->promo_users_competitor($ended_promos['id']);
+			$aPromoCompetitors = $this->competitor_model->get_competitors_by_promoid($ended_promos['id']);
 			if(count($aPromoCompetitors) > 0){
 				$aWinners = array();
 				$iCountWinners = 0;
@@ -42,6 +42,11 @@ class Winners extends CI_Controller
 		$this->layout->setTitle('Ganadores');
 		$this->layout->view('show_winners', compact("aWinners"));
 
+	}
+
+	public function notify_winners($iPromoId)
+	{
+		
 	}
 
 }
