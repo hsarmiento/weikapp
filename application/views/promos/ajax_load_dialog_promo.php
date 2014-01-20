@@ -44,6 +44,14 @@
 
 	<div id="countdown"></div>
 	<p>Participantes: <?=$aPromo['count_competitors']?></p>
+	<?php if ($aPromo['count_competitors'] > 0)
+	{
+		for ($i=0; $i < count($aPromo['competitors']); $i++)
+		{?>
+			<a href="http://www.facebook.com/<?=$aPromo['competitors'][$i]['fb_username']?>" target="_blank"><img src="http://graph.facebook.com/<?=$aPromo['competitors'][$i]['fb_uid']?>/picture"></a>
+		<?php }
+	}?>
+
 	<p>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacus felis, consequat condimentum nulla a, luctus placerat dui. Maecenas at aliquam libero, semper consequat turpis. Vivamus rhoncus egestas imperdiet. Integer sed lectus volutpat, scelerisque velit vulputate, malesuada nibh. Vestibulum nisi felis, vestibulum laoreet eros at, bibendum porta ante. Integer pellentesque dui nisi, eget semper eros ullamcorper sed. In tortor lacus, facilisis vel interdum mattis, eleifend nec ipsum.
 

@@ -55,20 +55,27 @@ class Competitor_model extends CI_Model
         return $this->db->count_all_results();
     }
 
-    public function user_promos_competitor($iUserId)
+    public function get_promos_by_userid($iUserId)
     {
         #get promotions user that participate
         $query = $this->db->query("SELECT t1.created_at as participate_created_at, t2.id as promo_id, t2.title as promo_title, t2.end_datetime as promo_end_datetime, t3.id as winner_id from competitors as t1 join promos as t2 on t1.promo_id = t2.id left join winners as t3 on t1.id = t3.competitor_id where t1.user_id = $iUserId order by t1.created_at desc;");
         return $query->result_array();
     }
 
-    public function promo_users_competitor($iPromoId)
+    public function get_competitors_by_promoid($iPromoId)
     {
         #get users promos that participate
         $this->db->select('*')
         ->from('competitors')
         ->where('promo_id', $iPromoId);
         return $this->db->get()->result_array();
+    }
+
+    // obtiene el username de facebook de todos los competidores de una promo en particular
+    public function get_fbusername_by_promoid($iPromoId)
+    {
+        $query = $this->db->query("SELECT t1.user_id, t1.promo_id, t2.fb_uid, t2.fb_username, t2.id FROM competitors AS t1 JOIN users AS t2 ON t1.user_id = t2.id AND t1.promo_id = ".$iPromoId." ORDER BY RAND() LIMIT 10;");
+        return $query->result_array();
     }
 
 }
