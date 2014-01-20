@@ -30,9 +30,18 @@ class Winners extends CI_Controller
 					}
 				}
 			}
-		}
-			
-			
+		}			
+	}
+
+
+	public function show_winners($iPromoId)
+	{
+		//mas adelante hay que verificar que este controlador lo habra solamente
+		//el dueño de la promo
+		$aWinners = $this->winner_model->get_promo_winners(4);
+		$this->layout->setTitle('Ganadores');
+		$this->layout->view('show_winners', compact("aWinners"));
+
 	}
 
 }
