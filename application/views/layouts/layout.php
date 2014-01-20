@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <html>
-
 	<head>
+		<title><?php echo $this->layout->getTitle(); ?></title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-	    <title><?php echo $this->layout->getTitle(); ?></title>
-	    
 		<meta name="description" content="<?php echo $this->layout->getDescripcion(); ?>">
 		<meta name="keywords" content="<?php echo $this->layout->getKeywords(); ?>" />
+		<meta charset="UTF-8">
 	    <script type="text/javascript" src="<?php echo base_url()?>public/js/jquery-1.10.2.js"></script>
 	    <script type="text/javascript" src="<?php echo base_url()?>public/js/json2.js"></script>
 		<script type="text/javascript" src="<?php echo base_url()?>public/js/jquery-ui-1.10.3.custom.js"></script>
@@ -49,7 +44,7 @@
 					</div>
 				<?php } else{ ?>
 					<div class="profile-container">
-						<a href="<?=base_url()?>user/login">Login</a>
+						<a href="<?= $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'))?>">Login</a>
 					</div>
 				<?php } ?>
 		</header>

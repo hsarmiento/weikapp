@@ -63,4 +63,9 @@ class Facebook_utils
 	{
 		return $this->CI->facebook->api('/'.$iFbuid.'/feed/', 'POST', $aPost);
 	}
+
+	public function execute_fql_query($aOptions)
+	{
+		return $this->CI->facebook->api($aOptions);
+	}
 }

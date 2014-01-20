@@ -7,7 +7,6 @@ class User extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('User_model');
-		$this->load->library('Facebook_utils');
         $this->layout->setLayout('layout');
 	}
 
@@ -26,14 +25,19 @@ class User extends CI_Controller
 		$urlFrom = null;
 		if ($iUserId)
 		{
+			echo __LINE__.'<br/>';
+			echo $iUserId; 
 			try
 			{
 				$aData['logout_url'] = $this->facebook_utils->get_logout_url(array( 'next' => base_url().'user/logout' ));
+				echo __LINE__.'<br/>';
                 if ($this->User_model->exist_fbuid($iUserId) === FALSE)
 		        {
 		        	$aUserInfo = $this->User_model->get_user_fb_data($iUserId);
-		        	$this->User_model->initialize($iUserId,$aUserInfo[0]['first_name'],$aUserInfo[0]['last_name'],$aUserInfo[0]['email']);
+		        	print_r($aUserInfo);
+		        	$this->User_model->initialize($iUserId,$aUserInfo[0]['first_name'],$aUserInfo[0]['last_name'],$aUserInfo[0]['email'],$aUserInfo[0]['sex'],$aUserInfo[0]['username']);
 		        	$this->User_model->save();
+
 		        	if ($this->facebook_utils->allowed_publish_actions($iUserId) === true)
 		        	{
 		        		$aPost = array(
@@ -57,9 +61,12 @@ class User extends CI_Controller
 		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE, 'uname' =>$this->User_model->get_uname_by_fbuid($iUserId)));								
 		        $urlFrom = $this->session->flashdata('urlFrom');
 		        if(empty($urlFrom)){
-		        	redirect(base_url().'promos/index');
+		        	redirect(base_url().'promos/index');		        	
 		        }
-	        	redirect(base_url().$this->session->flashdata('urlFrom'));
+		        else
+		        {
+		        	redirect(base_url().$this->session->flashdata('urlFrom'));
+		        }	        	
             }
             catch (FacebookApiException $e)
             {
@@ -81,7 +88,7 @@ class User extends CI_Controller
 			}
 			else
 			{
-				$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));
+				$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,gender,link,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));
 				$this->layout->setLayout('ajax_layout');
 				$this->layout->view('login',$aData);
 			}

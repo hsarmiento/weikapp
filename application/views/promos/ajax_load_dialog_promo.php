@@ -18,21 +18,28 @@
 			<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
 		<?php } ?>
 	</br>
-	<?php 
-		if ($aPromo['is_logged'] === true)
+	<?php
+		if ($aPromo['number_participants'] - $aPromo['count_competitors'] > 0 )
 		{
-			if ($aPromo['joined'] === false)
-			{?>
-				<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
-			<?php }
+			if ($aPromo['is_logged'] === true)
+			{
+				if ($aPromo['joined'] === false)
+				{?>
+					<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
+				<?php }
+				else
+				{?>
+					<p>Ya estas particando campeón</p>
+				<?php }
+			}
 			else
-			{?>
-				<p>Ya estas particando campeón</p>
+			{ ?>
+				<a onclick="participate();" href="#">Participar</a>
 			<?php }
 		}
 		else
 		{ ?>
-			<a onclick="participate();" href="#">Participar</a>
+			<p style="width:70px;color:#ff0000;border-style:solid;border-color:#d0dbdd;border-width:10px;">Agotado</p>
 		<?php } ?>
 
 	<div id="countdown"></div>

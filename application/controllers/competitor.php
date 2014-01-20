@@ -7,7 +7,6 @@ class Competitor extends CI_Controller
 	{
 		parent::__construct();        
         $this->load->model('competitor_model');
-        $this->load->library('Facebook_utils');
 	}
 
 	public function participate($iPromoId, $sCategory)
