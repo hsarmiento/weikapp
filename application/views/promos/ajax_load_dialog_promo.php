@@ -18,25 +18,40 @@
 			<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
 		<?php } ?>
 	</br>
-	<?php 
-		if ($aPromo['is_logged'] === true)
+	<?php
+		if ($aPromo['number_participants'] - $aPromo['count_competitors'] > 0 )
 		{
-			if ($aPromo['joined'] === false)
-			{?>
-				<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
-			<?php }
+			if ($aPromo['is_logged'] === true)
+			{
+				if ($aPromo['joined'] === false)
+				{?>
+					<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
+				<?php }
+				else
+				{?>
+					<p>Ya estas particando campeón</p>
+				<?php }
+			}
 			else
-			{?>
-				<p>Ya estas particando campeón</p>
+			{ ?>
+				<a onclick="participate();" href="#">Participar</a>
 			<?php }
 		}
 		else
 		{ ?>
-			<a onclick="participate();" href="#">Participar</a>
+			<p style="width:70px;color:#ff0000;border-style:solid;border-color:#d0dbdd;border-width:10px;">Agotado</p>
 		<?php } ?>
 
 	<div id="countdown"></div>
 	<p>Participantes: <?=$aPromo['count_competitors']?></p>
+	<?php if ($aPromo['count_competitors'] > 0)
+	{
+		for ($i=0; $i < count($aPromo['competitors']); $i++)
+		{?>
+			<a href="http://www.facebook.com/<?=$aPromo['competitors'][$i]['fb_username']?>" target="_blank"><img src="http://graph.facebook.com/<?=$aPromo['competitors'][$i]['fb_uid']?>/picture"></a>
+		<?php }
+	}?>
+
 	<p>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacus felis, consequat condimentum nulla a, luctus placerat dui. Maecenas at aliquam libero, semper consequat turpis. Vivamus rhoncus egestas imperdiet. Integer sed lectus volutpat, scelerisque velit vulputate, malesuada nibh. Vestibulum nisi felis, vestibulum laoreet eros at, bibendum porta ante. Integer pellentesque dui nisi, eget semper eros ullamcorper sed. In tortor lacus, facilisis vel interdum mattis, eleifend nec ipsum.
 

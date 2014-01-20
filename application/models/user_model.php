@@ -5,8 +5,9 @@ class User_model extends CI_Model
 	private $fb_uid;
 	private $names;
 	private $last_name;
-	private $city;
 	private $email;
+    private $gender;
+    private $fb_username;
 	private $created_at;
 
 	public function __construct()
@@ -14,13 +15,14 @@ class User_model extends CI_Model
         parent::__construct();
     }
 
-    public function initialize($iFbid,$sNames,$sLastName,$sEmail)
+    public function initialize($iFbid,$sNames,$sLastName,$sEmail,$sGender,$sFbUsername)
     {
     	$this->fb_uid = $iFbid;
 		$this->names = $sNames;
 		$this->last_name = $sLastName;
-		// $this->city = $sCity;
 		$this->email = $sEmail;
+        $this->gender = $sGender;
+        $this->fb_username = $sFbUsername;
 		$this->created_at = date('Y-m-d H:i:s',(time())+(10800));
     }
 
@@ -39,7 +41,7 @@ class User_model extends CI_Model
 
     public function save()
     {
-    	$aData = array('fb_uid' => $this->fb_uid, 'names' => $this->names, 'last_name' => $this->last_name,	'email' => $this->email, 'created_at' => $this->created_at);
+    	$aData = array('fb_uid' => $this->fb_uid, 'names' => $this->names, 'last_name' => $this->last_name,	'email' => $this->email, 'gender' => $this->gender, 'fb_username' => $this->fb_username,'created_at' => $this->created_at);
     	$this->db->insert('users',$aData);
     	if($this->db->affected_rows() == '1')
         {
@@ -54,17 +56,17 @@ class User_model extends CI_Model
     public function get_user_fb_data($iUserId)
     {
     	$this->config->load('facebook_config');
-		$this->load->library('Facebook', array('appId' => $this->config->item('appId'), 'secret' => $this->config->item('appSecret')));
+		// $this->load->library('Facebook', array('appId' => $this->config->item('appId'), 'secret' => $this->config->item('appSecret')));
 
 		if ($iUserId)
 		{
-			$sFqlQuery = 'SELECT first_name, last_name, email FROM user WHERE uid = '.$iUserId.';';
+			$sFqlQuery = 'SELECT first_name, last_name, email, sex, username FROM user WHERE uid = '.$iUserId.';';
 			$aOptions = array(
 				'method' => 'fql.query',
 				'query' => $sFqlQuery,
 				'callback' => ''
 			);
-			$aResult = $this->facebook->api($aOptions);            
+			$aResult = $this->facebook_utils->execute_fql_query($aOptions);
 			return $aResult;
 		}
     }

@@ -58,6 +58,7 @@ class Promos extends CI_Controller
 		}
 		$aPromo['is_logged'] = is_logged();
 		$aPromo['count_competitors'] = $this->competitor_model->count_promo_competitors($promo_id);
+		$aPromo['competitors'] = $this->competitor_model->get_fbusername_by_promoid($promo_id);
 		$sLoginUrl = $this->facebook_utils->get_login_url(array('scope' => 'publish_actions','redirect_uri' => base_url().'competitor/participate/'.$promo_id."/".$category));
 		$this->layout->view('ajax_load_dialog_promo', compact('aPromo', 'category', 'sPublishAction', 'sLoginUrl'));
 	}
