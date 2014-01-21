@@ -23,7 +23,8 @@ class User_model extends CI_Model
 		$this->email = $sEmail;
         $this->gender = $sGender;
         $this->fb_username = $sFbUsername;
-		$this->created_at = date('Y-m-d H:i:s',(time())+(10800));
+        $this->created_at = date('Y-m-d H:i:s',(time()));
+		// $this->created_at = date('Y-m-d H:i:s',(time())+(10800));
     }
 
     public function exist_fbuid($iFbuid)
@@ -115,6 +116,15 @@ class User_model extends CI_Model
         {
             return false;
         }
+    }
+
+    public function get_fbuid_by_userid($iUserId)
+    {
+        $this->db->select('fb_uid')
+        ->from('users')
+        ->where('id',$iUserId);
+        $aRow = $this->db->get()->row_array();
+        return $aRow['fb_uid'];
     }
     
 }

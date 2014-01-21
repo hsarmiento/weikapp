@@ -23,7 +23,8 @@ class Winners extends CI_Controller
 				while(count($aWinners) < intval($ended_promos['number_winners'])){
 					$key = array_rand($aPromoCompetitors);
 					if(in_array($key,$aWinners) === false){
-						if($this->winner_model->save_winner($aPromoCompetitors[$key]['id']) === true){
+						$this->winner_model->initialize($aPromoCompetitors[$key]['id']);
+						if($this->winner_model->save_winner() === true){
 							$aWinners[] = $key;
 							$this->promo_model->update_ended_promo($aPromoCompetitors[$key]['promo_id'], 1);
 						}
@@ -34,19 +35,36 @@ class Winners extends CI_Controller
 	}
 
 
-	public function show_winners($iPromoId)
+	public function show_winners($iPromoId, $sIsNotified = null)
 	{
 		//mas adelante hay que verificar que este controlador lo habra solamente
-		//el dueño de la promo
-		$aWinners = $this->winner_model->get_promo_winners(4);
+		//el dueño de la promo y que el promoid no este vacio para redirigir a otra pagina
+		$aWinners = $this->winner_model->get_promo_winners($iPromoId);
 		$this->layout->setTitle('Ganadores');
-		$this->layout->view('show_winners', compact("aWinners"));
+		$this->layout->view('show_winners', compact("aWinners", 'iPromoId', 'sIsNotified'));
 
 	}
 
 	public function notify_winners($iPromoId)
 	{
-		
+		//mas adelante se debe verificar que el promoid no este vacio para redirigir a otra pagina
+
+		$this->load->model('user_model');
+		$this->CI= get_instance();
+		$this->load->library('curl');
+		$this->load->library('rest');
+		$aWinners = $this->winner_model->get_promo_winners($iPromoId);
+		foreach ($aWinners as $winner) {
+			$fb_uid = $this->user_model->get_fbuid_by_userid($winner['user_id']);
+			$config = array('server' => 'https://graph.facebook.com/'.$fb_uid.'/notifications');
+			$this->rest->initialize($config);
+			$oResponseNotify= $this->rest->post('', array('access_token' => $this->CI->config->item('accessToken'), 'template' => 'john wayne'));
+			if(!empty($oResponseNotify->success) && $oResponseNotify->success === true){
+				$this->winner_model->initialize(null, date('Y-m-d H:i:s',(time())));
+				$this->winner_model->update_notified_at($winner['winner_id']);
+			}
+		}
+		redirect(base_url().'winners/show_winners/'.$iPromoId.'/is_notified');
 	}
 
 }
