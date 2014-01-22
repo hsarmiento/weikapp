@@ -28,21 +28,21 @@ class Competitor extends CI_Controller
 				$aPromo = $this->promo_model->get_info_promo($iPromoId);
 
 				// comparte en facebook
-				$aPost = array(
-					'message' => 'Weikapp!!! ya estoy participando por ...', 
-					'name' => $aPromo['title'],
-					'caption' => 'weikapp.cl',
-					'link' => 'http://www.backfront.cl',
-					'description' => '¡No te quedes fuera! '.$aPromo['description'],
-					'picture' => 'http://www.backfront.cl/src_bf/logo_bf.png'
-				);
-				try{
-					$post_id = $this->facebook_utils->post_on_user_wall($this->session->userdata('fbuid'), $aPost);
-                }
-                catch(Exception $e)
-                {
-                	error_log($e->getMessage());
-                }				
+				// $aPost = array(
+				// 	'message' => 'Weikapp!!! ya estoy participando por ...', 
+				// 	'name' => $aPromo['title'],
+				// 	'caption' => 'weikapp.cl',
+				// 	'link' => 'http://www.backfront.cl',
+				// 	'description' => '¡No te quedes fuera! '.$aPromo['description'],
+				// 	'picture' => 'http://www.backfront.cl/src_bf/logo_bf.png'
+				// );
+				// try{
+				// 	$post_id = $this->facebook_utils->post_on_user_wall($this->session->userdata('fbuid'), $aPost);
+    //             }
+    //             catch(Exception $e)
+    //             {
+    //             	error_log($e->getMessage());
+    //             }				
 			}		
 			else
 			{

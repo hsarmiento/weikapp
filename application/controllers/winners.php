@@ -58,7 +58,7 @@ class Winners extends CI_Controller
 			$fb_uid = $this->user_model->get_fbuid_by_userid($winner['user_id']);
 			$config = array('server' => 'https://graph.facebook.com/'.$fb_uid.'/notifications');
 			$this->rest->initialize($config);
-			$oResponseNotify= $this->rest->post('', array('access_token' => $this->CI->config->item('accessToken'), 'template' => 'john wayne'));
+			$oResponseNotify= $this->rest->post('', array('access_token' => $this->CI->config->item('accessToken'), 'template' => 'john wayne', 'href' => 'winners/accept_award/'.$winner['winner_id']));
 			if(!empty($oResponseNotify->success) && $oResponseNotify->success === true){
 				$this->winner_model->initialize(null, date('Y-m-d H:i:s',(time())));
 				$this->winner_model->update_notified_at($winner['winner_id']);
@@ -67,4 +67,43 @@ class Winners extends CI_Controller
 		redirect(base_url().'winners/show_winners/'.$iPromoId.'/is_notified');
 	}
 
+	public function accept_award($iWinnerId)
+	{
+
+		//despues validar cuando el winner_id este vacio y redireccionar a alguna parte
+		$aUserWinner = $this->winner_model->get_user_data_winner($iWinnerId);
+		$this->layout->setTitle('Aceptar premio');
+		$this->layout->setLayout('fb_canvas_layout');
+		$this->layout->view('accept_award', compact('aUserWinner'));
+	}
+
+	public function congrats()
+	{
+		$this->load->model('promo_model');
+		$iWinnerId = $this->input->post('winner_id');
+		$sUserFbuid = $this->input->post('user_fbuid');
+		$iPromoId = $this->input->post('promo_id');
+		if($this->input->post('agree') == 'Aceptar' && isset($iWinnerId ) && isset($sUserFbuid) && isset($iPromoId)){
+			if ($this->facebook_utils->allowed_publish_actions($sUserFbuid) === true){
+				$aPromo = $this->promo_model->get_info_promo($iPromoId);
+				$aPost = array(
+					'message' => 'El rey gano', 
+					'name' => $aPromo['title'],
+					'caption' => 'weikapp.cl',
+					'link' => 'http://www.backfront.cl',
+					'description' => $aPromo['description'],
+					'picture' => 'http://www.backfront.cl/src_bf/logo_bf.png'
+				);
+				try{
+					$post_id = $this->facebook_utils->post_on_user_wall($sUserFbuid, $aPost);
+                	$this->layout->setLayout('fb_canvas_layout');
+					$this->layout->view('congrats');
+                }
+                catch(Exception $e)
+                {
+                	error_log($e->getMessage());
+                }	
+			}
+		}
+	}
 }
