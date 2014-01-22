@@ -12,6 +12,5 @@ class Companies extends CI_Controller
 	public function index()
 	{
 		$this->layout->view('index');
-
 	}
 }

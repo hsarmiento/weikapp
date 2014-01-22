@@ -4,4 +4,5 @@
 	<p>
 		ACA HABRA MUCHO TEXTO Y FOTOS
 	</p>
+	<a href="<?php echo base_url().'owners/login'?>" >Comienza ya</a>
 </div>
