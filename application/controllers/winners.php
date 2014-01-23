@@ -35,17 +35,17 @@ class Winners extends CI_Controller
 	}
 
 
-	public function show_winners($iPromoId, $sIsNotified = null)
+	public function show($iPromoId, $sIsNotified = null)
 	{
 		//mas adelante hay que verificar que este controlador lo habra solamente
 		//el dueño de la promo y que el promoid no este vacio para redirigir a otra pagina
 		$aWinners = $this->winner_model->get_promo_winners($iPromoId);
 		$this->layout->setTitle('Ganadores');
-		$this->layout->view('show_winners', compact("aWinners", 'iPromoId', 'sIsNotified'));
+		$this->layout->view('show', compact("aWinners", 'iPromoId', 'sIsNotified'));
 
 	}
 
-	public function notify_winners($iPromoId)
+	public function notify($iPromoId)
 	{
 		//mas adelante se debe verificar que el promoid no este vacio para redirigir a otra pagina
 
@@ -64,7 +64,7 @@ class Winners extends CI_Controller
 				$this->winner_model->update_notified_at($winner['winner_id']);
 			}
 		}
-		redirect(base_url().'winners/show_winners/'.$iPromoId.'/is_notified');
+		redirect(base_url().'winners/show/'.$iPromoId.'/is_notified');
 	}
 
 	public function accept_award($iWinnerId)
@@ -96,6 +96,8 @@ class Winners extends CI_Controller
 				);
 				try{
 					$post_id = $this->facebook_utils->post_on_user_wall($sUserFbuid, $aPost);
+					$this->winner_model->initialize(null, null, date('Y-m-d H:i:s',(time())));
+					$this->winner_model->update_accepted_at($iWinnerId);
                 	$this->layout->setLayout('fb_canvas_layout');
 					$this->layout->view('congrats');
                 }
