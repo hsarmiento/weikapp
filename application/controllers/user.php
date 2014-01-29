@@ -140,6 +140,7 @@ class User extends CI_Controller
 			}
 		}
 		$this->layout->setTitle('Editar');
+		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
 		$this->layout->view('edit',compact('aCategories','iUid', 'sSuccess','aUserData'));
 	}
 

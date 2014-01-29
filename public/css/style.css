@@ -180,4 +180,10 @@ a:hover {
     text-decoration: underline;
 }	
 
+.error{
+	display: inline-block;
+	margin-left: 10px;
+	color: red;
+}
+
 /* FIN USER EDIT */
