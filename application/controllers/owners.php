@@ -55,7 +55,9 @@ class Owners extends CI_Controller
 				'protocol' => 'smtp',
 				'smtp_host' => 'ssl://smtp.googlemail.com',
 				'smtp_port' => 465,
+				//ingresar mail
 				'smtp_user' => '',
+				// ingresar password
 				'smtp_pass' => '',
 				'mailtype'  => 'text', 
 		    	'charset'   => 'iso-8859-1'
@@ -87,7 +89,12 @@ Atentamente el equipo de Weikapp
 		$this->layout->view('verify', compact('iResults'));
 	}
 
-	public function login()
+	public function authenticate()
+	{
+		$this->layout->view('authenticate');
+	}
+
+	public function fblogin()
 	{
 		$iFbuid = $this->facebook_utils->get_user_fbuid();
 		try
@@ -100,5 +107,10 @@ Atentamente el equipo de Weikapp
    		{
       		error_log($e->getMessage());
   		}
+	}
+
+	public function login()
+	{
+
 	}
 }
