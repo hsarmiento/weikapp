@@ -84,7 +84,7 @@ class User extends CI_Controller
 					$aUrl = explode('/', $this->session->flashdata('urlFrom'));
 					// echo base_url();
 					redirect(base_url().'promos/index/'.$aUrl[3].'/'.$aUrl[2]);
-				}				
+				}
 			}
 			else
 			{

@@ -4,5 +4,6 @@
 	<p>
 		ACA HABRA MUCHO TEXTO Y FOTOS
 	</p>
-	<a href="<?php echo base_url().'owners/login'?>" >Comienza ya</a>
+	<a href="<?php echo base_url().'owners/signup'?>" >Crea tu cuenta ahora</a><br><br>
+	<a href="<?php echo base_url().'owners/signup'?>" >Si ya tienes cuenta, logeate</a>
 </div>

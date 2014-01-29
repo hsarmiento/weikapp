@@ -59,6 +59,16 @@ class Facebook_utils
 		}
 	}
 
+	public function allowed_manage_pages($iFbuid)
+	{
+		$aPermissions = $this->get_permissions($iFbuid);
+		if (array_key_exists('manage_pages', $aPermissions['data']['0']))
+		{
+			return true;
+		}
+		return false;
+	}
+
 	public function post_on_user_wall($iFbuid, $aPost)
 	{
 		return $this->CI->facebook->api('/'.$iFbuid.'/feed/', 'POST', $aPost);
@@ -67,5 +77,10 @@ class Facebook_utils
 	public function execute_fql_query($aOptions)
 	{
 		return $this->CI->facebook->api($aOptions);
+	}
+
+	public function api_call($sOption)
+	{
+		return $this->CI->facebook->api($sOption);
 	}
 }

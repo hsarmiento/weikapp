@@ -9,9 +9,9 @@ class Owners extends CI_Controller
         $this->layout->setLayout('layout');
 	}
 
-	public function login()
+	public function signup()
 	{
-		$this->layout->view('login');
+		$this->layout->view('signup');
 	}
 
 	public function create()
@@ -47,8 +47,58 @@ class Owners extends CI_Controller
 		}
 		else
 		{
-			$this->owner_model->initialize($this->input->post('names'),$this->input->post('last_name'),$this->input->post('email'),$this->input->post('password'));
-			echo $this->owner_model->save();
+			$sHash = md5( rand(0,1000) );
+			$this->owner_model->initialize($this->input->post('names'),$this->input->post('last_name'),$this->input->post('email'),$this->input->post('password'),$sHash);
+			$this->owner_model->save();
+
+			$config = array(
+				'protocol' => 'smtp',
+				'smtp_host' => 'ssl://smtp.googlemail.com',
+				'smtp_port' => 465,
+				'smtp_user' => '',
+				'smtp_pass' => '',
+				'mailtype'  => 'text', 
+		    	'charset'   => 'iso-8859-1'
+			);
+			$this->load->library('email', $config);
+			$this->email->set_newline("\r\n");
+
+			$this->email->from('sebastian@backfront.cl', 'John Wayne');
+			$this->email->to($this->input->post('email')); 
+
+			$this->email->subject('[Weikapp] Verificaci&oacute;n de registro');
+			$this->email->message('Gracias por registrarse en Weikapp!
+Su cuenta ha sido creada, por favor siga el link a continuación para activar su cuenta:
+
+http://www.weikapp.cl/owners/verify/email/'.$this->input->post('email').'/hash/'.$sHash.'
+
+Atentamente el equipo de Weikapp
+			');	
+
+			$this->email->send();
+
+			echo $this->email->print_debugger();
 		}
+	}
+
+	public function verify($sEmail, $sHash)
+	{
+		$iResults = $this->owner_model->validate_email($sEmail,$sHash);
+		$this->layout->view('verify', compact('iResults'));
+	}
+
+	public function login()
+	{
+		$iFbuid = $this->facebook_utils->get_user_fbuid();
+		try
+		{
+			$aPages = $this->facebook_utils->api_call('/'.$iFbuid.'/accounts');
+			$bManagePages = $this->facebook_utils->allowed_manage_pages($iFbuid);
+			$this->layout->view('login',compact('aPages','bManagePages'));
+		}
+		catch(Exception $e)
+   		{
+      		error_log($e->getMessage());
+  		}
 	}
 }
