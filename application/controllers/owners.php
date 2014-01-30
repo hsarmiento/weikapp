@@ -101,7 +101,7 @@ Atentamente el equipo de Weikapp
 		{
 			$aPages = $this->facebook_utils->api_call('/'.$iFbuid.'/accounts');
 			$bManagePages = $this->facebook_utils->allowed_manage_pages($iFbuid);
-			$this->layout->view('login',compact('aPages','bManagePages'));
+			$this->layout->view('fblogin',compact('aPages','bManagePages'));
 		}
 		catch(Exception $e)
    		{
@@ -111,6 +111,27 @@ Atentamente el equipo de Weikapp
 
 	public function login()
 	{
-
+		$sEmail = $this->input->post('email');
+		if (!isset($sEmail))
+		{
+			$sEmail = '';
+			$this->layout->view('login',compact('sEmail'));
+		}
+		else
+		{
+			$aPassword = $this->owner_model->get_password_by_email($this->input->post('email'));
+			if ($aPassword['password'] == md5($this->input->post('password'))) 
+			{
+				$iOwnerId = $this->owner_model->get_id_by_email($this->input->post('email'));
+				$this->session->set_userdata(array('uid' => $iOwnerId,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
+				// redirect to profile
+				
+			}
+			else
+			{
+				$sEmail = $this->input->post('email');
+				$this->layout->view('login',compact('sEmail'));
+			}
+		}		
 	}
 }

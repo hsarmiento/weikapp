@@ -18,10 +18,6 @@
 ?>
 </div>
 
-<div class="container">
-	<a href="<?= $this->facebook_utils->get_login_url(array('scope' => 'email,publish_stream,publish_actions,manage_pages','redirect_uri' => base_url().'owners/login'))?>">Login con facebook</a>
-</div>
-
 <script type="text/javascript">
 function validate_email()
 {

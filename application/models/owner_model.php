@@ -45,4 +45,31 @@ class Owner_model extends CI_Model
         $this->db->get();
         return $this->db->count_all_results();
     }
+
+    public function get_password_by_email($sPassword)
+    {
+        $this->db->select('password')
+        ->from('owners')
+        ->where('email', $sPassword);
+        $aResult = $this->db->get()->row_array();
+        return $aResult;
+    }
+
+    public function get_id_by_email($sEmail)
+    {
+        $this->db->select('id')
+        ->from('owners')
+        ->where('email', $sEmail);
+        $aResult = $this->db->get()->row_array();
+        return $aResult;
+    }
+
+    public function get_names_by_id($iOwnerId)
+    {
+        $this->db->select('names')
+        ->from('owners')
+        ->where('id', $iOwnerId);
+        $aResult = $this->db->get()->row_array();
+        return $aResult;
+    }
 }
