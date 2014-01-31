@@ -96,17 +96,62 @@ Atentamente el equipo de Weikapp
 
 	public function fblogin()
 	{
-		$iFbuid = $this->facebook_utils->get_user_fbuid();
-		try
+		$aGet = $this->input->get();
+		if (array_key_exists('error', $aGet) && array_key_exists('error_code', $aGet) && array_key_exists('error_reason', $aGet))
 		{
-			$aPages = $this->facebook_utils->api_call('/'.$iFbuid.'/accounts');
-			$bManagePages = $this->facebook_utils->allowed_manage_pages($iFbuid);
-			$this->layout->view('fblogin',compact('aPages','bManagePages'));
+			if ($aGet['error_code'] == 200 && $aGet['error_reason'] == 'user_denied')
+			{
+				redirect(base_url().'companies/index/');
+			}
 		}
-		catch(Exception $e)
-   		{
-      		error_log($e->getMessage());
-  		}
+		else
+		{
+			$iFbuid = $this->facebook_utils->get_user_fbuid();
+			try
+			{				
+				if ($this->facebook_utils->allowed_manage_pages($iFbuid) == true)
+				{
+					if ($this->owner_model->exist_fbuid($iFbuid) == false)
+					{
+						// add new owner
+						$aResult = $this->owner_model->get_user_fb_data($iFbuid);
+						$this->owner_model->initialize($aResult['0']['first_name'],$aResult['0']['last_name'],$aResult['0']['email'],'','',$iFbuid);
+						$this->owner_model->save_from_facebook();
+					}
+					// check if theres new pages
+					$this->load->model('company_model');
+					$iOwnerId = $this->owner_model->get_userid_by_fbuid($iFbuid);
+					$aResult = $this->company_model->get_all_fbpid_by_ownerid($iOwnerId);
+					$aPages = $this->facebook_utils->api_call('/'.$iFbuid.'/accounts');
+					$aPagesFbpid = array();
+					foreach ($aResult as $key)
+					{
+						array_push($aPagesFbpid, $key['fb_pid']);
+					}
+					foreach ($aPages['data'] as $key)
+					{
+						if (!in_array($key['id'], $aPagesFbpid))
+						{
+							// add new pages
+							$this->company_model->initialize($iOwnerId,$key['id'],$key['name']);
+							$this->company_model->save();							
+						}						
+					}
+					// save sessions
+					$this->session->set_userdata(array('uid' => $iOwnerId,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
+					// redirect to owner profile					
+					// redirect(base_url().'owner/profile');		
+				}
+				else
+				{
+					redirect($this->facebook_utils->get_login_url(array('scope' => 'manage_pages','redirect_uri' => base_url().'owners/fblogin')));
+				}
+			}
+			catch(Exception $e)
+	   		{
+	      		error_log($e->getMessage());
+	  		}			
+		}
 	}
 
 	public function login()
