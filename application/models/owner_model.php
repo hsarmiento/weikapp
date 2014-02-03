@@ -131,4 +131,17 @@ class Owner_model extends CI_Model
         $aQuery = $this->db->get()->row_array();
         return $aQuery['id'];
     }
+
+    public function is_email_repeated($sEmail)
+    {
+        $query = $this->db->get_where('owners',array('email' => $sEmail));
+        if ($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

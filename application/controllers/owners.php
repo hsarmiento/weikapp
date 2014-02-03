@@ -11,6 +11,7 @@ class Owners extends CI_Controller
 
 	public function signup()
 	{
+		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
 		$this->layout->view('signup');
 	}
 
@@ -30,8 +31,8 @@ class Owners extends CI_Controller
 			),
 			array(
 				'field' => 'email',
-				'label' => 'Correo electrónico',
-				'rules' => 'required'
+				'label' => 'correo electrónico',
+				'rules' => 'callback_exist_email'
 			),
 			array(
 				'field' => 'password',
@@ -43,7 +44,7 @@ class Owners extends CI_Controller
 		$this->form_validation->set_message('required', 'Debe llenar el campo de %s');
 		if ($this->form_validation->run() === false)
 		{
-			$this->layout->view('login');
+			$this->layout->view('signup');
 		}
 		else
 		{
@@ -83,14 +84,29 @@ Atentamente el equipo de Weikapp
 		}
 	}
 
+	public function exist_email($sEmail)
+	{
+		if ($this->owner_model->is_email_repeated($sEmail))
+		{
+			$this->form_validation->set_message('exist_email', 'Este %s ya está en uso');
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
 	public function verify($sEmail, $sHash)
 	{
 		$iResults = $this->owner_model->validate_email($sEmail,$sHash);
+		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
 		$this->layout->view('verify', compact('iResults'));
 	}
 
 	public function authenticate()
 	{
+		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
 		$this->layout->view('authenticate');
 	}
 
@@ -156,6 +172,7 @@ Atentamente el equipo de Weikapp
 
 	public function login()
 	{
+		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
 		$sEmail = $this->input->post('email');
 		if (!isset($sEmail))
 		{
@@ -178,5 +195,10 @@ Atentamente el equipo de Weikapp
 				$this->layout->view('login',compact('sEmail'));
 			}
 		}		
+	}
+
+	public function recovery()
+	{
+
 	}
 }
