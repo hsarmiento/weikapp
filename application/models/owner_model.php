@@ -62,7 +62,6 @@ class Owner_model extends CI_Model
         $this->db->select('email,hash,activated_at')
         ->from('owners')
         ->where($aWhere);
-        $this->db->get();
         return $this->db->count_all_results();
     }
 
@@ -89,6 +88,15 @@ class Owner_model extends CI_Model
         $this->db->select('names')
         ->from('owners')
         ->where('id', $iOwnerId);
+        $aResult = $this->db->get()->row_array();
+        return $aResult;
+    }
+
+    public function get_field_by_something($sFields,$aWhere)
+    {
+        $this->db->select($sFields)
+        ->from('owners')
+        ->where($aWhere);
         $aResult = $this->db->get()->row_array();
         return $aResult;
     }
@@ -143,5 +151,20 @@ class Owner_model extends CI_Model
         {
             return false;
         }
+    }
+
+    public function update_field($aFields,$aWhere)
+    {
+        $this->db->update('owners',$aFields,$aWhere);
+        return $this->db->affected_rows();
+    }
+
+    public function validate_email_and_hash($sEmail,$sHash)
+    {
+        $aWhere = array('email' => $sEmail, 'hash' => $sHash);
+        $this->db->select('email,hash')
+        ->from('owners')
+        ->where($aWhere);
+        return $this->db->count_all_results();
     }
 }

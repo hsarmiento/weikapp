@@ -11,7 +11,7 @@
 			echo form_submit(array('name' => 'login_button', 'id' => 'login_button', 'value' => 'Ingresar'));
 		echo form_close();
 ?>
-<a href="#">Olvidé la contraseña</a>
+<a href="<?php echo base_url().'owners/recovery' ?>">Olvidé la contraseña</a>
 
 <script type="text/javascript">
 	$(function(){

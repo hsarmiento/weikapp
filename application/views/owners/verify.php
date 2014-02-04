@@ -4,8 +4,8 @@
 		<h1>Validado el mail po campeón. Ahora puedes logearte</h1>		
 	<?php 
 
-		$aAttributes = array('id' => 'login-form', $aAttributes);
-		echo form_open('owners/login');
+		$aAttributes = array('id' => 'login-form');
+		echo form_open('owners/login', $aAttributes);
 			echo form_input(array('name' => 'email', 'id' => 'email', 'placeholder' => 'Tu correo electrónico', 'class' => 'required'));
 			echo '<br/>';
 			echo form_password(array('name' => 'password', 'id' => 'password', 'placeholder' => 'Contraseña', 'class' => 'required'));

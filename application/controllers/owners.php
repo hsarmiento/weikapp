@@ -32,7 +32,7 @@ class Owners extends CI_Controller
 			array(
 				'field' => 'email',
 				'label' => 'correo electrónico',
-				'rules' => 'callback_exist_email'
+				'rules' => 'callback_repeated_email'
 			),
 			array(
 				'field' => 'password',
@@ -66,29 +66,29 @@ class Owners extends CI_Controller
 			$this->load->library('email', $config);
 			$this->email->set_newline("\r\n");
 
-			$this->email->from('sebastian@backfront.cl', 'John Wayne');
+			$this->email->from('', 'John Wayne');
 			$this->email->to($this->input->post('email')); 
 
 			$this->email->subject('[Weikapp] Verificaci&oacute;n de registro');
 			$this->email->message('Gracias por registrarse en Weikapp!
 Su cuenta ha sido creada, por favor siga el link a continuación para activar su cuenta:
 
-http://www.weikapp.cl/owners/verify/email/'.$this->input->post('email').'/hash/'.$sHash.'
+http://www.weikapp.cl/owners/verify/'.$this->input->post('email').'/'.$sHash.'
 
 Atentamente el equipo de Weikapp
 			');	
 
 			$this->email->send();
 
-			echo $this->email->print_debugger();
+			// echo $this->email->print_debugger();
 		}
 	}
 
-	public function exist_email($sEmail)
+	public function repeated_email($sEmail)
 	{
 		if ($this->owner_model->is_email_repeated($sEmail))
 		{
-			$this->form_validation->set_message('exist_email', 'Este %s ya está en uso');
+			$this->form_validation->set_message('repeated_email', 'Este %s ya está en uso');
 			return false;
 		}
 		else
@@ -139,19 +139,22 @@ Atentamente el equipo de Weikapp
 					$iOwnerId = $this->owner_model->get_userid_by_fbuid($iFbuid);
 					$aResult = $this->company_model->get_all_fbpid_by_ownerid($iOwnerId);
 					$aPages = $this->facebook_utils->api_call('/'.$iFbuid.'/accounts');
-					$aPagesFbpid = array();
-					foreach ($aResult as $key)
+					if (empty($aPages['data']) === false)
 					{
-						array_push($aPagesFbpid, $key['fb_pid']);
-					}
-					foreach ($aPages['data'] as $key)
-					{
-						if (!in_array($key['id'], $aPagesFbpid))
+						$aPagesFbpid = array();
+						foreach ($aResult as $key)
 						{
-							// add new pages
-							$this->company_model->initialize($iOwnerId,$key['id'],$key['name']);
-							$this->company_model->save();							
-						}						
+							array_push($aPagesFbpid, $key['fb_pid']);
+						}
+						foreach ($aPages['data'] as $key)
+						{
+							if (!in_array($key['id'], $aPagesFbpid))
+							{
+								// add new pages
+								$this->company_model->initialize($iOwnerId,$key['id'],$key['name']);
+								$this->company_model->save();							
+							}						
+						}
 					}
 					// save sessions
 					$this->session->set_userdata(array('uid' => $iOwnerId,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
@@ -199,6 +202,106 @@ Atentamente el equipo de Weikapp
 
 	public function recovery()
 	{
+		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
+		$this->layout->view('recovery');
+	}
 
+	public function send()
+	{		
+		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
+		$this->load->library('form_validation');
+		$aValidationRules = array(
+			array(
+				'field' => 'email',
+				'label' => 'correo electrónico',
+				'rules' => 'callback_exist_email'
+			)
+		);
+		$this->form_validation->set_rules($aValidationRules);
+		if ($this->form_validation->run() === false)
+		{
+			$this->layout->view('recovery');
+		}
+		else
+		{
+			// actualiza el hash
+			$sHash = md5( rand(0,1000) );
+			$this->owner_model->update_field(array('hash' => $sHash),array('email' => $this->input->post('email')));
+			// envia el mail
+			$config = array(
+				'protocol' => 'smtp',
+				'smtp_host' => 'ssl://smtp.googlemail.com',
+				'smtp_port' => 465,
+				//ingresar mail
+				'smtp_user' => '',
+				// ingresar password
+				'smtp_pass' => '',
+				'mailtype'  => 'text', 
+		    	'charset'   => 'iso-8859-1'
+			);
+			$this->load->library('email', $config);
+			$this->email->set_newline("\r\n");
+
+			$this->email->from('', 'John Wayne');
+			$this->email->to($this->input->post('email')); 
+
+			$this->email->subject('[Weikapp] Recuperar password');
+			$this->email->message('Gracias por volver a Weikapp!
+Por favor siga el link a continuación para crear una nueva password:
+
+http://www.weikapp.cl/owners/reset/'.$this->input->post('email').'/'.$sHash.'
+
+Atentamente el equipo de Weikapp
+			');	
+
+			$this->email->send();
+			// echo $this->email->print_debugger();
+			// muestra mensaje
+			echo 'Un correo ha sido enviado al email especificado.';
+		}
+	}
+
+	public function exist_email($sEmail)
+	{
+		if ($this->owner_model->is_email_repeated($sEmail))
+		{
+			return true;
+		}
+		else
+		{
+			$this->form_validation->set_message('exist_email', 'Esa dirección de correo electrónico no tiene asociada una cuenta de usuario. ¿Tienes certeza de haberte registrado?');
+			return false;
+		}
+	}
+
+	public function reset($sEmail,$sHash)
+	{
+		// validar email
+		$iResults = $this->owner_model->validate_email_and_hash($sEmail,$sHash);
+		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
+		$this->layout->view('reset', compact('iResults','sEmail'));
+	}
+
+	public function change()
+	{
+		// update password
+		$this->owner_model->update_field(array('password' => md5($this->input->post('password'))),array('email' => $this->input->post('email')));
+		// save sessions
+		$aResult = $this->owner_model->get_field_by_something('id,names',array('email' => $this->input->post('email')));
+		$this->session->set_userdata(array('uid' => $aResult['id'],'logged_in' => TRUE, 'uname' => $aResult['names']));
+		// redirect to profile
+	}
+
+	public function logout()
+	{
+		// Destroy CodeIgniter Session 
+		$this->session->sess_destroy();
+
+		// Destroy Facebook Session using Facebook function
+		$this->facebook_utils->session_destroy();
+
+		// Maybe even destroy all native sessions as overkill
+		session_destroy();
+		redirect(base_url());
 	}
 }
