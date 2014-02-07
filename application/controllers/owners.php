@@ -159,7 +159,7 @@ Atentamente el equipo de Weikapp
 					// save sessions
 					$this->session->set_userdata(array('uid' => $iOwnerId,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
 					// redirect to owner profile					
-					// redirect(base_url().'owner/profile');		
+					redirect(base_url().'owner/profile');
 				}
 				else
 				{
@@ -190,6 +190,7 @@ Atentamente el equipo de Weikapp
 				$iOwnerId = $this->owner_model->get_id_by_email($this->input->post('email'));
 				$this->session->set_userdata(array('uid' => $iOwnerId,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
 				// redirect to profile
+				redirect(base_url().'owner/profile');
 				
 			}
 			else
@@ -290,6 +291,7 @@ Atentamente el equipo de Weikapp
 		$aResult = $this->owner_model->get_field_by_something('id,names',array('email' => $this->input->post('email')));
 		$this->session->set_userdata(array('uid' => $aResult['id'],'logged_in' => TRUE, 'uname' => $aResult['names']));
 		// redirect to profile
+		redirect(base_url().'owner/profile');
 	}
 
 	public function logout()
@@ -303,5 +305,12 @@ Atentamente el equipo de Weikapp
 		// Maybe even destroy all native sessions as overkill
 		session_destroy();
 		redirect(base_url());
+	}
+
+	public function profile()
+	{
+		logged_or_redirect('owners/login', 'companies/index');
+
+
 	}
 }

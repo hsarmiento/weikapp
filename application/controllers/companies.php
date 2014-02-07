@@ -6,11 +6,10 @@ class Companies extends CI_Controller
 	{
 		parent::__construct();
         $this->layout->setLayout('layout');
-        // $this->load->model('category_model');
 	}
 
 	public function index()
 	{
 		$this->layout->view('index');
-	}
+	}	
 }
