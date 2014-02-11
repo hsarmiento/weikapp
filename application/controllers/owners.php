@@ -6,7 +6,7 @@ class Owners extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('owner_model');
-        $this->layout->setLayout('layout');
+        $this->layout->setLayout('business_layout');
 	}
 
 	public function signup()
@@ -136,6 +136,7 @@ Atentamente el equipo de Weikapp
 					}
 					// check if theres new pages
 					$this->load->model('company_model');
+					$this->load->model('subscription_model');
 					$iOwnerId = $this->owner_model->get_userid_by_fbuid($iFbuid);
 					$aResult = $this->company_model->get_all_fbpid_by_ownerid($iOwnerId);
 					$aPages = $this->facebook_utils->api_call('/'.$iFbuid.'/accounts');
@@ -152,14 +153,17 @@ Atentamente el equipo de Weikapp
 							{
 								// add new pages
 								$this->company_model->initialize($iOwnerId,$key['id'],$key['name']);
-								$this->company_model->save();							
+								$this->company_model->save();
+								$aResult = $this->company_model->get_fields_by_something('id',array('fb_pid' => $key['id']));
+								$this->subscription_model->initialize(1,$aResult['id']);
+								$this->subscription_model->save();
 							}						
 						}
 					}
 					// save sessions
-					$this->session->set_userdata(array('uid' => $iOwnerId,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
-					// redirect to owner profile					
-					redirect(base_url().'owner/profile');
+					$this->session->set_userdata(array('uid' => $iOwnerId, 'fbuid'=> $iFbuid,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
+					// redirect to owner profile
+					redirect(base_url().'owners/profile');
 				}
 				else
 				{
@@ -188,7 +192,7 @@ Atentamente el equipo de Weikapp
 			if ($aPassword['password'] == md5($this->input->post('password'))) 
 			{
 				$iOwnerId = $this->owner_model->get_id_by_email($this->input->post('email'));
-				$this->session->set_userdata(array('uid' => $iOwnerId,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
+				$this->session->set_userdata(array('uid' => $iOwnerId, 'fbuid'=> NULL, 'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
 				// redirect to profile
 				redirect(base_url().'owner/profile');
 				
@@ -288,7 +292,7 @@ Atentamente el equipo de Weikapp
 		// update password
 		$this->owner_model->update_field(array('password' => md5($this->input->post('password'))),array('email' => $this->input->post('email')));
 		// save sessions
-		$aResult = $this->owner_model->get_field_by_something('id,names',array('email' => $this->input->post('email')));
+		$aResult = $this->owner_model->get_fields_by_something('id,names',array('email' => $this->input->post('email')));
 		$this->session->set_userdata(array('uid' => $aResult['id'],'logged_in' => TRUE, 'uname' => $aResult['names']));
 		// redirect to profile
 		redirect(base_url().'owner/profile');
@@ -309,8 +313,12 @@ Atentamente el equipo de Weikapp
 
 	public function profile()
 	{
-		logged_or_redirect('owners/login', 'companies/index');
-
-
+		logged_or_redirect('owners/authenticate', 'owners/profile');
+		$this->load->model('company_model');
+		$this->load->model('subscription_model');
+		$this->load->model('plan_model');
+		// $aCompany = 
+		// $aPlan = 
+		$this->layout->view('profile');
 	}
 }

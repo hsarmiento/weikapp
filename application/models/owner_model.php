@@ -80,7 +80,7 @@ class Owner_model extends CI_Model
         ->from('owners')
         ->where('email', $sEmail);
         $aResult = $this->db->get()->row_array();
-        return $aResult;
+        return $aResult['id'];
     }
 
     public function get_names_by_id($iOwnerId)
@@ -89,10 +89,10 @@ class Owner_model extends CI_Model
         ->from('owners')
         ->where('id', $iOwnerId);
         $aResult = $this->db->get()->row_array();
-        return $aResult;
+        return $aResult['names'];
     }
 
-    public function get_field_by_something($sFields,$aWhere)
+    public function get_fields_by_something($sFields,$aWhere)
     {
         $this->db->select($sFields)
         ->from('owners')

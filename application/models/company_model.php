@@ -42,4 +42,13 @@ class Company_model extends CI_Model
         $aResult = $this->db->get()->result_array();
         return $aResult;
     }
+
+    public function get_fields_by_something($sFields,$aWhere)
+    {
+        $this->db->select($sFields)
+        ->from('companies')
+        ->where($aWhere);
+        $aResult = $this->db->get()->row_array();
+        return $aResult;
+    }
 }

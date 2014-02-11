@@ -5,7 +5,7 @@ class Companies extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-        $this->layout->setLayout('layout');
+        $this->layout->setLayout('business_layout');
 	}
 
 	public function index()
