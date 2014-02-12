@@ -317,8 +317,10 @@ Atentamente el equipo de Weikapp
 		$this->load->model('company_model');
 		$this->load->model('subscription_model');
 		$this->load->model('plan_model');
-		// $aCompany = 
-		// $aPlan = 
-		$this->layout->view('profile');
+		$aCompany = $this->company_model->get_fields_with_limits('id,name',array('owner_id' => $this->session->userdata('uid')),1,0);
+		$this->session->set_userdata('company_id', $aCompany['id']);
+		$this->session->set_userdata('company_name', $aCompany['name']);
+		$aPlan = $this->subscription_model->get_plan_by_company_id($aCompany['id']);
+		$this->layout->view('profile', compact('aCompany','aPlan'));
 	}
 }

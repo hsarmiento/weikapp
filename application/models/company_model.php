@@ -51,4 +51,14 @@ class Company_model extends CI_Model
         $aResult = $this->db->get()->row_array();
         return $aResult;
     }
+
+    public function get_fields_with_limits($sFields,$aWhere,$iLimit,$iOffset)
+    {
+        $this->db->select($sFields)
+        ->from('companies')
+        ->where($aWhere)
+        ->limit($iLimit,$iOffset);
+        $aResult = $this->db->get()->row_array();
+        return $aResult;
+    }
 }

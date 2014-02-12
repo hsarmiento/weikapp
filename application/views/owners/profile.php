@@ -4,6 +4,6 @@
 <a href="#">Cambiar empresa</a>
 <hr>
 <img src="#" alt="company_photo">
-<h2>Nombre de la empresa</h2>
-<a href="#">Free</a>  <a href="#">Editar empresa</a>
+<h2><?php echo $aCompany['name']; ?></h2>
+<a href="<?php echo base_url().'subscriptions/edit'; ?>"><?php echo $aPlan['name']; ?></a>  <a href="#">Editar empresa</a>
 <hr>
