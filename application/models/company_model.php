@@ -5,6 +5,7 @@ class Company_model extends CI_Model
 	private $owner_id;
 	private $fb_pid;
 	private $name;
+    private $city;
 	private $created_at;
 
 	public function __construct()
@@ -12,17 +13,18 @@ class Company_model extends CI_Model
         parent::__construct();
     }
 
-    public function initialize($iOwnerId,$iFbpid,$sName)
+    public function initialize($iOwnerId,$iFbpid,$sName,$sCity = NULL)
     {
     	$this->owner_id = $iOwnerId;
 		$this->fb_pid = $iFbpid;
 		$this->name = $sName;
+        $this->city = $sCity;
 		$this->created_at = date('Y-m-d H:i:s',(time()));
     }
 
     public function save()
     {
-    	$aData = array('owner_id' => $this->owner_id, 'fb_pid' => $this->fb_pid, 'name' => $this->name, 'created_at' => $this->created_at);
+    	$aData = array('owner_id' => $this->owner_id, 'fb_pid' => $this->fb_pid, 'name' => $this->name, 'city'=> $this->city, 'created_at' => $this->created_at);
     	$this->db->insert('companies',$aData);
     	if($this->db->affected_rows() == '1')
         {
@@ -48,17 +50,18 @@ class Company_model extends CI_Model
         $this->db->select($sFields)
         ->from('companies')
         ->where($aWhere);
-        $aResult = $this->db->get()->row_array();
+        $aResult = $this->db->get()->result_array();
         return $aResult;
     }
 
-    public function get_fields_with_limits($sFields,$aWhere,$iLimit,$iOffset)
+    public function get_fields_with_limits($sFields,$aWhere,$iLimit,$iOffset,$sOrdeBy = 'id asc')
     {
         $this->db->select($sFields)
         ->from('companies')
         ->where($aWhere)
+        ->order_by($sOrdeBy) 
         ->limit($iLimit,$iOffset);
-        $aResult = $this->db->get()->row_array();
+        $aResult = $this->db->get()->result_array();
         return $aResult;
     }
 }

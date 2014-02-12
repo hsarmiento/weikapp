@@ -51,4 +51,15 @@ class Promo_model extends CI_Model {
         }
     }
 
+    public function get_fields_with_limits($sFields,$aWhere,$iLimit,$iOffset,$sOrdeBy = 'id asc')
+    {
+        $this->db->select($sFields)
+        ->from('promos')
+        ->where($aWhere)
+        ->order_by($sOrdeBy) 
+        ->limit($iLimit,$iOffset);
+        $aResult = $this->db->get()->result_array();
+        return $aResult;
+    }
+
 }

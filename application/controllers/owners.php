@@ -155,7 +155,7 @@ Atentamente el equipo de Weikapp
 								$this->company_model->initialize($iOwnerId,$key['id'],$key['name']);
 								$this->company_model->save();
 								$aResult = $this->company_model->get_fields_by_something('id',array('fb_pid' => $key['id']));
-								$this->subscription_model->initialize(1,$aResult['id']);
+								$this->subscription_model->initialize(1,$aResult[0]['id']);
 								$this->subscription_model->save();
 							}						
 						}
@@ -314,14 +314,44 @@ Atentamente el equipo de Weikapp
 	public function profile()
 	{
 		logged_or_redirect('owners/authenticate', 'owners/profile');
-		$this->load->model('company_model');
+		if ($this->session->userdata('company_id') == NULL)
+		{
+			$this->load->model('company_model');
+			$aCompany = $this->company_model->get_fields_with_limits('id,name,fb_pid',array('owner_id' => $this->session->userdata('uid')),1,0);
+			$this->session->set_userdata('company_id', $aCompany[0]['id']);
+			$this->session->set_userdata('company_name', $aCompany[0]['name']);
+			$this->session->set_userdata('company_fbpid', $aCompany[0]['fb_pid']);
+		}
 		$this->load->model('subscription_model');
-		$this->load->model('plan_model');
-		$aCompany = $this->company_model->get_fields_with_limits('id,name,fb_pid',array('owner_id' => $this->session->userdata('uid')),1,0);
-		$this->session->set_userdata('company_id', $aCompany['id']);
-		$this->session->set_userdata('company_name', $aCompany['name']);
-		$this->session->set_userdata('company_fbpid', $aCompany['fb_pid']);
-		$aPlan = $this->subscription_model->get_plan_by_company_id($aCompany['id']);
-		$this->layout->view('profile', compact('aCompany','aPlan'));
+		$aPlan = $this->subscription_model->get_plan_by_company_id($this->session->userdata('company_id'));
+		$this->load->model('promo_model');
+		$aPromos = $this->promo_model->get_fields_with_limits('id,title',array('company_id' => $this->session->userdata('company_id')),3,0);
+		$this->layout->view('profile', compact('aPlan','aPromos'));
+	}
+
+	//change business
+	public function choose()
+	{
+		$this->load->model('company_model');
+		$aCompanies = $this->company_model->get_fields_by_something('id,name',array('owner_id' => $this->session->userdata('uid')));
+		$this->layout->view('choose',compact('aCompanies'));
+	}
+
+	public function select($iCompanyId)
+	{
+		$this->load->model('company_model');
+		$aResult = $this->company_model->get_fields_by_something('id,name,fb_pid',array('id' => $iCompanyId));
+		$this->session->set_userdata('company_id', $aResult[0]['id']);
+		$this->session->set_userdata('company_name', $aResult[0]['name']);
+		if ($aResult[0]['fb_pid'] == NULL)
+		{
+			$this->session->set_userdata('company_fbpid', NULL);
+		}
+		else
+		{
+			$this->session->set_userdata('company_fbpid', $aResult[0]['fb_pid']);
+		}		
+		//redirect to profile
+		redirect(base_url().'owners/profile');
 	}
 }
