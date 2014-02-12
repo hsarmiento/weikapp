@@ -12,4 +12,15 @@ class Companies extends CI_Controller
 	{
 		$this->layout->view('index');
 	}	
+
+	public function add()
+	{
+		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
+		$this->layout->view('add');
+	}
+
+	public function create()
+	{
+		echo $this->input->post('name');
+	}
 }
