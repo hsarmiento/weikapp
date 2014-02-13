@@ -11,7 +11,7 @@ class Promo_model extends CI_Model {
 
     public function get_promos($limit, $offset,$category)
     {
-        $query = $this->db->query('select * from categories as t1 join promo_categories as t2 on t1.id = t2.category_id join promos as t3 on t2.promo_id = t3.id where t1.name = "'.$category.'" and t3.start_datetime <= now() and t3.end_datetime > now() order by start_datetime desc limit '.$offset.','.$limit);
+        $query = $this->db->query('select t3.*,t4.name as company_name, DATEDIFF(t3.end_datetime,CURDATE()) AS remaining_days from categories as t1 join promo_categories as t2 on t1.id = t2.category_id join promos as t3 on t2.promo_id = t3.id join companies as t4 on t3.company_id = t4.id where t1.name = "'.$category.'" and t3.start_datetime <= now() and t3.end_datetime > now() order by start_datetime desc limit '.$offset.','.$limit);
         return $query->result_array();
     }
 
@@ -26,7 +26,7 @@ class Promo_model extends CI_Model {
 
     public function get_favorite_promos($iLimit, $iOffset, $iUserId)
     {
-        $query = $this->db->query('select * from users as t1 join user_preferences as t2 on t1.id = t2.user_id join categories as t3 on t2.category_id = t3.id join promo_categories as t4 on t3.id = t4.category_id join promos as t5 on t4.promo_id = t5.id where t1.id = '.$iUserId.' order by t5.start_datetime desc limit '.$iOffset.','.$iLimit);
+        $query = $this->db->query('select t3.*,t4.name as company_name, DATEDIFF(t3.end_datetime,CURDATE()) AS remaining_days from users as t1 join user_preferences as t2 on t1.id = t2.user_id join categories as t3 on t2.category_id = t3.id join promo_categories as t4 on t3.id = t4.category_id join promos as t5 on t4.promo_id = t5.id join companies as t4 on t3.company_id = t4.id where t1.id = '.$iUserId.' order by t5.start_datetime desc limit '.$iOffset.','.$iLimit);
         return $query->result_array(); 
     }
 

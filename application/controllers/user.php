@@ -24,13 +24,10 @@ class User extends CI_Controller
 		$aData['user'] = null;
 		$urlFrom = null;
 		if ($iUserId)
-		{
-			echo __LINE__.'<br/>';
-			echo $iUserId; 
+		{			
 			try
 			{
 				$aData['logout_url'] = $this->facebook_utils->get_logout_url(array( 'next' => base_url().'user/logout' ));
-				echo __LINE__.'<br/>';
                 if ($this->User_model->exist_fbuid($iUserId) === FALSE)
 		        {
 		        	$aUserInfo = $this->User_model->get_user_fb_data($iUserId);

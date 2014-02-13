@@ -5,33 +5,57 @@
 	}
 ?>
 
-<div class="header">
-	<h2>Categorias</h2>
-	<?php
-		foreach ($aCategories as $value) { ?>
-			<p><a href="<?php echo base_url();?>promos/index/<?=$value['name']?>"><?=ucfirst($value['name'])?></a></p>
-		<?php } ?>
+<div class="tabs">
+	<a href="#" onclick="$('').toggle('');">Concepción</a>
+	<img src="<?php echo base_url()?>public/img/tabs.png" alt="tabs">
+	<a href="#" onclick="$('#category_menu').toggle('');"><?php echo $category; ?></a>
+	<img src="<?php echo base_url()?>public/img/tabs.png" alt="tabs">
 </div>
-
-<h1>HOME PROMOS</h1>
 
 <div id="dialog">
 </div>
- 
-<div class="container" id="container-promos">
-		<?php if($count == 0){ ?>
-			<h3>No existen promociones para esta categoría</h3>
-		<?php }else{
-				foreach ($aData as $value) { ?>
-					<div class="promo" onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
-						<?=$value['title']?>
-						<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225" alt="foto_promo">
-					</div>
-			<?php } 
 
-		} ?>	
+<div id="category_menu" class="submenu">
+	<h2>
+		Categorías
+	</h2>
+	<?php
+		foreach ($aCategories as $value) { ?>
+			<div class="links">
+				<a href="<?php echo base_url();?>promos/index/<?=$value['name']?>"><?=ucfirst($value['name'])?></a>				
+			</div>
+		<?php } ?>	
 </div>
 
+<div class="container" id="container-promos">
+	<?php if($count == 0){ ?>
+		<h3>No existen promociones para esta categoría</h3>
+	<?php }else{ ?>
+		<section> 
+			<?php foreach ($aData as $value) { ?>
+				<article onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
+					<figure>
+						<img src="<?php echo base_url();?>public/img/piscola.jpg" alt="foto_promo">
+						<figcaption>
+							<?=$value['title']?>	
+						</figcaption>
+						<div class="left">
+							<a href="#"><?=$value['company_name']?></a>
+						</div>
+						<div class="icon_right">
+							<img src="<?php echo base_url()?>public/img/time.png" alt="time" />
+							QUEDAN <?=$value['remaining_days']?> DÍAS
+						</div>
+						<div class="icon_right">
+							<img src="<?php echo base_url()?>public/img/people.png" alt="people" />
+							<?=$value['number_participants']?>
+						</div>						
+					</figure>
+				</article>
+				<?php } ?>
+		</section>
+	<?php } ?>	
+</div>
 
 <script>
 
