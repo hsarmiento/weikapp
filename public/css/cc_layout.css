@@ -220,6 +220,17 @@ article figure figcaption{
 	background: #FFF;
 	color: #1c92da;
 }
+
+article figure a:link{
+	color: #333333;
+	text-decoration: underline;
+}
+
+article figure a:visited{
+	color: #333333;
+	text-decoration: underline;
+}
+
 .w100{
 	width: 95%;
 }
