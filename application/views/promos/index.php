@@ -32,28 +32,63 @@
 		<h3>No existen promociones para esta categoría</h3>
 	<?php }else{ ?>
 		<section> 
-			<?php foreach ($aData as $value) { ?>
-				<article onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
-					<figure>
-						<img src="<?php echo base_url();?>public/img/piscola.jpg" alt="foto_promo">
-						<figcaption>
-							<?=strtoupper($value['title'])?>	
-						</figcaption>
-						<div class="left">
-							<a href="#"><?=ucfirst($value['company_name'])?></a>
-						</div>
-						<div class="icon_right">
-							<img src="<?php echo base_url()?>public/img/time.png" alt="time" />
-							QUEDAN <?=$value['remaining_days']?> DÍAS
-						</div>
-						<div class="icon_right">
-							<img src="<?php echo base_url()?>public/img/people.png" alt="people" />
-							<?=$value['number_participants']?>
-						</div>						
-					</figure>
-				</article>
-				<hr>
-				<?php } ?>
+			<?php 
+			$all_promos = 0;
+			$little_promos = 0;
+			foreach ($aData as $value) {
+				if($all_promos %3 == 0){ ?>
+					<article onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
+						<figure>
+							<img src="<?php echo base_url();?>public/img/piscola.jpg" alt="foto_promo">
+							<figcaption>
+								<?=strtoupper($value['title'])?>	
+							</figcaption>
+							<div class="left">
+								<a href="#"><?=ucfirst($value['company_name'])?></a>
+							</div>
+							<div class="icon_right">
+								<img src="<?php echo base_url()?>public/img/time.png" alt="time" />
+								QUEDAN <?=$value['remaining_days']?> DÍAS
+							</div>
+							<div class="icon_right">
+								<img src="<?php echo base_url()?>public/img/people.png" alt="people" />
+								<?=$value['number_participants']?>
+							</div>						
+						</figure>
+					</article>
+					<hr />
+				<?php }else{ ?>
+					<article class="w50" onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
+						<figure>
+							<img src="<?php echo base_url();?>public/img/piscola.jpg" alt="foto_promo">
+							<figcaption>
+								<?=strtoupper($value['title'])?>	
+							</figcaption>
+							<div class="left">
+								<a href="#"><?=ucfirst($value['company_name'])?></a>
+							</div>
+							<div class="icon_right">
+								<img src="<?php echo base_url()?>public/img/time.png" alt="time" />
+								QUEDAN <?=$value['remaining_days']?> DÍAS
+							</div>
+							<div class="icon_right">
+								<img src="<?php echo base_url()?>public/img/people.png" alt="people" />
+								<?=$value['number_participants']?>
+							</div>						
+						</figure>
+					</article>
+					<?php
+						if($little_promos%2==0){ ?>
+							<div class="w5">&nbsp;</div>
+						<?php
+						}else{ ?>
+							<hr /> 
+						<?php }
+					$little_promos = $little_promos + 1;
+					} ?>	
+				<?php 
+				$all_promos  = $all_promos  + 1;		
+			} ?>
 		</section>
 	<?php } ?>	
 </div>
@@ -127,8 +162,17 @@
 						var str = '';
 						var items=[]; 	
 						$.each(obj[0], function(i,val){	
-								title = val.title.toString();												
-								$('section').append("<article onclick='open_promo("+val.id+",\"" +val.title+" \")'><figure><img src='<?php echo base_url();?>public/img/piscola.jpg'><figcaption>"+val.title.toUpperCase()+"</figcaption><div class='left'><a href='#'>"+val.company_name.charAt(0).toUpperCase() + val.company_name.slice(1)+"</a></div><div class='icon_right'><img src='<?php echo base_url()?>public/img/time.png' alt='time'>QUEDAN "+val.remaining_days+" DÍAS</div><div class='icon_right'><img src='<?php echo base_url()?>public/img/people.png' alt='people'>"+val.number_participants+"</div></figure></article><hr>");	
+								title = val.title.toString();
+								if(i == 0){
+									$('section').append("<article onclick='open_promo("+val.id+",\"" +val.title+" \")'><figure><img src='<?php echo base_url();?>public/img/piscola.jpg'><figcaption>"+val.title.toUpperCase()+"</figcaption><div class='left'><a href='#'>"+val.company_name.charAt(0).toUpperCase() + val.company_name.slice(1)+"</a></div><div class='icon_right'><img src='<?php echo base_url()?>public/img/time.png' alt='time'>QUEDAN "+val.remaining_days+" DÍAS</div><div class='icon_right'><img src='<?php echo base_url()?>public/img/people.png' alt='people'>"+val.number_participants+"</div></figure></article><hr />");
+								}else{
+									$('section').append("<article class='w50' onclick='open_promo("+val.id+",\"" +val.title+" \")'><figure><img src='<?php echo base_url();?>public/img/piscola.jpg'><figcaption>"+val.title.toUpperCase()+"</figcaption><div class='left'><a href='#'>"+val.company_name.charAt(0).toUpperCase() + val.company_name.slice(1)+"</a></div><div class='icon_right'><img src='<?php echo base_url()?>public/img/time.png' alt='time'>QUEDAN "+val.remaining_days+" DÍAS</div><div class='icon_right'><img src='<?php echo base_url()?>public/img/people.png' alt='people'>"+val.number_participants+"</div></figure></article>");
+									if(i==1){
+										$('section').append("<div class='w5'>&nbsp;</div>");
+									}else if(i == 2){
+										$('section').append("<hr />");
+									}
+								}												
 							    offset = offset + 1;
 						});	
 					

@@ -15,11 +15,10 @@ class Promos extends CI_Controller
 		$this->load->model('category_model');
 		// $this->load->model('user_preference_model');
 		if($category === 'favorites' && $isLogged === true){
-			$aData = $this->promo_model->get_favorite_promos(9,0,$this->session->userdata('uid'));
+			$aData = $this->promo_model->get_favorite_promos(6,0,$this->session->userdata('uid'));
 		}elseif($category !== 'favorites'){
-			$aData = $this->promo_model->get_promos(9,0, $category);
+			$aData = $this->promo_model->get_promos(6,0, $category);
 		}
-		
 		$aCategories = $this->category_model->get_all_categories();
 		$aPromo = NULL;
 		if(isset($promo_id)){
