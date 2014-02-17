@@ -37,10 +37,10 @@
 					<figure>
 						<img src="<?php echo base_url();?>public/img/piscola.jpg" alt="foto_promo">
 						<figcaption>
-							<?=$value['title']?>	
+							<?=strtoupper($value['title'])?>	
 						</figcaption>
 						<div class="left">
-							<a href="#"><?=$value['company_name']?></a>
+							<a href="#"><?=ucfirst($value['company_name'])?></a>
 						</div>
 						<div class="icon_right">
 							<img src="<?php echo base_url()?>public/img/time.png" alt="time" />
@@ -52,6 +52,7 @@
 						</div>						
 					</figure>
 				</article>
+				<hr>
 				<?php } ?>
 		</section>
 	<?php } ?>	
@@ -127,7 +128,7 @@
 						var items=[]; 	
 						$.each(obj[0], function(i,val){	
 								title = val.title.toString();												
-								$('#container-promos').append("<div class='promo' onclick='open_promo("+val.id+",\"" +val.title+" \")'>"+val.title+"<img src='<?php echo base_url();?>public/img/piscola.jpg' width='320' height='225'></div>");	
+								$('section').append("<article onclick='open_promo("+val.id+",\"" +val.title+" \")'><figure><img src='<?php echo base_url();?>public/img/piscola.jpg'><figcaption>"+val.title.toUpperCase()+"</figcaption><div class='left'><a href='#'>"+val.company_name.charAt(0).toUpperCase() + val.company_name.slice(1)+"</a></div><div class='icon_right'><img src='<?php echo base_url()?>public/img/time.png' alt='time'>QUEDAN "+val.remaining_days+" DÍAS</div><div class='icon_right'><img src='<?php echo base_url()?>public/img/people.png' alt='people'>"+val.number_participants+"</div></figure></article><hr>");	
 							    offset = offset + 1;
 						});	
 					

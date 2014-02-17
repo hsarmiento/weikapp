@@ -32,7 +32,7 @@
 
 			<div class="option right">
 				<input placeholder="Buscar" type="search" />
-				<a href="#" >
+				<a href="<?=base_url()?>companies" >
 					<img src="<?php echo base_url()?>public/img/ticket.png" alt="ticket" />
 				</a>
 				<?php
@@ -71,7 +71,6 @@
 
 		<?php echo $content_for_layout; ?>
 		<footer>
-			<a href="<?=base_url()?>companies">Soy empresa</a>
 		</footer>
 	</body>
 </html>
