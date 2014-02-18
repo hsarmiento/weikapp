@@ -15,7 +15,7 @@ class User_model extends CI_Model
         parent::__construct();
     }
 
-    public function initialize($iFbid,$sNames,$sLastName,$sEmail,$sGender,$sFbUsername)
+    public function initialize($iFbid,$sNames,$sLastName,$sEmail,$sGender = null,$sFbUsername = null)
     {
     	$this->fb_uid = $iFbid;
 		$this->names = $sNames;
