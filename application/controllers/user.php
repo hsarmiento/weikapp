@@ -31,7 +31,6 @@ class User extends CI_Controller
                 if ($this->User_model->exist_fbuid($iUserId) === FALSE)
 		        {
 		        	$aUserInfo = $this->User_model->get_user_fb_data($iUserId);
-		        	print_r($aUserInfo);
 		        	$this->User_model->initialize($iUserId,$aUserInfo[0]['first_name'],$aUserInfo[0]['last_name'],$aUserInfo[0]['email'],$aUserInfo[0]['sex'],$aUserInfo[0]['username']);
 		        	$this->User_model->save();
 
@@ -57,7 +56,8 @@ class User extends CI_Controller
 		        $aData['user'] = $this->User_model->get_uname_by_fbuid($iUserId);		        
 		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE, 'uname' =>$this->User_model->get_uname_by_fbuid($iUserId)));
 		        $urlFrom = $this->session->flashdata('urlFrom');
-		        if(empty($urlFrom)){
+		        if(empty($urlFrom))
+		        {
 		        	redirect(base_url().'promos/index');		        	
 		        }
 		        else

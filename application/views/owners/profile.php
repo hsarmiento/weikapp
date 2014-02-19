@@ -10,7 +10,7 @@
 else
 { ?>
 	<img src="http://graph.facebook.com/<?php echo $this->session->userdata('company_fbpid'); ?>/picture" alt="company_photo">
-<?php } 
+<?php }
  ?>
 <h2><?php echo $this->session->userdata('company_name'); ?></h2>
 <a href="<?php echo base_url().'subscriptions/edit'; ?>"><?php echo $aPlan['name']; ?></a> <!-- <a href="#">Editar empresa</a> -->
