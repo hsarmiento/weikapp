@@ -61,4 +61,52 @@ class Promos extends CI_Controller
 		$sLoginUrl = $this->facebook_utils->get_login_url(array('scope' => 'publish_actions','redirect_uri' => base_url().'competitor/participate/'.$promo_id."/".$category));
 		$this->layout->view('ajax_load_dialog_promo', compact('aPromo', 'category', 'sPublishAction', 'sLoginUrl'));
 	}
+
+	public function add(){
+		$this->load->model('plan_model');
+		$this->load->model('category_model');
+		logged_or_redirect('owners/authenticate', 'owners/profile');
+		if($iCompanyId = $this->session->userdata('company_id') != NULL){
+			$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
+			$this->layout->setLayout('business_layout');
+			$this->layout->js(array(base_url().'public/js/jquery-ui-timepicker-addon.js'));
+			$this->layout->css(array(base_url().'public/css/jquery-ui-1.10.3.custom.css'));
+			$aPlan = $this->plan_model->get_fields_by_something('*',array('id' => 1));
+			$aCategories = $this->category_model->get_all_categories();
+			$aOptionsCategories = array();
+			$aOptionsCategories[0] = 'Selecciona';
+			foreach ($aCategories as $category) {
+				$aOptionsCategories[$category['id']] = $category['name'];
+			}
+			$this->layout->view('add',compact('aPlan','aOptionsCategories'));
+		}
+	}
+
+	public function create(){
+		logged_or_redirect('owners/authenticate', 'owners/profile');
+		if ($this->session->userdata('company_id') != NULL && $this->session->userdata('oid') != NULL){
+			// print_r($_FILES);
+			$start_datetime = date("Y-m-d H:i:s", strtotime($this->input->post('start_datetime')));
+			$end_datetime = date("Y-m-d H:i:s", strtotime($this->input->post('end_datetime')));
+			$this->promo_model->initialize($this->session->userdata('company_id'),$this->input->post('title'),$this->input->post('description'),$this->input->post('terms'),$start_datetime, $end_datetime, $this->input->post('number_participants'),$this->input->post('number_winners'),1,1,0);
+			$this->promo_model->save();
+			$aResult = $this->promo_model->get_row_fields('id,title',array('company_id' => $this->session->userdata('company_id')),'id desc');
+			// print_r($aResult);
+			$config['upload_path'] = './public/img/promos/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']	= '2048';
+			$config['max_width'] = '0';
+			$config['max_height'] = '0';
+			$config['file_name'] = md5($aResult['id']);
+			
+			$this->load->library('upload', $config);
+			$this->upload->do_upload('image');
+
+			$options['image_library'] = 'ImageMagick';
+			$options['library_path']='/usr/bin';
+			$options['source_image']='./public/img/promos/'.md5($aResult['id']).'.';
+			$options['new_image']='./public/img/promos/'.md5($aResult['id']).'.png';
+			$this->load->library('image_lib',$config);
+		}
+	}
 }

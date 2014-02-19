@@ -2,12 +2,38 @@
 
 class Promo_model extends CI_Model {
 
+    private $company_id;
+    private $title;
+    private $description;
+    private $terms;
+    private $start_datetime;
+    private $end_datetime;
+    private $number_participants;
+    private $number_winners;
+    private $image;
+    private $township_id;
+    private $ended;
+
 
     public function __construct()
     {
         parent::__construct();
     }
 
+    public function initialize($iCompanyId, $sTitle, $sDescription, $sTerms, $dStartDatetime, $dEndDatetime, $iParticipants, $iWinners, $iImage, $iTownShipId, $iEnded = 0)
+    {
+        $this->company_id = $iCompanyId;
+        $this->title = $sTitle;
+        $this->description = $sDescription;
+        $this->terms = $sTerms;
+        $this->start_datetime = $dStartDatetime;
+        $this->end_datetime = $dEndDatetime;
+        $this->number_participants = $iParticipants;
+        $this->number_winners = $iWinners;
+        $this->image = $iImage;
+        $this->township_id = $iTownShipId;
+        $this->ended = $iEnded;
+    }
 
     public function get_promos($limit, $offset,$category)
     {
@@ -60,6 +86,30 @@ class Promo_model extends CI_Model {
         ->limit($iLimit,$iOffset);
         $aResult = $this->db->get()->result_array();
         return $aResult;
+    }
+
+    public function get_row_fields($sFields,$aWhere, $sOrdeBy = 'id asc')
+    {
+        $this->db->select($sFields)
+        ->from('promos')
+        ->where($aWhere)
+        ->order_by($sOrdeBy);
+        $aResult = $this->db->get()->row_array();
+        return $aResult;
+    }
+
+    public function save()
+    {
+        $aData = array('company_id' => $this->company_id, 'title' => $this->title, 'description' => $this->description, 'terms'=> $this->terms, 'start_datetime' => $this->start_datetime, 'end_datetime' => $this->end_datetime, 'number_participants' => $this->number_participants, 'number_winners' => $this->number_winners, 'image' => $this->image, 'township_id' => $this->township_id,'ended' => $this->ended);
+        $this->db->insert('promos',$aData);
+        if($this->db->affected_rows() == '1')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }
