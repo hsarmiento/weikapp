@@ -16,10 +16,19 @@ class Promos extends CI_Controller
 		// $this->load->model('user_preference_model');
 		if($category === 'favorites' && $isLogged === true){
 			$aData = $this->promo_model->get_favorite_promos(6,0,$this->session->userdata('uid'));
-		}elseif($category !== 'favorites'){
+			if (count($aData) == 0)
+			{
+				$aData = $this->promo_model->get_newest_promos(6,0);
+			}			
+		}elseif($category !== 'favorites' && $category != 'nuevas'){
 			$aData = $this->promo_model->get_promos(6,0, $category);
 		}
+		elseif ($category == 'nuevas')
+		{
+			$aData = $this->promo_model->get_newest_promos(6,0);
+		}
 		$aCategories = $this->category_model->get_all_categories();
+		array_push($aCategories, array('name' => 'nuevas'));
 		$aPromo = NULL;
 		if(isset($promo_id)){
 			$aPromo = $this->promo_model->get_info_promo($promo_id);

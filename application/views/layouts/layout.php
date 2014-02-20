@@ -24,7 +24,7 @@
 
 	<body>
 		<header>
-			<a href="<?=base_url()?>" class="home-logo left">
+			<a href="<?=base_url().'promos/index'?>" class="home-logo left">
 				<figure>
 					<img src="<?php echo base_url()?>public/img/logo.png" alt="WeikApp" />
 				</figure>
