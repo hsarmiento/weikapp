@@ -108,24 +108,25 @@ class Promos extends CI_Controller
 			$config['max_width'] = '0';
 			$config['max_height'] = '0';
 			$config['file_name'] = md5($aResult['id']);
-			$this->load->library('upload', $config);
-			$this->upload->do_upload('image');
-			$image_data = $this->upload->data();
-
-			$config = array(
-				'source_image' => $image_data['full_path'],
-	            'new_image' => './public/img/promos_big/',
-	            'maintain_ratio' => true,
-	            'width' => 800
+			imagepng(imagecreatefromstring(file_get_contents($_FILES['image']['tmp_name'])), './public/img/promos_orig/'.md5($aResult['id']).'.png');
+			
+			$this->image_lib->clear();
+        	$config= array(
+				'source_image' => './public/img/promos_orig/'.md5($aResult['id']).'.png',
+	            'new_image' => './public/img/promos_small',
+	            'maintain_ratio' => TRUE,
+	            'width' => 390,
+	            'height' => 200
 	        );
 	        $this->image_lib->initialize($config);
         	$this->image_lib->resize();
 
         	$config = array(
-				'source_image' => $image_data['full_path'],
-	            'new_image' => './public/img/promos_small',
-	            'maintain_ratio' => true,
-	            'width' => 390
+				'source_image' => './public/img/promos_orig/'.md5($aResult['id']).'.png',
+	            'new_image' => './public/img/promos_big/',
+	            'maintain_ratio' => TRUE,
+	            'width' => 700,
+	            'height' => 420
 	        );
 	        $this->image_lib->initialize($config);
         	$this->image_lib->resize();

@@ -1,0 +1,104 @@
+header, body, hgroup, aside, nav, section, article, h2, ul, li, figure{
+	margin: 0 auto;
+	padding: 0;
+}
+body {         
+	background: url(../img/landing_bg.jpg) no-repeat center center fixed;         
+	-webkit-background-size: cover;         
+	-moz-background-size: cover;         
+	-o-background-size: cover;         
+	background-size: cover;
+	color: #FFF;
+	font-family: 'Cantarell';
+	font-size: 16px;
+}
+header{
+	padding: 25px 0 0 70px;
+}
+.landing_container{
+	overflow: hidden;
+	margin: 0 auto;
+	width: 60%;
+	margin-top: 60px;
+	margin-bottom: 30px;
+	border-top: 1px solid #FFF;
+	border-bottom: 1px solid #FFF;
+	background: url(../img/landcont_bg.png);
+}
+.fleft{
+	float: left;
+	width: 30%;
+	padding: 20px;
+	text-align: center;
+	font-size: 14px;
+}
+.fright{
+	float: right;
+	width: 50%;
+}
+.fright figure{
+	display: inline-block;
+	padding: 30px 20px;
+}
+.fright figure figcaption{
+	text-align: center;
+}
+.gender_container{
+	overflow: hidden;
+	margin: 0 auto;
+	width: 60%;
+	margin-bottom: 70px;
+}
+.gender_container a{
+	display: inline-block;
+	width: 20%;
+	padding: 8px 20px;
+	margin: 20px 30px;
+	background: #fff8ee;
+	color: #f55600;
+	border-radius: 6px;
+	border: 1px solid #f55600;
+	text-decoration: none;
+	text-align: center;
+}
+.gender_container a:hover{
+	background: #535f77;
+	color: #FFF;
+}
+.gender_container p{
+	color: #535f77;
+	font-size: 15px;
+}
+footer{
+	background: #535f77;
+	border-top: 2px solid #f55600;
+	padding: 20px 0;
+	font-size: 10px;
+	width: 100%;
+	overflow: hidden;
+	bottom: 0;
+	position: fixed;
+}
+footer p{
+	text-align: center;
+}
+footer a{
+	text-decoration: none;
+	display: inline-block;
+	color: #FFF;
+	padding: 10px;
+}
+footer a:hover{
+	color: #f55600;
+}
+.footer_left{
+	float: left;
+	width: 40%;
+}
+.footer_right{
+	float:right;
+	width: 50%;
+	padding-right: 30px; 
+}
+
+
