@@ -16,6 +16,7 @@ class Companies extends CI_Controller
 
 	public function add()
 	{
+		logged_or_redirect('owners/authenticate', 'owners/profile');
 		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
 		$this->layout->view('add');
 	}
@@ -23,10 +24,12 @@ class Companies extends CI_Controller
 	public function create()
 	{
 		// add new company
+		logged_or_redirect('owners/authenticate', 'owners/profile');
 		$this->company_model->initialize($this->session->userdata('uid'),null,$this->input->post('name'),$this->input->post('city'));
 		$this->company_model->save();
 		$aResult = $this->company_model->get_fields_with_limits('id,name',array('owner_id' => $this->session->userdata('uid')),1,0,'id desc');
-
+		
+		// upload image		
 		imagepng(imagecreatefromstring(file_get_contents($_FILES['company_logo']['tmp_name'])), './public/img/companies/'.md5($aResult[0]['id']).'.png');
 
 		//set new company as default

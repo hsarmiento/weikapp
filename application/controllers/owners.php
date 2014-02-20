@@ -161,7 +161,7 @@ Atentamente el equipo de Weikapp
 						}
 					}
 					// save sessions
-					$this->session->set_userdata(array('uid' => $iOwnerId, 'fbuid'=> $iFbuid,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
+					$this->session->set_userdata(array('oid' => $iOwnerId, 'fbuid'=> $iFbuid,'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
 					// redirect to owner profile
 					redirect(base_url().'owners/profile');
 				}
@@ -192,7 +192,7 @@ Atentamente el equipo de Weikapp
 			if ($aPassword['password'] == md5($this->input->post('password'))) 
 			{
 				$iOwnerId = $this->owner_model->get_id_by_email($this->input->post('email'));
-				$this->session->set_userdata(array('uid' => $iOwnerId, 'fbuid'=> NULL, 'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
+				$this->session->set_userdata(array('oid' => $iOwnerId, 'fbuid'=> NULL, 'logged_in' => TRUE, 'uname' => $this->owner_model->get_names_by_id($iOwnerId)));
 				// redirect to profile
 				redirect(base_url().'owner/profile');
 				
@@ -293,7 +293,7 @@ Atentamente el equipo de Weikapp
 		$this->owner_model->update_field(array('password' => md5($this->input->post('password'))),array('email' => $this->input->post('email')));
 		// save sessions
 		$aResult = $this->owner_model->get_fields_by_something('id,names',array('email' => $this->input->post('email')));
-		$this->session->set_userdata(array('uid' => $aResult['id'],'logged_in' => TRUE, 'uname' => $aResult['names']));
+		$this->session->set_userdata(array('oid' => $aResult['id'],'logged_in' => TRUE, 'uname' => $aResult['names']));
 		// redirect to profile
 		redirect(base_url().'owner/profile');
 	}
@@ -317,7 +317,7 @@ Atentamente el equipo de Weikapp
 		if ($this->session->userdata('company_id') == NULL)
 		{
 			$this->load->model('company_model');
-			$aCompany = $this->company_model->get_fields_with_limits('id,name,fb_pid',array('owner_id' => $this->session->userdata('uid')),1,0);
+			$aCompany = $this->company_model->get_fields_with_limits('id,name,fb_pid',array('owner_id' => $this->session->userdata('oid')),1,0);
 			$this->session->set_userdata('company_id', $aCompany[0]['id']);
 			$this->session->set_userdata('company_name', $aCompany[0]['name']);
 			$this->session->set_userdata('company_fbpid', $aCompany[0]['fb_pid']);
@@ -333,7 +333,7 @@ Atentamente el equipo de Weikapp
 	public function choose()
 	{
 		$this->load->model('company_model');
-		$aCompanies = $this->company_model->get_fields_by_something('id,name',array('owner_id' => $this->session->userdata('uid')));
+		$aCompanies = $this->company_model->get_fields_by_something('id,name',array('owner_id' => $this->session->userdata('oid')));
 		$this->layout->view('choose',compact('aCompanies'));
 	}
 
