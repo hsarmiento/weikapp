@@ -6,8 +6,6 @@
 		echo '<br/>';
 		echo '*'.form_input(array('name' => 'city', 'id' => 'city', 'placeholder' => 'Ciudad', 'value' => set_value('city'), 'class' => 'required'));
 		echo '<br/>';
-		echo form_input(array('name' => 'website', 'id' => 'website', 'placeholder' => 'Página web', 'value' => set_value('website')));
-		echo '<br/>';
 		echo '*'.form_input(array('name' => 'company_logo', 'id' => 'company_logo', 'placeholder' => 'Imagen corporativa', 'type' => 'file', 'class' => 'required'));
 		echo '<br/>';
 		echo form_submit(array('name' => 'create_button', 'id' => 'create_button', 'value' => 'Crear empresa'));

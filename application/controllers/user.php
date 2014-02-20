@@ -102,7 +102,7 @@ class User extends CI_Controller
 
 		// Maybe even destroy all native sessions as overkill
 		session_destroy();
-		redirect(base_url());
+		redirect(base_url().'promos/index');
 	}
 
 	public function profile()
