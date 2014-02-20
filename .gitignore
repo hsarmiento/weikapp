@@ -10,4 +10,6 @@ application/logs/*
 
 application/config/database.php
 public/img/companies/*
-public/img/promos/*
+public/img/promos_orig/*
+public/img/promos_big/*
+public/img/promos_small/*

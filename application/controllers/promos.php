@@ -85,28 +85,42 @@ class Promos extends CI_Controller
 	public function create(){
 		logged_or_redirect('owners/authenticate', 'owners/profile');
 		if ($this->session->userdata('company_id') != NULL && $this->session->userdata('oid') != NULL){
-			// print_r($_FILES);
 			$start_datetime = date("Y-m-d H:i:s", strtotime($this->input->post('start_datetime')));
 			$end_datetime = date("Y-m-d H:i:s", strtotime($this->input->post('end_datetime')));
 			$this->promo_model->initialize($this->session->userdata('company_id'),$this->input->post('title'),$this->input->post('description'),$this->input->post('terms'),$start_datetime, $end_datetime, $this->input->post('number_participants'),$this->input->post('number_winners'),1,1,0);
 			$this->promo_model->save();
 			$aResult = $this->promo_model->get_row_fields('id,title',array('company_id' => $this->session->userdata('company_id')),'id desc');
-			// print_r($aResult);
-			$config['upload_path'] = './public/img/promos/';
+
+			$config['image_library'] = 'imagemagick';
+			$this->load->library('image_lib');
+			$config['upload_path'] = './public/img/promos_orig/';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$config['max_size']	= '2048';
 			$config['max_width'] = '0';
 			$config['max_height'] = '0';
 			$config['file_name'] = md5($aResult['id']);
-			
 			$this->load->library('upload', $config);
 			$this->upload->do_upload('image');
+			$image_data = $this->upload->data();
 
-			$options['image_library'] = 'ImageMagick';
-			$options['library_path']='/usr/bin';
-			$options['source_image']='./public/img/promos/'.md5($aResult['id']).'.';
-			$options['new_image']='./public/img/promos/'.md5($aResult['id']).'.png';
-			$this->load->library('image_lib',$config);
+			$config = array(
+				'source_image' => $image_data['full_path'],
+	            'new_image' => './public/img/promos_big/',
+	            'maintain_ratio' => true,
+	            'width' => 800
+	        );
+	        $this->image_lib->initialize($config);
+        	$this->image_lib->resize();
+
+        	$config = array(
+				'source_image' => $image_data['full_path'],
+	            'new_image' => './public/img/promos_small',
+	            'maintain_ratio' => true,
+	            'width' => 390
+	        );
+	        $this->image_lib->initialize($config);
+        	$this->image_lib->resize();
+			
 		}
 	}
 }
