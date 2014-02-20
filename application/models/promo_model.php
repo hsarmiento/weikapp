@@ -56,6 +56,12 @@ class Promo_model extends CI_Model {
         return $query->result_array(); 
     }
 
+    public function get_newest_promos($iLimit, $iOffset)
+    {
+        $query = $this->db->query('select t1.*,t2.name as company_name, DATEDIFF(t1.end_datetime,CURDATE()) AS remaining_days from promos AS t1 join companies AS t2 ON t1.company_id = t2.id order by start_datetime desc limit '.$iOffset.','.$iLimit);
+        return $query->result_array();
+    }
+
     public function get_id_ended_promos()
     {
         $query = $this->db->query('select id,number_winners from promos where ended = 0 and end_datetime <= now() and start_datetime < now();');
