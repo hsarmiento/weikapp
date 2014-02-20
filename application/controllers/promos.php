@@ -27,6 +27,7 @@ class Promos extends CI_Controller
 
 		$this->layout->css(array(base_url().'public/css/jquery-ui-1.10.3.custom.css'));
 		$this->layout->setTitle('Promociones');
+		$this->layout->css(array(base_url().'public/css/promos_index.css'));
 		$this->layout->view('index', compact("aData","category","aCategories", "isLogged", "aPromo", "sPublishAction"));
 	}
 
