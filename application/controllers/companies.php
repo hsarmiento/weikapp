@@ -28,22 +28,9 @@ class Companies extends CI_Controller
 		$this->company_model->initialize($this->session->userdata('uid'),null,$this->input->post('name'),$this->input->post('city'));
 		$this->company_model->save();
 		$aResult = $this->company_model->get_fields_with_limits('id,name',array('owner_id' => $this->session->userdata('uid')),1,0,'id desc');
+		
 		// upload image		
-		$config['upload_path'] = './public/img/companies/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '2048';
-		$config['max_width'] = '0';
-		$config['max_height'] = '0';
-		$config['file_name'] = md5($aResult[0]['id']);
-		// print_r($_FILES);
-		$this->load->library('upload', $config);
-		$this->upload->do_upload('logo');
-
-		$options['image_library'] = 'ImageMagick';
-		$options['library_path']='/usr/bin';
-		$options['source_image']='./public/img/companies/'.md5($aResult[0]['id']).'.';
-		$options['new_image']='./public/img/companies/'.md5($aResult[0]['id']).'.png';
-		$this->load->library('image_lib',$config);
+		imagepng(imagecreatefromstring(file_get_contents($_FILES['company_logo']['tmp_name'])), './public/img/companies/'.md5($aResult[0]['id']).'.png');
 
 		//set new company as default
 		$this->session->set_userdata('company_id', $aResult[0]['id']);
