@@ -23,10 +23,11 @@ class Promos extends CI_Controller
 		}elseif($category !== 'favorites' && $category != 'nuevas'){
 			$aData = $this->promo_model->get_promos(6,0, $category);
 		}
-		elseif ($category == 'nuevas')
+		elseif ($category == 'nuevas' || $isLogged == false)
 		{
 			$aData = $this->promo_model->get_newest_promos(6,0);
 		}
+
 		$aCategories = $this->category_model->get_all_categories();
 		array_push($aCategories, array('name' => 'nuevas'));
 		$aPromo = NULL;
