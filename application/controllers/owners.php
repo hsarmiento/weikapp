@@ -308,7 +308,7 @@ Atentamente el equipo de Weikapp
 
 		// Maybe even destroy all native sessions as overkill
 		session_destroy();
-		redirect(base_url());
+		redirect(base_url().'companies');
 	}
 
 	public function profile()
