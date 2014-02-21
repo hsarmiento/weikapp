@@ -35,19 +35,19 @@
 				if($this->session->userdata('uname') !== false){ ?>
 					<div class="profile-container">
 						<a href="#" onclick="$('#header_login_menu').toggle('');">
-							<img src="http://graph.facebook.com/<?=$this->session->userdata('fbuid')?>/picture">
+							<img src="<?php echo base_url()?>public/img/users/<?=md5($this->session->userdata('uid'))?>.png">
 							<?=$this->session->userdata('uname')?>
 						</a>
 					</div>
 				<?php } else{ ?>
 					<a href="<?=base_url()?>companies" >
-						<img src="<?php echo base_url()?>public/img/ticket.png" alt="ticket" />
+						<img src="<?php echo base_url();?>public/img/ticket.png" alt="ticket" />
 					</a>
 					<a href="<?= $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'))?>">
-						<img src="<?php echo base_url()?>public/img/fb_login.png" alt="login" />
+						<img src="<?php echo base_url();?>public/img/fb_login.png" alt="login" />
 					</a>
 					<a class="star" onclick="$('#header_menu').toggle('');">
-						<img src="<?php echo base_url()?>public/img/menu.png" alt="menu" />
+						<img src="<?php echo base_url();?>public/img/menu.png" alt="menu" />
 					</a>
 				<?php } ?>				
 				

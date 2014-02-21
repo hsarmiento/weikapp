@@ -29,7 +29,8 @@
 				if($this->session->userdata('uname') !== false){ ?>
 					<div class="profile-container">
 						<a href="<?=base_url()?>owners/profile">
-							<img src="http://graph.facebook.com/<?=$this->session->userdata('fbuid')?>/picture" alt="profile_photo">
+							
+							<img src="<?php echo base_url()?>public/img/owners/<?=md5($this->session->userdata('oid'))?>.png">
 							<?=$this->session->userdata('uname')?>
 						</a>
 						<!-- <a href="<?=base_url()?>user/edit">
