@@ -10,7 +10,8 @@ class Promos extends CI_Controller
         $this->load->model('competitor_model');
 	}
 
-	public function index($category = 'favorites', $promo_id = null, $sPublishAction = null){
+	public function index($category = 'favorites', $promo_id = null, $sPublishAction = null)
+	{
 		$isLogged = is_logged();
 		$this->load->model('category_model');
 		// $this->load->model('user_preference_model');
@@ -23,7 +24,7 @@ class Promos extends CI_Controller
 		}elseif($category !== 'favorites' && $category != 'nuevas'){
 			$aData = $this->promo_model->get_promos(6,0, $category);
 		}
-		elseif ($category == 'nuevas')
+		elseif ($category == 'nuevas' || $isLogged == false)
 		{
 			$aData = $this->promo_model->get_newest_promos(6,0);
 		}

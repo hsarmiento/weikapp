@@ -20,22 +20,22 @@
 		echo form_input(array('name' => 'end_datetime', 'id' => 'end_datetime', 'class' => 'required')).'*';
 		echo '<br/>';
 		echo form_label('N° participantes','number_participants');
-		$options = array('select' => 'Selecciona',$aPlan[0]['users'] => 'hasta '.$aPlan[0]['users']);
-		echo form_dropdown('number_participants', $options, 'select', 'id = number_participants');
+		$options = array('0' => 'Selecciona',$aPlan[0]['users'] => 'hasta '.$aPlan[0]['users']);
+		echo form_dropdown('number_participants', $options, 'select', 'id = number_participants class = required');
 		echo '<br/>';
 		echo form_label('N° ganadores','number_winners');
-		$options = array('select' => 'Selecciona',1 => 1);
-		echo form_dropdown('number_winners', $options, 'select', 'id = number_winners');
+		$options = array('0' => 'Selecciona',1 => 1);
+		echo form_dropdown('number_winners', $options, 'select', 'id = number_winners class = required');
 		echo '<br/>';
 		echo form_label('Imagen','image');
 		echo form_input(array('name' => 'image', 'id' => 'image', 'type' => 'file', 'class' => 'required')).'*';
 		echo '<br/>';
 		echo form_label('Categorias');
-		echo form_dropdown('category1', $aOptionsCategories, 0);
+		echo form_dropdown('category1', $aOptionsCategories, 0, 'id = category1 class = required');
 		echo '<br/>';
-		echo form_dropdown('category2', $aOptionsCategories, 0);
+		echo form_dropdown('category2', $aOptionsCategories, 0, 'id = category2 class = required');
 		echo '<br/>';
-		echo form_dropdown('category3', $aOptionsCategories, 0);
+		echo form_dropdown('category3', $aOptionsCategories, 0, 'id = category3 class = required');
 		echo '<br/>';
 		echo form_submit(array('name' => 'create_promo', 'id' => 'create_promo', 'value' => 'Crear campaña'));
 
@@ -48,7 +48,10 @@
 	$(function() {
 	    $('#start_datetime').datetimepicker({
 	    	dateFormat: "dd-mm-yy",
-	    	timeFormat: 'HH:mm'
+	    	timeFormat: 'HH:mm',
+	    	onSelect: function (selectedDateTime){
+	    		$("#end_datetime").datetimepicker('option', 'minDate', $('#start_datetime').datetimepicker('getDate') );
+			}
     	});
     	$( "#start_datetime" ).datepicker( "option", "closeText", "Cerrar" );
     	$( "#start_datetime" ).datepicker( "option", "currentText", "Fecha actual" );
@@ -61,4 +64,107 @@
     	$( "#end_datetime" ).datepicker( "option", "closeText", "Cerrar" );
     	$( "#end_datetime" ).datepicker( "option", "currentText", "Fecha actual" );
  	});
+
+	$.validator.addMethod("notEqualTo", function(value,elemtent){
+		if ($("#category1").val() != $("#category2").val() && $("#category1").val() != $("#category3").val() && $("#category2").val() != $("#category3").val()) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	},"Las categorías deben ser distintas");
+
+ 	$(function(){
+		 $("#create-form-promo").validate({
+		 	errorElement: "div",
+		 	rules:{
+		 		title: {
+		 			required: true
+		 		},
+		 		description: {
+		 			required: true
+		 		},
+		 		terms: {
+		 			required: true
+		 		},
+		 		start_datetime: {
+		 			required: true
+		 		},
+		 		end_datetime: {
+		 			required: true
+		 		},
+		 		number_participants: {
+		 			required: true,
+		 			min: 1
+		 		},
+		 		number_winners: {
+		 			required: true,
+		 			min: 1
+		 		},
+		 		image: {
+		 			required: true
+		 		},
+		 		category1: {
+		 			required: true,
+		 			min: 1,
+		 			notEqualTo: true
+		 		},
+		 		category2: {
+		 			required: true,
+		 			min: 1,
+		 			notEqualTo: true
+		 		},
+		 		category3: {
+		 			required: true,
+		 			min: 1,
+		 			notEqualTo: true
+		 		}
+		 	},
+		 	messages:{
+		 		title: {
+		 			required: "Es necesario un título para su promoción"
+		 		},
+		 		description: {
+		 			required: "Es necesaria una descripción para su promoción"
+		 		},
+		 		terms: {
+		 			required: "Son necesarios los términos y condiciones para su promoción"
+		 		},
+		 		start_datetime: {
+		 			required: "Es necesaria una fecha de inicio para su promoción"
+		 		},
+		 		end_datetime: {
+		 			required: "Es necesaria una fecha de término para su promoción"
+		 		},
+		 		number_participants: {
+		 			min: "Es necesario el número de participantes para su promoción"
+		 		},
+		 		number_winners: {
+		 			min: "Es necesario el número de ganadores para su promoción"
+		 		},
+		 		image: {
+		 			required: "Es necesaria una imagen para su promoción"
+		 		},
+		 		category1: {
+		 			min: "Es necesaria una categoría para su promoción"
+		 		},
+		 		category2: {
+		 			min: "Es necesaria una categoría para su promoción"		 			
+		 		},
+		 		category3: {
+		 			min: "Es necesaria una categoría para su promoción"
+		 		}
+		 	},
+			submitHandler: function(form) {
+			   form.submit();
+			  }
+			});
+	});
+
+	$(".required").blur(function(){
+		$(this).valid();
+    });
+
+
 </script>

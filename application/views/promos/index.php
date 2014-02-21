@@ -35,7 +35,7 @@
 			<?php 
 			$all_promos = 0;
 			$little_promos = 0;
-			foreach ($aData as $value) {
+			foreach ($aData as $value) {				
 				if($all_promos %3 == 0){ ?>
 					<article onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
 						<figure>
@@ -48,7 +48,19 @@
 							</div>
 							<div class="icon_right">
 								<img src="<?php echo base_url()?>public/img/time.png" alt="time" />
-								QUEDAN <?=$value['remaining_days']?> DÍAS
+								<?php if ($value['remaining_days'] == 0)
+								{
+									if ($value['remaining_hours'] == 0)
+									{ ?>
+									 	QUEDA MENOS DE 1 HORA
+									<?php } 
+									else
+									{ ?>
+									 	QUEDAN <?php echo $value['remaining_hours']; ?> HORAS
+									<?php }	?>									
+								<?php } else { ?>
+									QUEDAN <?=$value['remaining_days']?> DIAS
+								<?php } ?>								
 							</div>
 							<div class="icon_right">
 								<img src="<?php echo base_url()?>public/img/people.png" alt="people" />
