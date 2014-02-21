@@ -133,6 +133,20 @@ Atentamente el equipo de Weikapp
 						$aResult = $this->owner_model->get_user_fb_data($iFbuid);
 						$this->owner_model->initialize($aResult['0']['first_name'],$aResult['0']['last_name'],$aResult['0']['email'],'','',$iFbuid);
 						$this->owner_model->save_from_facebook();
+						// guardar imagen de facebook
+			        	$url = 'http://graph.facebook.com/'.$iFbuid.'/picture';
+						$img = './public/img/owners/'.md5($this->owner_model->get_userid_by_fbuid($iFbuid)).'.png';
+						imagepng(imagecreatefromstring(file_get_contents($url)), $img);
+						$this->load->library('image_lib');
+						$config= array(
+							'source_image' => $img,
+				            'new_image' => $img,
+				            // 'maintain_ratio' => TRUE,
+				            'width' => 32,
+				            'height' => 32
+				        );
+				        $this->image_lib->initialize($config);
+			        	$this->image_lib->resize();
 					}
 					// check if theres new pages
 					$this->load->model('company_model');

@@ -139,6 +139,9 @@ class Promos extends CI_Controller
 	        );
 	        $this->image_lib->initialize($config);
         	$this->image_lib->resize();
+<<<<<<< HEAD
+			redirect(base_url().'owners/profile');
+=======
 
         	$config = array(
 				'source_image' => './public/img/promos_orig/'.md5($aResult['id']).'.png',
@@ -149,7 +152,8 @@ class Promos extends CI_Controller
 	        );
 	        $this->image_lib->initialize($config);
         	$this->image_lib->resize();
-			redirect(base_url().'owners/profile');
+			
+>>>>>>> e1a58bb2710c7a8d780184d53f992beb14a6ab09
 		}
 	}
 }

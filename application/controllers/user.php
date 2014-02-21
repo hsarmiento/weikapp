@@ -52,6 +52,20 @@ class User extends CI_Controller
                       		error_log($e->getMessage());
                   		}
 		        	}
+		        	// guardar imagen de facebook
+		        	$url = 'http://graph.facebook.com/'.$iUserId.'/picture';
+					$img = './public/img/users/'.md5($this->User_model->get_userid_by_fbuid($iUserId)).'.png';
+					imagepng(imagecreatefromstring(file_get_contents($url)), $img);
+					$this->load->library('image_lib');
+					$config= array(
+						'source_image' => $img,
+			            'new_image' => $img,
+			            // 'maintain_ratio' => TRUE,
+			            'width' => 32,
+			            'height' => 32
+			        );
+			        $this->image_lib->initialize($config);
+		        	$this->image_lib->resize();
 		        }		        
 		        $aData['user'] = $this->User_model->get_uname_by_fbuid($iUserId);		        
 		        $this->session->set_userdata(array('uid' => $this->User_model->get_userid_by_fbuid($iUserId), 'fbuid' => $iUserId,'logged_in' => TRUE, 'uname' =>$this->User_model->get_uname_by_fbuid($iUserId)));
@@ -85,7 +99,7 @@ class User extends CI_Controller
 			}
 			else
 			{
-				$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,gender,link,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));
+				$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,gender,link,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));				
 				$this->layout->setLayout('ajax_layout');
 				$this->layout->view('login',$aData);
 			}
