@@ -465,7 +465,7 @@ button.ui-button::-moz-focus-inner {
 	border-right-width: 0;
 	border-left-width: 1px;
 }
-.ui-dialog {
+/*.ui-dialog {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -520,7 +520,7 @@ button.ui-button::-moz-focus-inner {
 	right: -5px;
 	bottom: -5px;
 	background-position: 16px 16px;
-}
+}*/
 .ui-draggable .ui-dialog-titlebar {
 	cursor: move;
 }
@@ -800,9 +800,9 @@ body .ui-tooltip {
 	font-size: 1em;
 }
 .ui-widget-content {
-	border: 1px solid #dddddd;
+	/*border: 1px solid #dddddd;
 	background: #eeeeee url(../img/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x;
-	color: #333333;
+	color: #333333;*/
 }
 .ui-widget-content a {
 	color: #333333;

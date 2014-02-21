@@ -10,7 +10,6 @@
 	    <script type="text/javascript" src="<?php echo base_url()?>public/js/json2.js"></script>
 		<script type="text/javascript" src="<?php echo base_url()?>public/js/jquery-ui-1.10.3.custom.js"></script>
 	    <script type="text/javascript" src="<?php echo base_url()?>public/js/jquery.countdown.js"></script>
-	    <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>public/css/style.css"> -->
 	    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Cantarell">
 	    <!--*************auxiliares*****************-->
 
