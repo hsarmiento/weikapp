@@ -139,7 +139,7 @@ class Promos extends CI_Controller
 	        );
 	        $this->image_lib->initialize($config);
         	$this->image_lib->resize();
-			
+			redirect(base_url().'owners/profile');
 		}
 	}
 }
