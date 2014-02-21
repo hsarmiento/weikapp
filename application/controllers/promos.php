@@ -85,18 +85,27 @@ class Promos extends CI_Controller
 			$this->layout->css(array(base_url().'public/css/jquery-ui-1.10.3.custom.css'));
 			$aPlan = $this->plan_model->get_fields_by_something('*',array('id' => 1));
 			$aCategories = $this->category_model->get_all_categories();
+
 			$aOptionsCategories = array();
 			$aOptionsCategories[0] = 'Selecciona';
 			foreach ($aCategories as $category) {
 				$aOptionsCategories[$category['id']] = $category['name'];
 			}
-			$this->layout->view('add',compact('aPlan','aOptionsCategories'));
+			$indexMen = array_search('hombre', $aOptionsCategories);
+			$aGender = array();
+			$aGender[$indexMen] = 'hombre';
+			unset($aOptionsCategories[$indexMen]);
+			$indexWoman = array_search('mujer', $aOptionsCategories);
+			$aGender[$indexWoman] = 'mujer';
+			unset($aOptionsCategories[$indexWoman]);
+			$this->layout->view('add',compact('aPlan','aOptionsCategories', 'aGender'));
 		}
 	}
 
 	public function create(){
 		logged_or_redirect('owners/authenticate', 'owners/profile');
 		$this->load->model('promo_category_model');
+		$this->load->model('tag_model');
 		if ($this->session->userdata('company_id') != NULL && $this->session->userdata('oid') != NULL){
 			$start_datetime = date("Y-m-d H:i:s", strtotime($this->input->post('start_datetime')));
 			$end_datetime = date("Y-m-d H:i:s", strtotime($this->input->post('end_datetime')));
@@ -107,8 +116,15 @@ class Promos extends CI_Controller
 			$this->promo_category_model->save();
 			$this->promo_category_model->initialize($aResult['id'],$this->input->post('category2'));
 			$this->promo_category_model->save();
-			$this->promo_category_model->initialize($aResult['id'],$this->input->post('category1'));
+			$this->promo_category_model->initialize($aResult['id'],$this->input->post('category3'));
 			$this->promo_category_model->save();
+			$this->promo_category_model->initialize($aResult['id'],$this->input->post('gender'));
+			$this->promo_category_model->save();
+			$aTags = explode(',',$this->input->post('tags'));
+			foreach ($aTags as $value) {
+				$this->tag_model->initialize($aResult['id'],trim($value));
+				$this->tag_model->save();
+			}
 			$config['image_library'] = 'imagemagick';
 			$this->load->library('image_lib');
 			// $config['upload_path'] = './public/img/promos_orig/';
