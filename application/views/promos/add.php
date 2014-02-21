@@ -1,3 +1,14 @@
+<style type="text/css">
+
+.ui-widget-content {
+	border: 1px solid #dddddd;
+	background: #eeeeee url(../img/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x;
+	color: #333333;
+}
+
+</style>
+
+
 <h1>crear promo</h1>
 
 
