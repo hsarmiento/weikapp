@@ -3,23 +3,24 @@
 	$end_date = getdate($timestamp);
 ?>
 
-<div class="dialog-promo" id="dialog-promo">
-	<div class="dialog_box">
-		<?php if (isset($sPublishAction) && $sPublishAction == 'permissions_denied')
-		{ ?>
-			<p style="color:#ff0000;border-style:solid;border-color:#00ff00;border-width:10px;">Para poder participar debe dar permisos de publicacion para postear en facebook automaticamente <a href="<?php echo $sLoginUrl; ?>">Dar permisos</a></p>
-		<?php } ?>
-		<p>Nombre promo:<?=$aPromo['title']?></p>
-		<p>Descripcion: <?=$aPromo['description']?></p>
-		<p>Terminos y condiciones: <?=$aPromo['terms']?></p>
-		<p>Fecha de inicio: <?=$aPromo['start_datetime']?></p>
-		<p>Fecha de termino: <?=$aPromo['end_datetime']?></p>
-		<?php
-			if($aPromo['image'] == 1){ ?>
-				<img src="<?php echo base_url();?>public/img/piscola.jpg" width="320" height="225">
-			<?php } ?>
-		</br>
-		<?php
+<?php if (isset($sPublishAction) && $sPublishAction == 'permissions_denied')
+{ ?>
+	<p style="color:#ff0000;border-style:solid;border-color:#00ff00;border-width:10px;">
+		Para poder participar debe dar permisos de publicacion para postear en facebook automaticamente 
+		<a href="<?php echo $sLoginUrl; ?>">Dar permisos</a>
+	</p>
+<?php } ?>
+<h2><?=$aPromo['title']?></h2>
+<div class="fleft">
+	<div class="btns">
+		<div class="number">1º</div>
+		<div id="triangulo-right"></div>
+		<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.bufa.es&amp;layout=button_count&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=trebuchet+ms&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:20px;" allowTransparency="true"></iframe>
+	</div>
+	<div class="btns">
+		<div class="number">2º</div>
+		<div id="triangulo-right"></div>
+			<?php
 			if ($aPromo['number_participants'] - $aPromo['count_competitors'] > 0 )
 			{
 				if ($aPromo['is_logged'] === true)
@@ -30,7 +31,7 @@
 					<?php }
 					else
 					{?>
-						<p>Ya estas particando campeón</p>
+						<p>Ya estás particando</p>
 					<?php }
 				}
 				else
@@ -40,35 +41,57 @@
 			}
 			else
 			{ ?>
-				<p style="width:70px;color:#ff0000;border-style:solid;border-color:#d0dbdd;border-width:10px;">Agotado</p>
+				<p>Agotado</p>
 			<?php } ?>
-
-		<div id="countdown"></div>
-		<p>Participantes: <?=$aPromo['count_competitors']?></p>
-		<?php if ($aPromo['count_competitors'] > 0)
-		{
-			for ($i=0; $i < count($aPromo['competitors']); $i++)
-			{?>
-				<a href="http://www.facebook.com/<?=$aPromo['competitors'][$i]['fb_username']?>" target="_blank"><img src="http://graph.facebook.com/<?=$aPromo['competitors'][$i]['fb_uid']?>/picture"></a>
-			<?php }
-		}?>
-
-		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacus felis, consequat condimentum nulla a, luctus placerat dui. Maecenas at aliquam libero, semper consequat turpis. Vivamus rhoncus egestas imperdiet. Integer sed lectus volutpat, scelerisque velit vulputate, malesuada nibh. Vestibulum nisi felis, vestibulum laoreet eros at, bibendum porta ante. Integer pellentesque dui nisi, eget semper eros ullamcorper sed. In tortor lacus, facilisis vel interdum mattis, eleifend nec ipsum.
-
-			Aenean eu purus convallis odio vehicula tristique quis quis leo. Aenean et tincidunt magna. Suspendisse suscipit tempor eros quis auctor. Aliquam at feugiat orci. Quisque quis gravida magna. Maecenas consequat diam odio. Proin tincidunt placerat malesuada. Sed viverra, felis eget pharetra facilisis, sapien diam luctus risus, elementum venenatis velit massa vitae arcu. Donec ac porta augue, eget pretium nisi. Vestibulum tristique est sapien, laoreet accumsan quam venenatis vel. Nullam at tristique purus. Fusce nec lacus suscipit, convallis augue sit amet, scelerisque nisl. Suspendisse potenti. Cras varius magna at elit ornare convallis.
-		</p>
+	</div>
+	<div class="expire">
+		<img src="<?=base_url()?>public/img/clock.png" alt="time" />
+		<span id="countdown"></span>	
+	</div>
+	<div class="people">
+		<img src="<?=base_url()?>public/img/user_img.png" alt="time" />
+		<?=$aPromo['count_competitors']?> Participantes	
+	</div>
+	<?php if ($aPromo['count_competitors'] > 0)
+	{ ?>
+		<h4>Ellos tambien están participando:</h4>
+		<div class="photo_people">
+			<?php 
+				for ($i=0; $i < count($aPromo['competitors']); $i++)
+				{?>
+					<figure><a href="http://www.facebook.com/<?=$aPromo['competitors'][$i]['fb_username']?>" target="_blank"><img src="http://graph.facebook.com/<?=$aPromo['competitors'][$i]['fb_uid']?>/picture"></a></figure>
+				<?php } ?>
+		</div>
+		<?php }else{ ?>
+			<h4>Puedes ser el primero en participar!</h4>
+			<div class="photo_people">
+				<figure></figure>
+			</div>
+		<?php	}?>
+	<div class="dialog_text">
+		<h3>Detalles</h3>
+		<p><?=$aPromo['description']?></p>
 	</div>
 </div>
+<div class="fright">
+	<figure>
+		<img src="<?=base_url()?>public/img/promos_medium/<?=md5($aPromo['id'])?>" alt="promo_img" />
+	</figure>
+	<div class="dialog_text">
+		<h3>Términos y condiciones</h3>
+		<p><?=$aPromo['terms']?></p>
+	</div>
+</div>
+
 
 <script type="text/javascript">	
 	function participate()
 	{
-		$("#dialog-promo").empty().load("<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>");
+		$("#dialog").empty().load("<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>");
 	}
 
 	$("#countdown").countdown({ 
-		layout:'<b>{d<}{dn} {dl} {d>}'+'{hn} {hl}, {mn} {ml}, {sn} {sl}</b>',
+		layout:'Expira en {d<}{dn} {dl} {d>},'+'{hn}:{mn}:{sn}',
 		labels: ['Años', 'Meses', 'Semanas', 'Dias', 'Horas', 'Minutos', 'Segundos'],
     	until: new Date(<?=$end_date['year']?>, <?=$end_date['mon']?>-1, <?=$end_date['mday']?>, <?=$end_date['hours']?>,<?=$end_date['minutes']?>,<?=$end_date['seconds']?>)
 	});

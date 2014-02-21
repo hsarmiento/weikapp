@@ -39,7 +39,7 @@
 				if($all_promos %3 == 0){ ?>
 					<article onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
 						<figure>
-							<img src="<?php echo base_url();?>public/img/piscola.jpg" alt="foto_promo">
+							<img src="<?php echo base_url();?>public/img/promos_big/<?=md5($value['id'])?>" alt="foto_promo">
 							<figcaption>
 								<?=strtoupper($value['title'])?>	
 							</figcaption>
@@ -72,7 +72,7 @@
 				<?php }else{ ?>
 					<article class="w50" onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
 						<figure>
-							<img src="<?php echo base_url();?>public/img/piscola.jpg" alt="foto_promo">
+							<img src="<?php echo base_url();?>public/img/promos_small/<?=md5($value['id'])?>" alt="foto_promo">
 							<figcaption>
 								<?=strtoupper($value['title'])?>	
 							</figcaption>
@@ -131,22 +131,25 @@
 		            jQuery('#dialog').dialog('close');
 		        });
     	  },
-	      minWidth:($( window ).width())*0.9,
-	      minHeight: ($( window ).height())*0.9,
-	      maxHeight: ($( window ).height())*0.95
+    	  width: 800,
+    	  height: 540,
+    	  dialogClass: 'noTitleStuff'
+	      // minWidth:($( window ).width())*0.9,
+	      // minHeight: ($( window ).height())*0.9,
+	      // maxHeight: ($( window ).height())*0.95
 	    });
     }
 
 	function open_promo(id,title,publish_actions)
 	{
 		settings_dialog();
-		$("#dialog").dialog("option","title", title);
 		$("#dialog").dialog("open");
 		$("#dialog").empty().load("<?php echo base_url();?>promos/ajax_load_dialog_promo/<?=$category?>/"+id+'/'+publish_actions);	
 	}
 
 	var offset = <?=$count?>;
 	$(document).ready(function () {
+		$.ui.dialog.prototype._focusTabbable = function(){};
 		settings_dialog();
 		if("<?=$aPromo['id']?>"){
 			open_promo("<?=$aPromo['id']?>","<?=$aPromo['title']?>","<?=$sPublishAction;?>");
@@ -176,9 +179,9 @@
 						$.each(obj[0], function(i,val){	
 								title = val.title.toString();
 								if(i == 0){
-									$('section').append("<article onclick='open_promo("+val.id+",\"" +val.title+" \")'><figure><img src='<?php echo base_url();?>public/img/piscola.jpg'><figcaption>"+val.title.toUpperCase()+"</figcaption><div class='left'><a href='#'>"+val.company_name.charAt(0).toUpperCase() + val.company_name.slice(1)+"</a></div><div class='icon_right'><img src='<?php echo base_url()?>public/img/time.png' alt='time'>QUEDAN "+val.remaining_days+" DÍAS</div><div class='icon_right'><img src='<?php echo base_url()?>public/img/people.png' alt='people'>"+val.number_participants+"</div></figure></article><hr />");
+									$('section').append("<article onclick='open_promo("+val.id+",\"" +val.title+" \")'><figure><img src='<?php echo base_url();?>public/img/promos_big/<?php echo md5("+val.id+");?>'><figcaption>"+val.title.toUpperCase()+"</figcaption><div class='left'><a href='#'>"+val.company_name.charAt(0).toUpperCase() + val.company_name.slice(1)+"</a></div><div class='icon_right'><img src='<?php echo base_url()?>public/img/time.png' alt='time'>QUEDAN "+val.remaining_days+" DÍAS</div><div class='icon_right'><img src='<?php echo base_url()?>public/img/people.png' alt='people'>"+val.number_participants+"</div></figure></article><hr />");
 								}else{
-									$('section').append("<article class='w50' onclick='open_promo("+val.id+",\"" +val.title+" \")'><figure><img src='<?php echo base_url();?>public/img/piscola.jpg'><figcaption>"+val.title.toUpperCase()+"</figcaption><div class='left'><a href='#'>"+val.company_name.charAt(0).toUpperCase() + val.company_name.slice(1)+"</a></div><div class='icon_right'><img src='<?php echo base_url()?>public/img/time.png' alt='time'>QUEDAN "+val.remaining_days+" DÍAS</div><div class='icon_right'><img src='<?php echo base_url()?>public/img/people.png' alt='people'>"+val.number_participants+"</div></figure></article>");
+									$('section').append("<article class='w50' onclick='open_promo("+val.id+",\"" +val.title+" \")'><figure><img src='<?php echo base_url();?>public/img/promos_small/<?php echo md5("+val.id+");?>'><figcaption>"+val.title.toUpperCase()+"</figcaption><div class='left'><a href='#'>"+val.company_name.charAt(0).toUpperCase() + val.company_name.slice(1)+"</a></div><div class='icon_right'><img src='<?php echo base_url()?>public/img/time.png' alt='time'>QUEDAN "+val.remaining_days+" DÍAS</div><div class='icon_right'><img src='<?php echo base_url()?>public/img/people.png' alt='people'>"+val.number_participants+"</div></figure></article>");
 									if(i==1){
 										$('section').append("<div class='w5'>&nbsp;</div>");
 									}else if(i == 2){
