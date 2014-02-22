@@ -56,6 +56,12 @@
 			echo form_radio('gender',$id,NULL, 'id="'.$gender.'" class="required"'.set_radio('gender', $id)).ucfirst($gender);
 		}
 		echo '<br/>';
+		echo form_label('Localidad');
+		echo form_dropdown('township', $aOptionsTownships, 0, 'id = township');
+		echo '<br/>';
+		echo form_label('No está tu ciudad? Solicítala acá','new_city');
+		echo form_input(array('name' => 'new_city', 'id' => 'new_city')).'*';
+		echo '<br/>';
 		echo form_submit(array('name' => 'create_promo', 'id' => 'create_promo', 'value' => 'Crear campaña'));
 
 	echo form_close();
