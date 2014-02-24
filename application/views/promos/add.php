@@ -10,8 +10,6 @@
 
 
 <h1>crear promo</h1>
-
-
 <?php 
 	$aAttributes = array('id' => 'create-form-promo');
 	echo form_open_multipart('promos/create', $aAttributes);
@@ -62,14 +60,73 @@
 		echo form_label('No está tu ciudad? Solicítala acá','new_city');
 		echo form_input(array('name' => 'new_city', 'id' => 'new_city')).'*';
 		echo '<br/>';
+		$aButton = array(
+			'name' => 'preview',
+			'id' => 'preview',
+			'content' => 'Preview'
+			);
+		echo form_button($aButton);
 		echo form_submit(array('name' => 'create_promo', 'id' => 'create_promo', 'value' => 'Crear campaña'));
 
 	echo form_close();
 ?>
 
 
+<div class="ui-dialog" id="dialog_preview">
+	<h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>
+	<div class="fleft">
+		<div class="btns">
+			<div class="number">1º</div>
+			<div id="triangulo-right"></div>
+			<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.bufa.es&amp;layout=button_count&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=trebuchet+ms&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:20px;" allowTransparency="true"></iframe>
+		</div>
+		<div class="btns">
+			<div class="number">2º</div>
+			<div id="triangulo-right"></div>
+			<a href="#">Participa</a>
+		</div>
+		<div class="expire">
+			<img src="<?=base_url()?>public/img/clock.png" alt="time" />
+			Expira en <span>29:30:45</span>	
+		</div>
+		<div class="people">
+			<img src="<?=base_url()?>public/img/user_img.png" alt="time" />
+			203 Participantes	
+		</div>
+		<h4>Ellos tambien están participando:</h4>
+		<div class="photo_people">
+			<figure><img src="<?=base_url()?>public/img/fb_01.png" alt="ok" /></figure>
+			<figure><img src="<?=base_url()?>public/img/fb_02.png" alt="ok" /></figure>
+			<figure><img src="<?=base_url()?>public/img/fb_03.png" alt="ok" /></figure>
+			<figure><img src="<?=base_url()?>public/img/fb_04.png" alt="ok" /></figure>
+			<figure><img src="<?=base_url()?>public/img/fb_05.png" alt="ok" /></figure>
+		</div>
+		<div class="dialog_text">
+			<h3>Detalles</h3>
+			<p></p>
+		</div>
+	</div>
+	<div class="fright">
+		<figure>
+			<img src="<?=base_url()?>public/img/piscola.jpg" id="preview_img" alt="promo_img" />
+		</figure>
+		<div class="dialog_text">
+			<h3>Términos y condiciones</h3>
+			<p></p>
+		</div>
+	</div>
+</div>
+
 
 <script type="text/javascript">
+
+
+</script>
+
+
+
+<script type="text/javascript">
+
 	$(function() {
 	    $('#start_datetime').datetimepicker({
 	    	dateFormat: "dd-mm-yy",
@@ -198,5 +255,27 @@
 		$(this).valid();
     });
 
+		function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#preview_img').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#image").change(function(){
+        readURL(this);
+    });
 
+    $("#preview").click(function(){
+    	$("#dialog_preview h2").text($("#title").val());
+    	$(".fleft .dialog_text p").text($("#description").val());
+    	$(".fright .dialog_text p").text($("#terms").val());
+    	$("#dialog_preview").show();
+
+    });
 </script>
