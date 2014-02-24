@@ -31,7 +31,7 @@
 					<?php }
 					else
 					{?>
-						<p>Ya estás particando</p>
+						<span>Estás participando</span>
 					<?php }
 				}
 				else

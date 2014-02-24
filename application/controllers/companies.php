@@ -11,6 +11,7 @@ class Companies extends CI_Controller
 
 	public function index()
 	{
+		$this->layout->css(array(base_url().'public/css/owners.css'));
 		$this->layout->view('index');
 	}	
 

@@ -340,6 +340,7 @@ Atentamente el equipo de Weikapp
 		$aPlan = $this->subscription_model->get_plan_by_company_id($this->session->userdata('company_id'));
 		$this->load->model('promo_model');
 		$aPromos = $this->promo_model->get_fields_with_limits('id,title',array('company_id' => $this->session->userdata('company_id')),3,0);
+		$this->layout->css(array(base_url().'public/css/owners.css'));
 		$this->layout->view('profile', compact('aPlan','aPromos'));
 	}
 

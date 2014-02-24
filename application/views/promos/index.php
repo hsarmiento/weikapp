@@ -132,7 +132,7 @@
 		        });
     	  },
     	  width: 800,
-    	  height: 540,
+    	  minHeight: 540,
     	  dialogClass: 'noTitleStuff'
 	      // minWidth:($( window ).width())*0.9,
 	      // minHeight: ($( window ).height())*0.9,

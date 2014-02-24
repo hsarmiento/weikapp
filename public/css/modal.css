@@ -9,7 +9,7 @@
 	color: #000;
 	position: absolute;
 	width: 800px;
-	height: 500px;
+	/*height: 500px;*/
 	left: 50%;
 	top: 50%;
 	margin: -270px 0 0 -400px;
@@ -88,6 +88,12 @@
 
 .btns a:hover{
 	color: #535f77;
+}
+
+.btns span{
+	color: #FFF;
+	line-height: 40px;
+	font-size: 19px;
 }
 
 .btns iframe{
@@ -173,5 +179,27 @@
 }
 .photo_people figure img{
 	height: 100%;
+}
+
+/*.large_facebook_button{
+	border: solid;
+	text-align:center
+}*/
+
+.large_facebook_button a{	
+    background-color: #303b7b;
+    color: #fff !important;
+	text-align: center;
+	font-weight: bold;
+	font-size: x-large;
+	position: absolute;
+	z-index: 2;
+	width: 400px;
+	height: 30px;
+	left: 50%;
+	top: 50%;
+	margin: -155px 0 0 -200px;
+	padding: 30px;
+	overflow: hidden;
 }
 
