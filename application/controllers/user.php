@@ -99,7 +99,7 @@ class User extends CI_Controller
 			}
 			else
 			{
-				$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,link,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));				
+				$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));				
 				$this->layout->setLayout('ajax_layout');
 				$this->layout->view('login',$aData);
 			}
