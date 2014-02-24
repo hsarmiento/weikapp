@@ -9,67 +9,135 @@
 </style>
 
 
-<h1>crear promo</h1>
-<?php 
-	$aAttributes = array('id' => 'create-form-promo');
-	echo form_open_multipart('promos/create', $aAttributes);
-		echo form_label('Titulo','title');
-		echo form_input(array('name' => 'title', 'id' => 'title', 'class' => 'required')).'*';
-		echo '<br/>';
-		echo form_label('Descripcion','description');
-		echo form_textarea(array('name' => 'description', 'id' => 'description', 'class' => 'required')).'*';
-		echo '<br/>';
-		echo form_label('Términos y condiciones','terms');
-		echo form_textarea(array('name' => 'terms', 'id' => 'terms', 'class' => 'required')).'*';
-		echo '<br/>';
-		echo form_label('Inicia','start_datetime');
-		echo form_input(array('name' => 'start_datetime', 'id' => 'start_datetime', 'class' => 'required')).'*';
-		echo '<br/>';
-		echo form_label('Finaliza','end_datetime');
-		echo form_input(array('name' => 'end_datetime', 'id' => 'end_datetime', 'class' => 'required')).'*';
-		echo '<br/>';
-		echo form_label('N° participantes','number_participants');
-		$options = array('0' => 'Selecciona',$aPlan[0]['users'] => 'hasta '.$aPlan[0]['users']);
-		echo form_dropdown('number_participants', $options, 'select', 'id = number_participants class = required');
-		echo '<br/>';
-		echo form_label('N° ganadores','number_winners');
-		$options = array('0' => 'Selecciona',1 => 1);
-		echo form_dropdown('number_winners', $options, 'select', 'id = number_winners class = required');
-		echo '<br/>';
-		echo form_label('Imagen','image');
-		echo form_input(array('name' => 'image', 'id' => 'image', 'type' => 'file', 'class' => 'required')).'*';
-		echo '<br/>';
-		echo form_label('Categorias');
-		echo form_dropdown('category1', $aOptionsCategories, 0, 'id = category1 class = required');
-		echo '<br/>';
-		echo form_dropdown('category2', $aOptionsCategories, 0, 'id = category2 class = required');
-		echo '<br/>';
-		echo form_dropdown('category3', $aOptionsCategories, 0, 'id = category3 class = required');
-		echo '<br/>';
-		echo form_label('Etiquetas','tags');
-		echo form_input(array('name' => 'tags', 'id' => 'tags', 'class' => 'required', 'placeholder' => 'Escribir separado por comas. Max 100 caracteres')).'*';
-		echo '<br/>';
-		echo form_label('Sexo', 'gender').'   ';
-		foreach ($aGender as $id => $gender) {
-			echo form_radio('gender',$id,NULL, 'id="'.$gender.'" class="required"'.set_radio('gender', $id)).ucfirst($gender);
-		}
-		echo '<br/>';
-		echo form_label('Localidad');
-		echo form_dropdown('township', $aOptionsTownships, 0, 'id = township');
-		echo '<br/>';
-		echo form_label('No está tu ciudad? Solicítala acá','new_city');
-		echo form_input(array('name' => 'new_city', 'id' => 'new_city')).'*';
-		echo '<br/>';
-		$aButton = array(
-			'name' => 'preview',
-			'id' => 'preview',
-			'content' => 'Preview'
-			);
-		echo form_button($aButton);
-		echo form_submit(array('name' => 'create_promo', 'id' => 'create_promo', 'value' => 'Crear campaña'));
+<div class="container">
+	<section>
+		<div class="promo_title">
+			Crear promoción				
+		</div>
+		<hr />
+		<article>
+			<?php
+				$aAttributes = array('id' => 'create-form-promo');
+				echo form_open_multipart('promos/create', $aAttributes);
+			?>
+					<div class="input_a big_input">
+						<?php 
+							echo form_label('Título','title');
+							echo form_input(array('name' => 'title', 'id' => 'title', 'class' => 'required'));
+						?>
+						<!-- <div class="warning">*Este campo es obligatorio</div> -->
+					</div>
+					<div class="input_b">
+						<?php
+							echo form_label('Descripción','description');
+							echo form_textarea(array('name' => 'description', 'id' => 'description', 'class' => 'required', 'rows' => '10', 'cols' => '50', 'placeholder' => 'Describe tu promoción'));
+						?>
+						<!-- <div class="warning">*Este campo es obligatorio</div> -->
+					</div>
+					<div class="input_a">
+						<?php 
+							echo form_label('Términos y condiciones','terms');
+							echo form_textarea(array('name' => 'terms', 'id' => 'terms', 'class' => 'required', 'rows' => '10', 'cols' => '50', 'placeholder' => 'Describe los términos y condiciones')).'*';
+						?>
+					</div>
+					<div class="input_b">
+						<?php
+							echo form_label('Inicia','start_datetime');
+							echo form_input(array('name' => 'start_datetime', 'id' => 'start_datetime', 'class' => 'required', 'placeholder' => 'Fecha de inicio'));
+						?>
+						<a href="#">
+							<img src="<?=base_url()?>public/img/calendar.png">
+						</a>
+					</div>
+					<div class="input_a">
+						<?php
+							echo form_label('Finaliza','end_datetime');
+							echo form_input(array('name' => 'end_datetime', 'id' => 'end_datetime', 'class' => 'required', 'placeholder' => 'Fecha de término'));
+						?>
+						<a href="#">
+							<img src="<?=base_url()?>public/img/calendar.png">
+						</a>
+						Si quieres mas tiempo, <a href="#">click aquí.</a>
+					</div>
+					<div class="input_b">
+						<?php
+							echo form_label('N° participantes','number_participants');
+							$options = array('0' => 'Selecciona',$aPlan[0]['users'] => 'hasta '.$aPlan[0]['users']);
+							echo form_dropdown('number_participants', $options, 'select', 'id = number_participants class = required');
+						?>
 
-	echo form_close();
-?>
+						Si quieres mejorar tu alcance, <a href="#">click aquí.</a>
+					</div>
+					<div class="input_a">
+						<?php 
+							echo form_label('N° ganadores','number_winners');
+							$options = array('0' => 'Selecciona',1 => 1);
+							echo form_dropdown('number_winners', $options, 'select', 'id = number_winners class = required');
+						?>
+						Si quieres premiar a mas personas, <a href="#">click aquí.</a>
+					</div>
+					<div class="input_b">
+						<?php
+							echo form_label('Cargar imagen','image');
+							echo form_input(array('name' => 'image', 'id' => 'image', 'type' => 'file', 'class' => 'required'));
+						?>
+					</div>
+					<div class="input_a">
+						<?php
+							echo form_label('Categorias');
+							echo form_dropdown('category1', $aOptionsCategories, 0, 'id = category1 class = required');
+							echo form_dropdown('category2', $aOptionsCategories, 0, 'id = category2 class = required');
+							echo form_dropdown('category3', $aOptionsCategories, 0, 'id = category3 class = required');
+						?>
+					</div>
+					<div class="input_b big_input">
+						<?php
+							echo form_label('Etiquetas','tags');
+							echo form_input(array('name' => 'tags', 'id' => 'tags', 'class' => 'required', 'placeholder' => 'Escribir separado por comas. Max 100 caracteres'));
+						?>
+					</div>
+					<div class="input_a">
+						<?php
+							echo form_label('Sexo', 'gender').'   ';
+							foreach ($aGender as $id => $gender) {
+								echo form_radio('gender',$id,NULL, 'id="'.$gender.'" class="required"'.set_radio('gender', $id)).ucfirst($gender);
+							}
+						?>
+					</div>
+					<div class="input_b">
+						<?php
+							echo form_label('Localidad');
+							echo form_dropdown('township', $aOptionsTownships, 0, 'id = township');
+						?>
+					</div>
+					<div class="input_c">
+						<?php
+							echo form_label('No está tu ciudad? Solicítala acá','new_city');
+							echo form_input(array('name' => 'new_city', 'id' => 'new_city'));
+						?>
+					</div>
+					<hr>
+					<div class="btn_box">
+						<?php
+							echo form_submit(array('name' => 'create_promo', 'id' => 'create_promo', 'value' => 'Crear campaña', 'class' => 'form_btn'));
+							$aButton = array(
+							'name' => 'preview',
+							'id' => 'preview',
+							'content' => 'Previsualizar',
+							'class' => 'form_btn'
+							);
+							echo form_button($aButton);
+						?>
+					</div>
+
+			<?php
+				echo form_close();
+			?>
+		
+		</article>
+
+	</section>
+</div>
 
 
 <div class="ui-dialog" id="dialog_preview">
@@ -117,16 +185,7 @@
 	</div>
 </div>
 
-
 <script type="text/javascript">
-
-
-</script>
-
-
-
-<script type="text/javascript">
-
 	$(function() {
 	    $('#start_datetime').datetimepicker({
 	    	dateFormat: "dd-mm-yy",

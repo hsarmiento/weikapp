@@ -83,7 +83,7 @@ class Promos extends CI_Controller
 			$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
 			$this->layout->setLayout('business_layout');
 			$this->layout->js(array(base_url().'public/js/jquery-ui-timepicker-addon.js'));
-			$this->layout->css(array(base_url().'public/css/promos_index.css'));
+			$this->layout->css(array(base_url().'public/css/create_promo.css'));
 			$this->layout->css(array(base_url().'public/css/jquery-ui-1.10.3.custom.css'));
 			$this->layout->css(array(base_url().'public/css/modal.css'));
 			$aPlan = $this->plan_model->get_fields_by_something('*',array('id' => 1));
