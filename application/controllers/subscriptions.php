@@ -17,6 +17,7 @@ class Subscriptions extends CI_Controller
 		$aPlans = $this->plan_model->get_fields_by_something('*',array('id >' => 0));
 		// get the subscription
 		$aSubscription = $this->subscription_model->get_fields_by_something('plan_id',array('company_id' => $this->session->userdata('company_id')));
+		$this->layout->css(array(base_url().'public/css/owners.css'));
 		$this->layout->view('edit', compact('aPlans','aSubscription'));
 	}
 

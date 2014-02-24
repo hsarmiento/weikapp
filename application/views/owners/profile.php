@@ -2,8 +2,7 @@
 	<section>
 		<article>
 			<div class="company_logo">
-				<!-- foto de la company -->
-					<img src="img/company_big.png" alt="company" />		
+					<img src="<?php echo base_url() ?>public/img/companies_orig/<?php echo md5($this->session->userdata('company_id')); ?>.png" alt="company" />		
 			</div>
 			<div class="company">
 				<h3><?php echo $this->session->userdata('company_name'); ?></h3>
@@ -17,7 +16,7 @@
 				</div>
 			</div>
 			<div class="company_type">
-				<a href="<?php echo base_url().'subscriptions/edit'; ?>" alt="company_type"><?php echo $aPlan['name']; ?></a>
+				<a href="#" alt="company_type"><?php echo $aPlan['name']; ?></a>
 			</div>
 		</article>
 		<hr />
