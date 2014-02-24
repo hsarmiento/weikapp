@@ -171,6 +171,21 @@ Atentamente el equipo de Weikapp
 								$aResult = $this->company_model->get_fields_by_something('id',array('fb_pid' => $key['id']));
 								$this->subscription_model->initialize(1,$aResult[0]['id']);
 								$this->subscription_model->save();
+
+								// save fanpage image from facebook
+								$url = 'http://graph.facebook.com/'.$key['id'].'/picture?width=80&height=80';
+								$img = './public/img/companies_orig/'.md5($aResult[0]['id']).'.png';
+								imagepng(imagecreatefromstring(file_get_contents($url)), $img);
+								// redimensionar imagen y guardar copia
+								$this->image_lib->clear();
+								$config= array(
+									'source_image' => $img,
+						            'new_image' => './public/img/companies_small/'.md5($aResult[0]['id']).'.png',						            
+						            'width' => 32,
+						            'height' => 32
+						        );
+						        $this->image_lib->initialize($config);
+					        	$this->image_lib->resize();
 							}						
 						}
 					}

@@ -22,7 +22,7 @@
 
 	<body>
 		<header> 
-			<a href="#" class="logo left">
+			<a href="<?php echo base_url(); ?>owners/profile" class="logo left">
 				<figure>
 					<img src="<?php echo base_url(); ?>public/img/logo_emp.png" alt="WeikApp" />
 				</figure>
@@ -30,7 +30,7 @@
 			<?php
 				if($this->session->userdata('logged_in') == true){ ?>
 					<div class="menu">
-						<img src="<?php echo base_url()?>public/img/owners/<?=md5($this->session->userdata('oid'))?>.png" alt="menu" />
+						<img src="<?php echo base_url()?>public/img/companies_small/<?=md5($this->session->userdata('company_id'))?>.png" alt="menu" />
 						<a class="star" onclick="$('#header_company_menu').toggle('');">
 							<div class="company_name"><?php echo $this->session->userdata('company_name'); ?></div>
 							<div class="triangle_down"></div>
