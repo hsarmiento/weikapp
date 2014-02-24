@@ -113,6 +113,7 @@
 	      modal:true,
 	      autoOpen: false,
 	      sticky: true,
+	      resizable: false,
 	      show: {
 	        effect: "blind",
 	        duration: 300

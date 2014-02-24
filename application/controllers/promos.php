@@ -77,6 +77,7 @@ class Promos extends CI_Controller
 	public function add(){
 		$this->load->model('plan_model');
 		$this->load->model('category_model');
+		$this->load->model('township_model');
 		logged_or_redirect('owners/authenticate', 'owners/profile');
 		if($iCompanyId = $this->session->userdata('company_id') != NULL){
 			$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
@@ -85,30 +86,62 @@ class Promos extends CI_Controller
 			$this->layout->css(array(base_url().'public/css/jquery-ui-1.10.3.custom.css'));
 			$aPlan = $this->plan_model->get_fields_by_something('*',array('id' => 1));
 			$aCategories = $this->category_model->get_all_categories();
+
 			$aOptionsCategories = array();
 			$aOptionsCategories[0] = 'Selecciona';
 			foreach ($aCategories as $category) {
 				$aOptionsCategories[$category['id']] = $category['name'];
 			}
-			$this->layout->view('add',compact('aPlan','aOptionsCategories'));
+			$indexMen = array_search('hombre', $aOptionsCategories);
+			$aGender = array();
+			$aGender[$indexMen] = 'hombre';
+			unset($aOptionsCategories[$indexMen]);
+			$indexWoman = array_search('mujer', $aOptionsCategories);
+			$aGender[$indexWoman] = 'mujer';
+			unset($aOptionsCategories[$indexWoman]);
+			$aTownships = $this->township_model->get_townships();
+			$aOptionsTownships = array();
+			$aOptionsTownships[0] = 'Selecciona';
+			foreach ($aTownships as $township) {
+				$aOptionsTownships[$township['id']] = $township['name'];
+			}
+			$this->layout->view('add',compact('aPlan','aOptionsCategories', 'aGender', 'aOptionsTownships'));
 		}
 	}
 
 	public function create(){
 		logged_or_redirect('owners/authenticate', 'owners/profile');
 		$this->load->model('promo_category_model');
+		$this->load->model('tag_model');
+		$this->load->model('township_model');
 		if ($this->session->userdata('company_id') != NULL && $this->session->userdata('oid') != NULL){
 			$start_datetime = date("Y-m-d H:i:s", strtotime($this->input->post('start_datetime')));
 			$end_datetime = date("Y-m-d H:i:s", strtotime($this->input->post('end_datetime')));
-			$this->promo_model->initialize($this->session->userdata('company_id'),$this->input->post('title'),$this->input->post('description'),$this->input->post('terms'),$start_datetime, $end_datetime, $this->input->post('number_participants'),$this->input->post('number_winners'),1,1,0);
-			$this->promo_model->save();
+			if($this->input->post('township') == 0 && $this->input->post('new_city') != ''){
+				$this->township_model->initialize($this->input->post('new_city'),2);
+				$this->township_model->save();
+				$aTownship = $this->township_model->get_township('id desc');
+				$this->promo_model->initialize($this->session->userdata('company_id'),$this->input->post('title'),$this->input->post('description'),$this->input->post('terms'),$start_datetime, $end_datetime, $this->input->post('number_participants'),$this->input->post('number_winners'),1,$aTownship['id'],0);
+				$this->promo_model->save();
+			}else{
+				$this->promo_model->initialize($this->session->userdata('company_id'),$this->input->post('title'),$this->input->post('description'),$this->input->post('terms'),$start_datetime, $end_datetime, $this->input->post('number_participants'),$this->input->post('number_winners'),1,$this->input->post('township'),0);
+				$this->promo_model->save();
+			}
+			
 			$aResult = $this->promo_model->get_row_fields('id,title',array('company_id' => $this->session->userdata('company_id')),'id desc');
 			$this->promo_category_model->initialize($aResult['id'],$this->input->post('category1'));
 			$this->promo_category_model->save();
 			$this->promo_category_model->initialize($aResult['id'],$this->input->post('category2'));
 			$this->promo_category_model->save();
-			$this->promo_category_model->initialize($aResult['id'],$this->input->post('category1'));
+			$this->promo_category_model->initialize($aResult['id'],$this->input->post('category3'));
 			$this->promo_category_model->save();
+			$this->promo_category_model->initialize($aResult['id'],$this->input->post('gender'));
+			$this->promo_category_model->save();
+			$aTags = explode(',',$this->input->post('tags'));
+			foreach ($aTags as $value) {
+				$this->tag_model->initialize($aResult['id'],trim($value));
+				$this->tag_model->save();
+			}
 			$config['image_library'] = 'imagemagick';
 			$this->load->library('image_lib');
 			// $config['upload_path'] = './public/img/promos_orig/';
@@ -149,7 +182,7 @@ class Promos extends CI_Controller
 	        );
 	        $this->image_lib->initialize($config);
         	$this->image_lib->resize();
-			
+			redirect(base_url().'owners/profile');
 		}
 	}
 }

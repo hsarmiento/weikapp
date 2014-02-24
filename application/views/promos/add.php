@@ -48,6 +48,20 @@
 		echo '<br/>';
 		echo form_dropdown('category3', $aOptionsCategories, 0, 'id = category3 class = required');
 		echo '<br/>';
+		echo form_label('Etiquetas','tags');
+		echo form_input(array('name' => 'tags', 'id' => 'tags', 'class' => 'required', 'placeholder' => 'Escribir separado por comas. Max 100 caracteres')).'*';
+		echo '<br/>';
+		echo form_label('Sexo', 'gender').'   ';
+		foreach ($aGender as $id => $gender) {
+			echo form_radio('gender',$id,NULL, 'id="'.$gender.'" class="required"'.set_radio('gender', $id)).ucfirst($gender);
+		}
+		echo '<br/>';
+		echo form_label('Localidad');
+		echo form_dropdown('township', $aOptionsTownships, 0, 'id = township');
+		echo '<br/>';
+		echo form_label('No está tu ciudad? Solicítala acá','new_city');
+		echo form_input(array('name' => 'new_city', 'id' => 'new_city')).'*';
+		echo '<br/>';
 		echo form_submit(array('name' => 'create_promo', 'id' => 'create_promo', 'value' => 'Crear campaña'));
 
 	echo form_close();
@@ -130,7 +144,11 @@
 		 			required: true,
 		 			min: 1,
 		 			notEqualTo: true
+		 		},
+		 		tags:{
+		 			required:true,
 		 		}
+
 		 	},
 		 	messages:{
 		 		title: {
@@ -165,6 +183,9 @@
 		 		},
 		 		category3: {
 		 			min: "Es necesaria una categoría para su promoción"
+		 		},
+		 		tags:{
+		 			required: "Es necesaria al menos 1 etiqueta"
 		 		}
 		 	},
 			submitHandler: function(form) {
