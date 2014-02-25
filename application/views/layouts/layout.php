@@ -42,7 +42,7 @@
 					<a href="<?=base_url()?>companies" >
 						<img src="<?php echo base_url();?>public/img/ticket.png" alt="ticket" />
 					</a>
-					<a href="<?= $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'))?>">
+					<a href="<?= $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,user_likes,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'))?>">
 						<img src="<?php echo base_url();?>public/img/fb_login.png" alt="login" />
 					</a>
 					<a class="star" onclick="$('#header_menu').toggle('');">

@@ -1,3 +1,21 @@
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/es_LA/all.js"></script>
+<script>
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: '536439783130946',
+	status : true, // check login status
+	cookie : true, // enable cookies to allow the server to access the session
+	xfbml  : true 
+    });
+    FB.Event.subscribe('edge.create', function(response) {
+  		console.log('you liked this');
+  		window.location.href = "<?php echo base_url().'/promos/index/'.$category.'/'.$aPromo['id']; ?>";
+	});
+  };
+</script>
+
 <?php 
 	$timestamp = strtotime($aPromo['end_datetime']);
 	$end_date = getdate($timestamp);
@@ -15,7 +33,7 @@
 	<div class="btns">
 		<div class="number">1º</div>
 		<div id="triangulo-right"></div>
-		<iframe src="http://www.facebook.com/plugins/like.php?href=<?php echo $aPromo['fanpage']['fanpage_fb']; ?>&amp;layout=button_count&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=trebuchet+ms&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:20px;" allowTransparency="true"></iframe>
+		<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 	</div>
 	<div class="btns">
 		<div class="number">2º</div>
@@ -25,14 +43,22 @@
 			{
 				if ($aPromo['is_logged'] === true)
 				{
-					if ($aPromo['joined'] === false)
-					{?>
-						<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
-					<?php }
+					if ($bLike == true)
+					{
+						if ($aPromo['joined'] === false)
+						{?>
+							<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
+						<?php }
+						else
+						{?>
+							<span>Estás participando</span>
+						<?php }
+						}
 					else
 					{?>
-						<span>Estás participando</span>
+						<span>Dale me gusta</span>
 					<?php }
+										
 				}
 				else
 				{ ?>

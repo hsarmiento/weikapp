@@ -74,7 +74,7 @@ class Competitor_model extends CI_Model
     // obtiene el username de facebook de todos los competidores de una promo en particular
     public function get_fbusername_by_promoid($iPromoId)
     {
-        $query = $this->db->query("SELECT t1.user_id, t1.promo_id, t2.fb_uid, t2.fb_username, t2.id FROM competitors AS t1 JOIN users AS t2 ON t1.user_id = t2.id AND t1.promo_id = ".$iPromoId." ORDER BY RAND() LIMIT 10;");
+        $query = $this->db->query("SELECT t1.user_id, t1.promo_id, t2.fb_uid, t2.fb_username, t2.id FROM competitors AS t1 JOIN users AS t2 ON t1.user_id = t2.id AND t1.promo_id = ".$iPromoId." ORDER BY RAND() LIMIT 4;");
         return $query->result_array();
     }
 

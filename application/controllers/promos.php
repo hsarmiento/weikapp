@@ -58,14 +58,26 @@ class Promos extends CI_Controller
 		echo json_encode(array($aData));
 	}
 
-	public function ajax_load_dialog_promo($category, $promo_id, $sPublishAction = null){	
+	public function ajax_load_dialog_promo($category, $promo_id, $sPublishAction = null)
+	{	
 		$this->load->model('competitor_model');
 		$this->load->library('Facebook_utils');
 		$this->layout->setLayout('ajax_layout');
 		$aPromo = $this->promo_model->get_info_promo($promo_id);
+		$this->load->model('company_model');
+		$aPromo['company_info'] = $this->company_model->get_row_by_something('fanpage_fb,fb_pid',array('id' => $aPromo['company_id']));
 		if(is_logged() === true)
 		{			
 			$aPromo['joined'] = $this->competitor_model->is_competitor($this->session->userdata('uid'),$promo_id);
+			$aLikes = $this->facebook_utils->api_call('/'.$this->session->userdata('fbuid').'/likes/'.$aPromo['company_info']['fb_pid']);
+			if (count($aLikes['data']) > 0)
+			{
+				$bLike = true;
+			}
+			else
+			{
+				$bLike = false;
+			}			
 		}
 		else
 		{
@@ -73,11 +85,9 @@ class Promos extends CI_Controller
 		}
 		$aPromo['is_logged'] = is_logged();
 		$aPromo['count_competitors'] = $this->competitor_model->count_promo_competitors($promo_id);
-		$aPromo['competitors'] = $this->competitor_model->get_fbusername_by_promoid($promo_id);
-		$this->load->model('company_model');
-		$aPromo['fanpage'] = $this->company_model->get_row_by_something('fanpage_fb',array('id' => $aPromo['company_id']));		
+		$aPromo['competitors'] = $this->competitor_model->get_fbusername_by_promoid($promo_id);		
 		$sLoginUrl = $this->facebook_utils->get_login_url(array('scope' => 'publish_actions','redirect_uri' => base_url().'competitor/participate/'.$promo_id."/".$category));
-		$this->layout->view('ajax_load_dialog_promo', compact('aPromo', 'category', 'sPublishAction', 'sLoginUrl'));
+		$this->layout->view('ajax_load_dialog_promo', compact('aPromo', 'category', 'sPublishAction', 'sLoginUrl','aLikes','bLike'));
 	}
 
 	public function add(){
