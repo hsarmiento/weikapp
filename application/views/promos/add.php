@@ -1,13 +1,3 @@
-<style type="text/css">
-
-.ui-widget-content {
-	border: 1px solid #dddddd;
-	background: #eeeeee url(../img/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x;
-	color: #333333;
-}
-
-</style>
-
 
 <div class="container">
 	<section>
@@ -37,7 +27,7 @@
 					<div class="input_a">
 						<?php 
 							echo form_label('Términos y condiciones','terms');
-							echo form_textarea(array('name' => 'terms', 'id' => 'terms', 'class' => 'required', 'rows' => '10', 'cols' => '50', 'placeholder' => 'Describe los términos y condiciones')).'*';
+							echo form_textarea(array('name' => 'terms', 'id' => 'terms', 'class' => 'required', 'rows' => '10', 'cols' => '50', 'placeholder' => 'Describe los términos y condiciones'));
 						?>
 					</div>
 					<div class="input_b">
@@ -45,7 +35,7 @@
 							echo form_label('Inicia','start_datetime');
 							echo form_input(array('name' => 'start_datetime', 'id' => 'start_datetime', 'class' => 'required', 'placeholder' => 'Fecha de inicio'));
 						?>
-						<a href="#">
+						<a href="#start_datetime" id="open_start_dt">
 							<img src="<?=base_url()?>public/img/calendar.png">
 						</a>
 					</div>
@@ -54,7 +44,7 @@
 							echo form_label('Finaliza','end_datetime');
 							echo form_input(array('name' => 'end_datetime', 'id' => 'end_datetime', 'class' => 'required', 'placeholder' => 'Fecha de término'));
 						?>
-						<a href="#">
+						<a href="#end_datetime" id="open_end_dt">
 							<img src="<?=base_url()?>public/img/calendar.png">
 						</a>
 						Si quieres mas tiempo, <a href="#">click aquí.</a>
@@ -118,15 +108,16 @@
 					</div>
 					<hr>
 					<div class="btn_box">
+
 						<?php
 							echo form_submit(array('name' => 'create_promo', 'id' => 'create_promo', 'value' => 'Crear campaña', 'class' => 'form_btn'));
 							$aButton = array(
-							'name' => 'preview',
-							'id' => 'preview',
-							'content' => 'Previsualizar',
-							'class' => 'form_btn'
-							);
-							echo form_button($aButton);
+								'name' => 'preview',
+								'id' => 'preview',
+								'content' => 'Previsualizar',
+								'class' => 'form_btn'
+								);
+								echo form_button($aButton);
 						?>
 					</div>
 
@@ -141,6 +132,7 @@
 
 
 <div class="ui-dialog" id="dialog_preview">
+	<a href="#create_promo" title="Cerrar" class="close" id="close_preview">X</a>
 	<h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>
 	<div class="fleft">
 		<div class="btns">
@@ -206,8 +198,36 @@
     	$( "#end_datetime" ).datepicker( "option", "currentText", "Fecha actual" );
  	});
 
-	$.validator.addMethod("notEqualTo", function(value,elemtent){
-		if ($("#category1").val() != $("#category2").val() && $("#category1").val() != $("#category3").val() && $("#category2").val() != $("#category3").val()) {
+ 	$("#open_start_dt").click(function(){
+ 		$("#start_datetime").datepicker("show");
+ 	});
+
+ 	$("#open_end_dt").click(function(){
+ 		$("#end_datetime").datepicker("show");
+ 	});
+
+	$.validator.addMethod("notEqualToCateg1", function(value,elemtent){
+		if ($("#category1").val() != $("#category2").val() && $("#category1").val() != $("#category3").val()) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	},"Las categorías deben ser distintas");
+
+	$.validator.addMethod("notEqualToCateg2", function(value,elemtent){
+		if ($("#category1").val() != $("#category2").val() && $("#category2").val() != $("#category3").val()) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	},"Las categorías deben ser distintas");
+
+	$.validator.addMethod("notEqualToCateg3", function(value,elemtent){
+		if ($("#category1").val() != $("#category3").val() && $("#category2").val() != $("#category3").val()) {
 			return true;
 		}
 		else
@@ -219,6 +239,7 @@
  	$(function(){
 		 $("#create-form-promo").validate({
 		 	errorElement: "div",
+		 	errorClass: "warning",
 		 	rules:{
 		 		title: {
 		 			required: true
@@ -247,61 +268,64 @@
 		 			required: true
 		 		},
 		 		category1: {
-		 			required: true,
 		 			min: 1,
-		 			notEqualTo: true
+		 			notEqualToCateg1: true
 		 		},
 		 		category2: {
-		 			required: true,
 		 			min: 1,
-		 			notEqualTo: true
+		 			notEqualToCateg2: true
 		 		},
 		 		category3: {
-		 			required: true,
 		 			min: 1,
-		 			notEqualTo: true
+		 			notEqualToCateg3: true
 		 		},
 		 		tags:{
-		 			required:true,
+		 			required:true
+		 		},
+		 		gender:{
+		 			required: true
 		 		}
 
 		 	},
 		 	messages:{
 		 		title: {
-		 			required: "Es necesario un título para su promoción"
+		 			required: "*Este campo es obligatorio"
 		 		},
 		 		description: {
-		 			required: "Es necesaria una descripción para su promoción"
+		 			required: "*Este campo es obligatorio"
 		 		},
 		 		terms: {
-		 			required: "Son necesarios los términos y condiciones para su promoción"
+		 			required: "*Este campo es obligatorio"
 		 		},
 		 		start_datetime: {
-		 			required: "Es necesaria una fecha de inicio para su promoción"
+		 			required: "*Este campo es obligatorio"
 		 		},
 		 		end_datetime: {
-		 			required: "Es necesaria una fecha de término para su promoción"
+		 			required: "*Este campo es obligatorio"
 		 		},
 		 		number_participants: {
-		 			min: "Es necesario el número de participantes para su promoción"
+		 			min: "*Este campo es obligatorio"
 		 		},
 		 		number_winners: {
-		 			min: "Es necesario el número de ganadores para su promoción"
+		 			min: "*Este campo es obligatorio"
 		 		},
 		 		image: {
-		 			required: "Es necesaria una imagen para su promoción"
+		 			required: "*Este campo es obligatorio"
 		 		},
 		 		category1: {
-		 			min: "Es necesaria una categoría para su promoción"
+		 			min: "*Este campo es obligatorio"
 		 		},
 		 		category2: {
-		 			min: "Es necesaria una categoría para su promoción"		 			
+		 			min: "*Este campo es obligatorio"		 			
 		 		},
 		 		category3: {
-		 			min: "Es necesaria una categoría para su promoción"
+		 			min: "*Este campo es obligatorio"
 		 		},
 		 		tags:{
-		 			required: "Es necesaria al menos 1 etiqueta"
+		 			required: "*Este campo es obligatorio"
+		 		},
+		 		gender: {
+		 			required: "*Este campo es obligatorio"
 		 		}
 		 	},
 			submitHandler: function(form) {
@@ -334,7 +358,20 @@
     	$("#dialog_preview h2").text($("#title").val());
     	$(".fleft .dialog_text p").text($("#description").val());
     	$(".fright .dialog_text p").text($("#terms").val());
-    	$("#dialog_preview").show();
+    	var style = {"background-image": "none", "background-color": "grey"};
+    	$("body").css(style);
+    	$(".container").css("opacity", "0.1");
+    	$("#dialog_preview").show(400,function(){
+			location.href="#dialog_preview";
+    	});
+    	
 
+    });
+
+    $("#close_preview").click(function(){
+    	$("#dialog_preview").hide(300);
+    	var style = {"background": "#fff url('<?=base_url()?>public/img/bg.png')", }
+    	$("body").css(style);
+    	$(".container").css("opacity", "1");
     });
 </script>

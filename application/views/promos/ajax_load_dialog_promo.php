@@ -10,6 +10,7 @@
 		<a href="<?php echo $sLoginUrl; ?>">Dar permisos</a>
 	</p>
 <?php } ?>
+<a href="#create_promo" title="Cerrar" class="close" id="close_preview">X</a>
 <h2><?=$aPromo['title']?></h2>
 <div class="fleft">
 	<div class="btns">
@@ -93,7 +94,12 @@
 	$("#countdown").countdown({ 
 		layout:'Expira en {d<}{dn} {dl} {d>},'+'{hn}:{mn}:{sn}',
 		labels: ['Años', 'Meses', 'Semanas', 'Dias', 'Horas', 'Minutos', 'Segundos'],
+		labels1: ['Año', 'Mes', 'Semana', 'Dia', 'Hora', 'Minuto', 'Segundo'],
     	until: new Date(<?=$end_date['year']?>, <?=$end_date['mon']?>-1, <?=$end_date['mday']?>, <?=$end_date['hours']?>,<?=$end_date['minutes']?>,<?=$end_date['seconds']?>)
+	});
+
+	$("#close_preview").click(function(){
+		jQuery('#dialog').dialog('close');
 	});
 </script>
 
