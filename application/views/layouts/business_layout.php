@@ -49,7 +49,7 @@
 						<a href="#">Mis promociones</a>
 					</div>
 					<div class="option right">
-						<a href="#" >
+						<a href="#">
 							<img src="<?php echo base_url(); ?>public/img/ticket.png" alt="ticket" />
 						</a>
 						<a href="#" onclick="$('#header_owner_menu').toggle('');">
@@ -64,7 +64,7 @@
 					</div>
 				<?php } else{ ?>
 					<div class="profile-container">
-						<a href="<?= $this->facebook_utils->get_login_url(array('scope' => 'email,publish_stream,publish_actions,manage_pages','redirect_uri' => base_url().'owners/fblogin'))?>">Login</a>
+						<!-- <a href="<?= $this->facebook_utils->get_login_url(array('scope' => 'email,publish_stream,publish_actions,manage_pages','redirect_uri' => base_url().'owners/fblogin'))?>">Login</a> -->
 					</div>
 				<?php } ?>
 		</header>
@@ -82,5 +82,23 @@
 				<a href="#">Contacto</a>
 			</div>
 		</footer>
+		<script type="text/javascript">
+			$(function() {
+			    $( document ).tooltip({
+			      position: {
+			        my: "center bottom-20",
+			        at: "center top",
+			        using: function( position, feedback ) {
+			          $( this ).css( position );
+			          $( "<div>" )
+			            .addClass( "arrow" )
+			            .addClass( feedback.vertical )
+			            .addClass( feedback.horizontal )
+			            .appendTo( this );
+			        }
+			      }
+			    });
+			  });
+		</script>
 	</body>
 </html>

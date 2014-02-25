@@ -44,8 +44,7 @@ figure img{
 }
 .right_login{
 	float: right;
-	padding: 5px 20px 0 0;
-	font-size: 14px;
+	padding: 5px 5px 0 0;
 }
 .icon_right{
 	float: right;
@@ -101,9 +100,9 @@ figure img{
 }
 .right_login a{
 	color: #fff;
-	border: 1px solid #fff;
-	border-radius: 3px;
-	/*padding: 17px 5px 2px 0;*/
+	/*border: 1px solid #fff;*/
+	/*border-radius: 3px;*/
+	padding: 10px 5px 2px 0;
 }
 .right_login a:hover{
 	color: red;
@@ -158,6 +157,7 @@ nav li{
 	margin: 10px auto;
 	background: #333;
 	overflow: hidden;
+	border-radius: 2px;
 }
 .submenu a{
 	color: #FFF;
@@ -246,6 +246,56 @@ article figure a:visited{
 	width: 1%;
 	display: inline-block;
 }
+
+  .ui-tooltip, .arrow:after {
+    background: black;
+    /*border: 2px solid white;*/
+  }
+  .ui-tooltip {
+    padding: 10px 10px;
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    box-shadow: 0 0 7px black;
+  }
+  .arrow {
+    width: 50px;
+    height: 16px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
+    bottom: -16px;
+  }
+  .arrow.top {
+    top: -16px;
+    bottom: auto;
+  }
+  .arrow.left {
+    left: 20%;
+  }
+  .arrow:after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -20px;
+    width: 25px;
+    height: 25px;
+    box-shadow: 6px 5px 9px -9px black;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    tranform: rotate(45deg);
+  }
+  .arrow.top:after {
+    bottom: -20px;
+    top: auto;
+  }
+
+  .show{
+  	border-radius: 3px;
+  }
 /*
 .polaroid{
     width: 650px;
@@ -292,4 +342,4 @@ article figure a:visited{
     transform: rotate(5deg);
 }
 
-*/r
+*/
