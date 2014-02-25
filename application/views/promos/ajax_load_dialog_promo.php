@@ -15,7 +15,7 @@
 	<div class="btns">
 		<div class="number">1º</div>
 		<div id="triangulo-right"></div>
-		<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.bufa.es&amp;layout=button_count&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=trebuchet+ms&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:20px;" allowTransparency="true"></iframe>
+		<iframe src="http://www.facebook.com/plugins/like.php?href=<?php echo $aPromo['fanpage']['fanpage_fb']; ?>&amp;layout=button_count&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=trebuchet+ms&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:20px;" allowTransparency="true"></iframe>
 	</div>
 	<div class="btns">
 		<div class="number">2º</div>
