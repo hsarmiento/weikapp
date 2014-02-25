@@ -4,7 +4,6 @@
 		$aPromo = null;
 	}
 ?>
-
 <div class="tabs">
 	<a href="#" onclick="$('').toggle('');">Concepción</a>
 	<img src="<?php echo base_url()?>public/img/tabs.png" alt="tabs">

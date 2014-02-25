@@ -166,7 +166,8 @@ Atentamente el equipo de Weikapp
 							if (!in_array($key['id'], $aPagesFbpid))
 							{
 								// add new pages
-								$this->company_model->initialize($iOwnerId,$key['id'],$key['name']);
+								$aPageInfo = $this->facebook_utils->api_call('/'.$key['id']);
+								$this->company_model->initialize($iOwnerId,$key['id'],$key['name'],NULL,$aPageInfo['link']);
 								$this->company_model->save();
 								$aResult = $this->company_model->get_fields_by_something('id',array('fb_pid' => $key['id']));
 								$this->subscription_model->initialize(1,$aResult[0]['id']);

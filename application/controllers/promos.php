@@ -47,8 +47,12 @@ class Promos extends CI_Controller
 		$isLogged = is_logged();
 		if($category === 'favorites' && $isLogged === true){
 			$aData = $this->promo_model->get_favorite_promos(3,$offset,$this->session->userdata('uid'));
-		}elseif($category !== 'favorites'){
+		}elseif($category !== 'favorites' && $category != 'nuevas'){
 			$aData = $this->promo_model->get_promos(3,$offset, $category);
+		}
+		elseif ($category == 'nuevas' || $isLogged == false)
+		{
+			$aData = $this->promo_model->get_newest_promos(3,$offset);
 		}
 
 		echo json_encode(array($aData));
@@ -56,7 +60,7 @@ class Promos extends CI_Controller
 
 	public function ajax_load_dialog_promo($category, $promo_id, $sPublishAction = null){	
 		$this->load->model('competitor_model');
-		$this->load->library('Facebook_utils');		
+		$this->load->library('Facebook_utils');
 		$this->layout->setLayout('ajax_layout');
 		$aPromo = $this->promo_model->get_info_promo($promo_id);
 		if(is_logged() === true)
@@ -70,6 +74,8 @@ class Promos extends CI_Controller
 		$aPromo['is_logged'] = is_logged();
 		$aPromo['count_competitors'] = $this->competitor_model->count_promo_competitors($promo_id);
 		$aPromo['competitors'] = $this->competitor_model->get_fbusername_by_promoid($promo_id);
+		$this->load->model('company_model');
+		$aPromo['fanpage'] = $this->company_model->get_row_by_something('fanpage_fb',array('id' => $aPromo['company_id']));		
 		$sLoginUrl = $this->facebook_utils->get_login_url(array('scope' => 'publish_actions','redirect_uri' => base_url().'competitor/participate/'.$promo_id."/".$category));
 		$this->layout->view('ajax_load_dialog_promo', compact('aPromo', 'category', 'sPublishAction', 'sLoginUrl'));
 	}
