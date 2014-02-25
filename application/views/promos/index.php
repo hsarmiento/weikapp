@@ -138,6 +138,8 @@
 	      // minHeight: ($( window ).height())*0.9,
 	      // maxHeight: ($( window ).height())*0.95
 	    });
+
+	    $(".ui-dialog").attr("id","dialog_promo");
     }
 
 	function open_promo(id,title,publish_actions)

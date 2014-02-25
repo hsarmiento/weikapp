@@ -124,7 +124,7 @@ figure img{
 }
 .promo_title{
 	padding: 10px;
-	width: 96%;
+	width: 97.8%;
 	color: #FFF;
 	background: #535f77;
 	border-bottom: 1px solid #C2C2C2;
@@ -369,4 +369,10 @@ footer a:hover{
 	float:right;
 	width: 50%;
 	padding-right: 30px; 
+}
+
+.ui-widget-content {
+	border: 1px solid #dddddd;
+	background: #eeeeee url(../img/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x;
+	color: #333333;
 }
