@@ -37,7 +37,7 @@
 				}
 				else
 				{ ?>
-					<a onclick="participate();" href="#">Participar</a>
+					<a onclick="participate();" href="#dialog_promo">Participar</a>
 				<?php }
 			}
 			else
@@ -88,6 +88,7 @@
 <script type="text/javascript">	
 	function participate()
 	{
+		// $("#dialog").empty();
 		$("#dialog").empty().load("<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>");
 	}
 

@@ -1,3 +1,2 @@
-<div class="large_facebook_button">
-	<a href="<?php echo $login_url; ?>">Ingresar con Facebook</a>
-</div>
+
+<a href="<?php echo $login_url; ?>" id="large_button_facebook">Ingresar con Facebook</a>
