@@ -12,6 +12,10 @@ class Promos extends CI_Controller
 
 	public function index($category = 'favorites', $promo_id = null, $sPublishAction = null)
 	{
+		if ($category == 'favoritas')
+		{
+			$category = 'favorites';
+		}
 		$isLogged = is_logged();
 		$this->load->model('category_model');
 		// $this->load->model('user_preference_model');
@@ -30,6 +34,7 @@ class Promos extends CI_Controller
 		}
 		$aCategories = $this->category_model->get_all_categories();
 		array_push($aCategories, array('name' => 'nuevas'));
+		array_push($aCategories, array('name' => 'favoritas'));
 		$aPromo = NULL;
 		if(isset($promo_id)){
 			$aPromo = $this->promo_model->get_info_promo($promo_id);
@@ -43,6 +48,10 @@ class Promos extends CI_Controller
 	}
 
 	public function ajax_load_scrolling($offset,$category){
+		if ($category == 'favoritas')
+		{
+			$category = 'favorites';
+		}
 		$this->layout->setLayout('ajax_layout');
 		$isLogged = is_logged();
 		if($category === 'favorites' && $isLogged === true){

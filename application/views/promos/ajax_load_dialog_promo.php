@@ -28,7 +28,7 @@
 		<a href="<?php echo $sLoginUrl; ?>">Dar permisos</a>
 	</p>
 <?php } ?>
-<a href="#create_promo" title="Cerrar" class="close" id="close_preview">X</a>
+<a href="#" title="Cerrar" class="close" id="close_preview">X</a>
 <h2><?=$aPromo['title']?></h2>
 <div class="fleft">
 	<div class="btns">

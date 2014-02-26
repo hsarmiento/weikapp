@@ -7,7 +7,15 @@
 <div class="tabs">
 	<a href="#" onclick="$('').toggle('');">Concepción</a>
 	<img src="<?php echo base_url()?>public/img/tabs.png" alt="tabs">
-	<a href="#" onclick="$('#category_menu').toggle('');"><?php echo $category; ?></a>
+	<?php 
+		if ($category == 'favorites')
+		{?>
+			<a href="#" onclick="$('#category_menu').toggle('');">Favoritas</a>
+		<?php }
+		else
+		{?>
+			<a href="#" onclick="$('#category_menu').toggle('');"><?php echo ucfirst($category); ?></a>
+		<?php } ?>	
 	<img src="<?php echo base_url()?>public/img/tabs.png" alt="tabs">
 </div>
 
