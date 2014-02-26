@@ -30,9 +30,11 @@
 					{?>
 						<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
 					<?php }
-					else
+					elseif($aPromo['ended'] == 0)
 					{?>
 						<span>Estás participando</span>
+					<?php }elseif($aPromo['ended'] == 1){ ?>
+						<span>Ya participaste</span>
 					<?php }
 				}
 				else
@@ -47,7 +49,12 @@
 	</div>
 	<div class="expire">
 		<img src="<?=base_url()?>public/img/clock.png" alt="time" />
-		<span id="countdown"></span>	
+		<?php if($aPromo['ended'] == 0){ ?>
+			<span id="countdown"></span>	
+		<?php }else{ ?>
+			<span>Finalizado</span>
+		<?php } ?>
+		
 	</div>
 	<div class="people">
 		<img src="<?=base_url()?>public/img/user_img.png" alt="time" />
