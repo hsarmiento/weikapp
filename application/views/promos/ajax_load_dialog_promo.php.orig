@@ -44,6 +44,17 @@
 			{
 				if ($aPromo['is_logged'] === true)
 				{
+<<<<<<< HEAD
+					if ($aPromo['joined'] === false)
+					{?>
+						<a href="<?php echo base_url();?>competitor/participate/<?php echo $aPromo['id']; ?>/<?=$category?>">Participar</a>
+					<?php }
+					elseif($aPromo['ended'] == 0)
+					{?>
+						<span>Estás participando</span>
+					<?php }elseif($aPromo['ended'] == 1){ ?>
+						<span>Ya participaste</span>
+=======
 					if ($bLike == true)
 					{
 						if ($aPromo['joined'] === false)
@@ -58,6 +69,7 @@
 					else
 					{?>
 						<span>Dale me gusta</span>
+>>>>>>> dd56c624433ee5cb35545bf965064a946853cc75
 					<?php }
 										
 				}
