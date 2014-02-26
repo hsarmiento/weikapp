@@ -66,12 +66,27 @@
 						<li><a href="<?=base_url()?>user/edit">Editar</a></li>
 						<li><a href="<?=base_url()?>user/logout">Salir</a></li>
 					</ul>
-				</nav>	
-			</div>			
+				</nav>
+			</div>
 		</header>
 
 		<?php echo $content_for_layout; ?>
 		<footer>
+			<?php 
+				if (strpos(current_url(), '/promo/index/') === false)
+				{ ?>
+					<div class="footer_left">
+						<p>WEIKAPP © 2014</p>
+					</div>
+					<div class="footer_right">
+						<a href="#">Como funciona</a>
+						<a href="#">Preguntas frecuentes</a>
+						<a href="#">Soy empresa</a>
+						<a href="#">Términos y condiciones</a>
+						<a href="#">Contacto</a>
+					</div>
+				<?php }
+			?>
 		</footer>
 	</body>
 </html>
