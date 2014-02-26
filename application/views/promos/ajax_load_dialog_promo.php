@@ -107,7 +107,7 @@
 </div>
 <div class="fright">
 	<figure>
-		<img src="<?=base_url()?>public/img/promos_medium/<?=md5($aPromo['id'])?>" alt="promo_img" />
+		<img src="<?=base_url()?>public/img/promos_medium/<?=md5($aPromo['id'])?>.png" alt="promo_img" />
 	</figure>
 	<div class="dialog_text">
 		<h3>Términos y condiciones</h3>

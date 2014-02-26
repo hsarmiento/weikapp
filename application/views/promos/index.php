@@ -46,7 +46,7 @@
 				if($all_promos %3 == 0){ ?>
 					<article onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
 						<figure>
-							<img src="<?php echo base_url();?>public/img/promos_big/<?=md5($value['id'])?>" alt="foto_promo">
+							<img src="<?php echo base_url();?>public/img/promos_big/<?=md5($value['id'])?>.png" alt="foto_promo">
 							<figcaption>
 								<?=strtoupper($value['title'])?>	
 							</figcaption>
@@ -79,7 +79,7 @@
 				<?php }else{ ?>
 					<article class="w50" onclick="open_promo(<?=$value['id']?>, '<?=$value['title']?>', '<?=$sPublishAction?>'); return false;">
 						<figure>
-							<img src="<?php echo base_url();?>public/img/promos_small/<?=md5($value['id'])?>" alt="foto_promo">
+							<img src="<?php echo base_url();?>public/img/promos_small/<?=md5($value['id'])?>.png" alt="foto_promo">
 							<figcaption>
 								<?=strtoupper($value['title'])?>	
 							</figcaption>
