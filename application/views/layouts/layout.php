@@ -63,6 +63,7 @@
 				</nav>
 				<nav id="header_login_menu" class="show">
 					<ul>
+						<li><a href="<?=base_url()?>user/profile">Perfil</a></li>
 						<li><a href="<?=base_url()?>user/edit">Editar</a></li>
 						<li><a href="<?=base_url()?>user/logout">Salir</a></li>
 					</ul>
@@ -73,7 +74,7 @@
 		<?php echo $content_for_layout; ?>
 		<footer>
 			<?php 
-				if (strpos(current_url(), '/promo/index/') === false)
+				if (strpos(current_url(), '/promos/index') === false)
 				{ ?>
 					<div class="footer_left">
 						<p>WEIKAPP © 2014</p>
