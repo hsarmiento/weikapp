@@ -107,6 +107,7 @@ Atentamente el equipo de Weikapp
 
 	public function authenticate()
 	{
+		$this->layout->css(array(base_url().'public/css/owners_authenticate.css'));
 		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
 		$this->layout->view('authenticate');
 	}

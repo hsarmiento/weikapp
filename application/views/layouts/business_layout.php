@@ -75,7 +75,7 @@
 				<p>WEIKAPP © 2014</p>
 			</div>
 			<div class="footer_right">
-				<a href="#">Como funciona</a>
+				<a href="#">Cómo funciona</a>
 				<a href="#">Preguntas frecuentes</a>
 				<a href="#">Soy empresa</a>
 				<a href="#">Términos y condiciones</a>
