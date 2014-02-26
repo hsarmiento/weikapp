@@ -91,7 +91,6 @@ class User extends CI_Controller
 			{
 				if ($_GET['error_code'] == 200 && $_GET['error_reason'] == 'user_denied')
 				{
-					// echo $this->session->flashdata('urlFrom').'<br>';
 					$aUrl = explode('/', $this->session->flashdata('urlFrom'));
 					// echo base_url();
 					redirect(base_url().'promos/index/'.$aUrl[3].'/'.$aUrl[2]);
@@ -99,7 +98,7 @@ class User extends CI_Controller
 			}
 			else
 			{
-				$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));				
+				$aData['login_url'] = $this->facebook_utils->get_login_url(array('scope' => 'email,user_birthday,user_likes,publish_stream,publish_actions','redirect_uri' => base_url().'user/login'));				
 				$this->layout->setLayout('ajax_layout');
 				$this->layout->view('login',$aData);
 			}
@@ -152,6 +151,7 @@ class User extends CI_Controller
 				}
 			}
 		}
+		$this->layout->css(array(base_url().'public/css/users_edit.css'));
 		$this->layout->setTitle('Editar');
 		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
 		$this->layout->view('edit',compact('aCategories','iUid', 'sSuccess','aUserData'));

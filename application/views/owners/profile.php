@@ -12,7 +12,7 @@
 			</div>
 			<div class="create_promo">
 				<div class="button_create">
-					<a href="<?php echo base_url().'promos/add';?>">NUEVA PROMOCIÓN</a>
+					<a href="<?php echo base_url().'promos/add';?>" >NUEVA PROMOCIÓN</a>
 				</div>
 			</div>
 			<div class="company_type">

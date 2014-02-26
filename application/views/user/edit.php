@@ -1,35 +1,61 @@
-<h1>Editar usuario</h1>
 <?php
 	if(isset($sSuccess)){ ?>
 		<div class="success">Actualizado</div>
-	<?php } ?>
+<?php } ?>
 <div class="container">
- <?php
- 	$aAttributes = array('id' => 'edit-user-form');
- 	echo form_open('user/update', $aAttributes);
-
- 		echo form_label('Nombres','names');
- 		echo form_input(array('name'=>'names','id'=>'names','value'=>$aUserData['names'], 'class' => 'required'));
-	 	echo '<br>';
-	 	echo form_label('Apellidos','last_name');
- 		echo form_input(array('name'=>'last_name','id'=>'last-name','value'=>$aUserData['last_name'], 'class' => 'required'));
-	 	echo '<br>';
-	 	echo form_label('Email','email');
- 		echo form_input(array('name'=>'email','id'=>'email','value'=>$aUserData['email'], 'class' => 'required'));
-	 	echo '<br>';
-	 	foreach ($aCategories as $category) {
-	 		$aOptions = array('name' => $category['name'], 'id' => $category['name'], 'value' =>$category['id']);
-			if($category['exist'] === 1){
-	 			$aOptions['checked'] = 'TRUE';
-	 		}
-	 		echo form_label($category['name'],$category['name']);
-	 		echo form_checkbox($aOptions);
-	 		echo '<br>';
-	 	}
-	 	echo form_hidden('user_id', $iUid);
- 		echo form_submit('update_user','Guardar');
- 	echo form_close();
- ?>
+	<section>
+		<div class="promo_title">
+			Editar perfil
+		</div>
+		<hr />
+		<article>			
+			 <?php
+			 	$aAttributes = array('id' => 'edit-user-form');
+			 	echo form_open('user/update', $aAttributes); ?>
+					<div class="input_a big_input">
+				 		<?php
+					 		echo form_label('Nombres','names');
+					 		echo form_input(array('name'=>'names','id'=>'names','value'=>$aUserData['names'], 'class' => 'required'));
+					 	?>
+				 	</div>
+				 	<div class="input_b big_input">
+				 		<?php
+				 			echo form_label('Apellidos','last_name');
+			 				echo form_input(array('name'=>'last_name','id'=>'last-name','value'=>$aUserData['last_name'], 'class' => 'required'));
+				 		?>
+				 	</div>
+				 	<div class="input_a big_input">
+				 		<?php 
+						 	echo form_label('Email','email');
+					 		echo form_input(array('name'=>'email','id'=>'email','value'=>$aUserData['email'], 'class' => 'required'));
+			 			?>
+				 	</div>
+				 	<div class="input_b">
+					 	<?php
+					 		echo form_label('Preferencias','preferencias');
+						 	foreach ($aCategories as $category) {
+						 		$aOptions = array('name' => $category['name'], 'id' => $category['name'], 'value' =>$category['id']);
+								if($category['exist'] === 1){
+						 			$aOptions['checked'] = 'TRUE';
+						 		}
+						 		echo form_checkbox($aOptions).ucfirst($category['name']).' ';
+						 	}
+					 	?>
+					 </div>
+					 <hr>
+					 <?php
+				 	echo form_hidden('user_id', $iUid);
+				 	?>
+				 	<div class="btn_box">
+				 		<?php
+				 			echo form_submit(array('name' => 'update_user', 'id' => 'update_user', 'value' => 'Guardar', 'class' => 'form_btn'));
+				 		?>			 		
+			 		</div>
+			 		<?php
+			 	echo form_close();
+			 ?>
+		</article>
+	</section>
 </div>
 
 <script type="text/javascript">
