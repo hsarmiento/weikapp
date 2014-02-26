@@ -12,6 +12,7 @@ class Owners extends CI_Controller
 	public function signup()
 	{
 		$this->layout->js(array(base_url().'public/js/jquery.validate.min.js'));
+		$this->layout->css(array(base_url().'public/css/owners_signup.css'));
 		$this->layout->view('signup');
 	}
 
