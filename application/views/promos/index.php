@@ -180,8 +180,7 @@
 				url: "<?php echo base_url();?>promos/ajax_load_scrolling/"+offset.toString()+"/<?=$category?>",
 				cache: false,				
 				data:'',
-				success: function(response){	
-						
+				success: function(response){						
 	    			var obj = JSON.parse(response);
 					try{
 						var str = '';

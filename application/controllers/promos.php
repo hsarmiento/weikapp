@@ -56,6 +56,10 @@ class Promos extends CI_Controller
 		$isLogged = is_logged();
 		if($category === 'favorites' && $isLogged === true){
 			$aData = $this->promo_model->get_favorite_promos(3,$offset,$this->session->userdata('uid'));
+			if (count($aData) == 0)
+			{
+				$aData = $this->promo_model->get_newest_promos(3,$offset);
+			}
 		}elseif($category !== 'favorites' && $category != 'nuevas'){
 			$aData = $this->promo_model->get_promos(3,$offset, $category);
 		}
@@ -63,7 +67,6 @@ class Promos extends CI_Controller
 		{
 			$aData = $this->promo_model->get_newest_promos(3,$offset);
 		}
-
 		echo json_encode(array($aData));
 	}
 
